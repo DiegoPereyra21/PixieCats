@@ -900,11 +900,11 @@ PlayerSettings:
   activeInputHandler: 1
   windowsGamepadBackendHint: 0
   enableDirectStorage: 0
-  cloudProjectId: 
+  cloudProjectId: e168de35-3b93-45e0-b62a-c6f7b318de3d
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Plantilla 3D
-  organizationId: 
+  projectName: PixieCats
+  organizationId: diego2102
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
