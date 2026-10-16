@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,7 +6,10 @@ public class PlayerInputReader : MonoBehaviour
 {
     public Vector2 Move { get; private set; }
     public bool Sprint { get; private set; }
+    public bool JumpHeld { get; private set; }
     public bool JumpRequested { get; private set; }
+
+    public event Action JumpPressed;
 
     private InputAction _move;
     private InputAction _sprint;
@@ -22,9 +26,14 @@ public class PlayerInputReader : MonoBehaviour
     {
         Move = _move.ReadValue<Vector2>();
         Sprint = _sprint.IsPressed();
+        JumpHeld = _jump.IsPressed();
 
-        // se guarda hasta el próximo FixedUpdate para no perder el salto
-        if (_jump.WasPressedThisFrame()) JumpRequested = true;
+        if (_jump.WasPressedThisFrame())
+        {
+            // se guarda hasta el próximo FixedUpdate para no perder el salto
+            JumpRequested = true;
+            JumpPressed?.Invoke();
+        }
     }
 
     public void ConsumeJump() => JumpRequested = false;

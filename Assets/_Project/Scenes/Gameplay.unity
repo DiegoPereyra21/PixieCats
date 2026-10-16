@@ -130,7 +130,6 @@ GameObject:
   - component: {fileID: 291852375}
   - component: {fileID: 291852378}
   - component: {fileID: 291852377}
-  - component: {fileID: 291852376}
   m_Layer: 6
   m_Name: Visual
   m_TagString: Untagged
@@ -153,29 +152,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1749401271}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &291852376
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 291852374}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &291852377
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -539,7 +515,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 354501700}
-  m_Material: {fileID: 13400000, guid: bdfce141ce91a7d42b1928683e5340b5, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1220,6 +1196,7 @@ GameObject:
   - component: {fileID: 1749401275}
   - component: {fileID: 1749401274}
   - component: {fileID: 1749401273}
+  - component: {fileID: 1749401276}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -1284,6 +1261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   _input: {fileID: 1749401274}
+  _flight: {fileID: 1749401276}
   _cameraTransform: {fileID: 1618657053}
   _walkSpeed: 15
   _sprintSpeed: 20
@@ -1330,6 +1308,31 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &1749401276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749401270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89ee8b70d8ef39144ba3e1ea5061b2e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerFlight
+  _input: {fileID: 1749401274}
+  _movement: {fileID: 1749401273}
+  _flySpeed: 25
+  _flyAcceleration: 30
+  _flapAscendSpeed: 6
+  _glideDescendSpeed: 3
+  _verticalAcceleration: 12
+  _maxHeight: 20
+  _ceilingSoftZone: 2
+  _bobAmplitude: 0.8
+  _bobFrequency: 3
+  _carriedWeight: 5
+  _weightInfluence: 0.15
 --- !u!1 &1836617607
 GameObject:
   m_ObjectHideFlags: 0

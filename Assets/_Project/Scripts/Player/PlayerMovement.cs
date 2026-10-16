@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private PlayerInputReader _input;
+    [SerializeField] private PlayerFlight _flight;
     [SerializeField] private Transform _cameraTransform;
 
     [Header("Movimiento")]
@@ -20,8 +21,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _groundCheckRadius = 0.3f;
     [SerializeField] private float _groundCheckDistance = 0.1f;
 
+    public bool IsGrounded { get; private set; }
+
     private Rigidbody _rb;
-    private bool _isGrounded;
 
     private void Awake()
     {
@@ -32,33 +34,41 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         CheckGround();
-        Move();
         Rotate();
+
+        // mientras vuela, PlayerFlight controla el movimiento
+        if (_flight != null && _flight.IsFlying)
+        {
+            _input.ConsumeJump(); // evita un salto fantasma al aterrizar
+            return;
+        }
+
+        MoveHorizontal(_input.Sprint ? _sprintSpeed : _walkSpeed, _acceleration);
         Jump();
     }
 
-    private void CheckGround()
-    {
-        // esfera en los pies (el pivot del player debe estar en el suelo)
-        Vector3 origin = transform.position + Vector3.up * (_groundCheckRadius - _groundCheckDistance);
-        _isGrounded = Physics.CheckSphere(origin, _groundCheckRadius, _groundMask, QueryTriggerInteraction.Ignore);
-    }
-
-    private void Move()
+    /// Mueve en el plano horizontal relativo a la cámara, sin tocar la velocidad vertical.
+    public void MoveHorizontal(float speed, float acceleration)
     {
         // dirección relativa a la cámara, sin componente vertical
         Vector3 camForward = Vector3.ProjectOnPlane(_cameraTransform.forward, Vector3.up).normalized;
         Vector3 camRight = Vector3.ProjectOnPlane(_cameraTransform.right, Vector3.up).normalized;
         Vector3 direction = Vector3.ClampMagnitude(camForward * _input.Move.y + camRight * _input.Move.x, 1f);
 
-        float speed = _input.Sprint ? _sprintSpeed : _walkSpeed;
         Vector3 targetVelocity = direction * speed;
 
         Vector3 velocity = _rb.linearVelocity;
         Vector3 horizontal = new Vector3(velocity.x, 0f, velocity.z);
-        horizontal = Vector3.MoveTowards(horizontal, targetVelocity, _acceleration * Time.fixedDeltaTime);
+        horizontal = Vector3.MoveTowards(horizontal, targetVelocity, acceleration * Time.fixedDeltaTime);
 
         _rb.linearVelocity = new Vector3(horizontal.x, velocity.y, horizontal.z);
+    }
+
+    private void CheckGround()
+    {
+        // esfera en los pies (el pivot del player debe estar en el suelo)
+        Vector3 origin = transform.position + Vector3.up * (_groundCheckRadius - _groundCheckDistance);
+        IsGrounded = Physics.CheckSphere(origin, _groundCheckRadius, _groundMask, QueryTriggerInteraction.Ignore);
     }
 
     private void Rotate()
@@ -70,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        if (_input.JumpRequested && _isGrounded)
+        if (_input.JumpRequested && IsGrounded)
         {
             // v = sqrt(2 * g * h)
             float jumpVelocity = Mathf.Sqrt(_jumpHeight * -2f * Physics.gravity.y);
