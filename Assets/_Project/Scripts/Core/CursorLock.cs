@@ -3,12 +3,18 @@ using UnityEngine.InputSystem;
 
 public class CursorLock : MonoBehaviour
 {
-    private void Start() => Lock();
+    private void Start()
+    {
+        // en WebGL el navegador solo deja bloquear el cursor tras un click del jugador
+#if !UNITY_WEBGL || UNITY_EDITOR
+        Lock();
+#endif
+    }
 
     private void Update()
     {
-        // en WebGL el navegador libera el cursor con Esc, se vuelve a bloquear con click
-        if (Cursor.lockState != CursorLockMode.Locked && Mouse.current.leftButton.wasPressedThisFrame)
+        // en WebGL se bloquea con el primer click, y se vuelve a bloquear tras Esc
+        if (Cursor.lockState != CursorLockMode.Locked && Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
             Lock();
     }
 

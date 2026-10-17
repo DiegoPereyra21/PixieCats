@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -19,6 +20,9 @@ public class PlayerFlight : MonoBehaviour
     [SerializeField] private float _maxHeight = 20f;          // Y de mundo
     [SerializeField] private float _ceilingSoftZone = 2f;     // distancia donde la subida se frena
 
+    [Header("Despegue")]
+    [SerializeField] private float _takeoffImpulse = 4f;      // velocidad vertical mínima al activar el vuelo
+
     [Header("Aleteo")]
     [SerializeField] private float _bobAmplitude = 2f;
     [SerializeField] private float _bobFrequency = 6f;
@@ -30,6 +34,9 @@ public class PlayerFlight : MonoBehaviour
 
     public bool IsFlying { get; private set; }
     public float CurrentWeight => _currentWeight;
+    public float WeightFactor => 1f + _currentWeight * _weightInfluence;
+
+    public event Action TookOff;
 
     private Rigidbody _rb;
     private float _bobPhase;
@@ -50,12 +57,16 @@ public class PlayerFlight : MonoBehaviour
         if (IsFlying) StopFlight();
     }
 
-    /// Cambia el peso que lleva el hada (0 = sin carga).
+    // Cambia el peso que lleva el hada (0 = sin carga)
     public void SetCarriedWeight(float weight) => _carriedWeight = Mathf.Max(0f, weight);
 
     private void OnJumpPressed()
     {
-        if (!IsFlying && !_movement.IsGrounded) StartFlight();
+        // en el suelo, con coyote o cayendo cerca del suelo, Space es un salto y no el inicio del vuelo
+        if (IsFlying || _movement.PrefersGroundJump) return;
+
+        StartFlight();
+        _input.ConsumeJump(); // este Space ya se usó para volar
     }
 
     private void FixedUpdate()
@@ -116,6 +127,14 @@ public class PlayerFlight : MonoBehaviour
         IsFlying = true;
         _rb.useGravity = false; // la velocidad vertical la controla este script
         _bobPhase = 0f;
+
+        // el primer aleteo da un empujón hacia arriba, más débil con peso
+        float weightFactor = 1f + _currentWeight * _weightInfluence;
+        Vector3 velocity = _rb.linearVelocity;
+        velocity.y = Mathf.Max(velocity.y, _takeoffImpulse / weightFactor);
+        _rb.linearVelocity = velocity;
+
+        TookOff?.Invoke();
     }
 
     private void StopFlight()

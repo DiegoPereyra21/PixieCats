@@ -1,20 +1,36 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
+    private const float JumpGroundIgnoreTime = 0.15f; // tras saltar, el sensor sigue tocando el suelo unos frames
+
     [SerializeField] private PlayerInputReader _input;
     [SerializeField] private PlayerFlight _flight;
     [SerializeField] private Transform _cameraTransform;
 
     [Header("Movimiento")]
     [SerializeField] private float _walkSpeed = 5f;
-    [SerializeField] private float _sprintSpeed = 8f;
-    [SerializeField] private float _acceleration = 60f;
-    [SerializeField] private float _rotationSpeed = 15f;
+    [SerializeField] private float _sprintSpeed = 12f;
+    [SerializeField] private float _acceleration = 50f;
+    [SerializeField] private float _rotationSpeed = 20f;
+    [SerializeField] private float _flyRotationSpeed = 6f; // giro en vuelo + lento q en suelo
 
     [Header("Salto")]
-    [SerializeField] private float _jumpHeight = 1.5f;
+    [SerializeField] private float _jumpHeight = 3f;
+    [SerializeField] private float _coyoteTime = 0.1f;
+    [SerializeField] private float _jumpBufferTime = 0.15f;
+    [SerializeField] private float _bufferGroundDistance = 0.6f; // en esta distancia al suelo, cayendo, Space es salto y no vuelo
+
+    [Header("Caída")]
+    [SerializeField] private float _fallGravityMultiplier = 1.8f;
+    [SerializeField] private float _maxFallSpeed = 30f;
+
+    [Header("Aterrizaje")]
+    [SerializeField] private float _minLandingImpact = 2f;
+    [SerializeField] private float _landingSlideTime = 0.2f;
+    [SerializeField] private float _landingGrip = 0.3f; // fracción de la aceleración mientras patina
 
     [Header("Suelo")]
     [SerializeField] private LayerMask _groundMask = ~0; // excluir la layer Player
@@ -23,7 +39,19 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsGrounded { get; private set; }
 
+    // true si un Space ahora debe ser un salto (suelo, coyote o pre-aterrizaje) y no el inicio del vuelo
+    public bool PrefersGroundJump => IsGrounded || CanGroundJump || IsFallingNearGround();
+
+    // velocidad vertical de impacto (positiva) al aterrizar
+    public event Action<float> Landed;
+
+    private bool CanGroundJump => _lastGroundedTime > _lastJumpTime && Time.time - _lastGroundedTime <= _coyoteTime;
+
     private Rigidbody _rb;
+    private float _lastGroundedTime = float.NegativeInfinity;
+    private float _lastJumpTime = float.NegativeInfinity;
+    private float _fallSpeed;
+    private float _slideUntil;
 
     private void Awake()
     {
@@ -43,11 +71,14 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        MoveHorizontal(_input.Sprint ? _sprintSpeed : _walkSpeed, _acceleration);
+        float acceleration = Time.time < _slideUntil ? _acceleration * _landingGrip : _acceleration;
+        MoveHorizontal(_input.Sprint ? _sprintSpeed : _walkSpeed, acceleration);
+
         Jump();
+        ApplyFallGravity();
     }
 
-    /// Mueve en el plano horizontal relativo a la cámara, sin tocar la velocidad vertical.
+    // Mueve en el plano horizontal relativo a la cámara, sin tocar la velocidad vertical
     public void MoveHorizontal(float speed, float acceleration)
     {
         // dirección relativa a la cámara, sin componente vertical
@@ -66,28 +97,79 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckGround()
     {
+        bool wasGrounded = IsGrounded;
+
         // esfera en los pies (el pivot del player debe estar en el suelo)
         Vector3 origin = transform.position + Vector3.up * (_groundCheckRadius - _groundCheckDistance);
         IsGrounded = Physics.CheckSphere(origin, _groundCheckRadius, _groundMask, QueryTriggerInteraction.Ignore);
+
+        if (IsGrounded)
+        {
+            // el coyote solo se renueva si no acaba de saltar
+            if (Time.time - _lastJumpTime > JumpGroundIgnoreTime) _lastGroundedTime = Time.time;
+
+            if (!wasGrounded) OnLanded(-_fallSpeed);
+            _fallSpeed = 0f;
+        }
+        else
+        {
+            // la velocidad al chocar ya se perdió en el paso de física, por eso se guarda la mínima en el aire
+            _fallSpeed = Mathf.Min(_fallSpeed, _rb.linearVelocity.y);
+        }
     }
 
+    private void OnLanded(float impact)
+    {
+        if (impact < _minLandingImpact) return;
+
+        Vector3 velocity = _rb.linearVelocity;
+        float horizontalSpeed = new Vector2(velocity.x, velocity.z).magnitude;
+
+        // solo patina si llega más rápido que el sprint (vuelo)
+        if (horizontalSpeed > _sprintSpeed + 0.5f) _slideUntil = Time.time + _landingSlideTime;
+
+        Landed?.Invoke(impact);
+    }
     private void Rotate()
     {
-        // siempre mira hacia donde apunta la cámara
+        // siempre mira hacia donde apunta la cámara; en vuelo gira más lento, y con peso todavía más
+        float speed = _rotationSpeed;
+        if (_flight != null && _flight.IsFlying) speed = _flyRotationSpeed / Mathf.Sqrt(_flight.WeightFactor);
+
         Quaternion target = Quaternion.Euler(0f, _cameraTransform.eulerAngles.y, 0f);
-        _rb.MoveRotation(Quaternion.Slerp(_rb.rotation, target, _rotationSpeed * Time.fixedDeltaTime));
+        _rb.MoveRotation(Quaternion.Slerp(_rb.rotation, target, speed * Time.fixedDeltaTime));
     }
 
     private void Jump()
     {
-        if (_input.JumpRequested && IsGrounded)
-        {
-            // v = sqrt(2 * g * h)
-            float jumpVelocity = Mathf.Sqrt(_jumpHeight * -2f * Physics.gravity.y);
-            Vector3 velocity = _rb.linearVelocity;
-            _rb.linearVelocity = new Vector3(velocity.x, jumpVelocity, velocity.z);
-        }
+        if (!_input.JumpBuffered(_jumpBufferTime) || !CanGroundJump) return;
 
+        // v = sqrt(2 * g * h)
+        float jumpVelocity = Mathf.Sqrt(_jumpHeight * -2f * Physics.gravity.y);
+        Vector3 velocity = _rb.linearVelocity;
+        _rb.linearVelocity = new Vector3(velocity.x, jumpVelocity, velocity.z);
+
+        _lastJumpTime = Time.time;
         _input.ConsumeJump();
+    }
+
+    private void ApplyFallGravity()
+    {
+        Vector3 velocity = _rb.linearVelocity;
+        if (velocity.y >= 0f || IsGrounded) return;
+
+        // gravedad extra solo al bajar
+        _rb.AddForce(Physics.gravity * (_fallGravityMultiplier - 1f), ForceMode.Acceleration);
+
+        if (velocity.y < -_maxFallSpeed)
+            _rb.linearVelocity = new Vector3(velocity.x, -_maxFallSpeed, velocity.z);
+    }
+
+    private bool IsFallingNearGround()
+    {
+        if (_rb.linearVelocity.y >= 0f) return false;
+
+        Vector3 origin = transform.position + Vector3.up * 0.1f;
+        return Physics.Raycast(origin, Vector3.down, _bufferGroundDistance + 0.1f, _groundMask, QueryTriggerInteraction.Ignore);
     }
 }

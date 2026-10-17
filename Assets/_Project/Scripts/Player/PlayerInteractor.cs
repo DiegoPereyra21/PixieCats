@@ -10,9 +10,21 @@ public class PlayerInteractor : MonoBehaviour
     public PlayerCarrier Carrier => _carrier;
 
     private readonly Collider[] _hits = new Collider[16];
+    private IInteractable _highlighted;
 
     private void OnEnable() => _input.InteractPressed += OnInteractPressed;
-    private void OnDisable() => _input.InteractPressed -= OnInteractPressed;
+
+    private void OnDisable()
+    {
+        _input.InteractPressed -= OnInteractPressed;
+        SetHighlighted(null);
+    }
+
+    private void Update()
+    {
+        // el objeto que se resalta es el mismo que agarraría E
+        SetHighlighted(FindClosest());
+    }
 
     private void OnInteractPressed()
     {
@@ -20,6 +32,15 @@ public class PlayerInteractor : MonoBehaviour
 
         if (target != null) target.Interact(this);
         else _carrier.DropLast(); // sin nada en rango, suelta el último objeto
+    }
+
+    private void SetHighlighted(IInteractable target)
+    {
+        if (target == _highlighted) return;
+
+        _highlighted?.SetHighlighted(false);
+        _highlighted = target;
+        _highlighted?.SetHighlighted(true);
     }
 
     private IInteractable FindClosest()
