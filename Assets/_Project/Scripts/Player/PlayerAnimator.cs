@@ -14,7 +14,6 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField] private PlayerMovement _movement;
     [SerializeField] private PlayerFlight _flight;
     [SerializeField] private PlayerInputReader _input;
-    [SerializeField] private Animator _wingsAnimator; // el de las alas, opcional
 
     [Header("Caminata")]
     [SerializeField] private float _walkReferenceSpeed = 5f; // velocidad a la que la animación de caminar se ve natural
@@ -32,6 +31,8 @@ public class PlayerAnimator : MonoBehaviour
 
     // 0 = pose de Floating, 1 = pose de Flying (también la usa PlayerVisualTilt)
     public float FlyBlend { get; private set; }
+    // velocidad de aleteo: más lenta con peso, más rápida al subir (la lee PlayerWings)
+    public float WingSpeed { get; private set; }
 
     private float _flyBlendVelocity;
     private float _airTime;
@@ -61,14 +62,8 @@ public class PlayerAnimator : MonoBehaviour
         FlyBlend = Mathf.SmoothDamp(FlyBlend, targetBlend, ref _flyBlendVelocity, _flyBlendSmoothTime);
         _animator.SetFloat(FlyBlendHash, FlyBlend);
 
-        // alas: más lentas con peso y más rápidas al subir (tienen su propio Animator)
-        if (_wingsAnimator != null)
-        {
-            float wingSpeed = 1f / Mathf.Sqrt(_flight.WeightFactor);
-            if (isFlying && _input.JumpHeld) wingSpeed *= _wingAscendBoost;
-
-            _wingsAnimator.SetBool(IsFlyingHash, isFlying);
-            _wingsAnimator.SetFloat(WingSpeedHash, wingSpeed);
-        }
+        // alas: más lentas con peso y más rápidas al subir
+        WingSpeed = 1f / Mathf.Sqrt(_flight.WeightFactor);
+        if (isFlying && _input.JumpHeld) WingSpeed *= _wingAscendBoost;
     }
 }

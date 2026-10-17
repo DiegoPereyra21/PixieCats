@@ -1924,6 +1924,11 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!4 &236651162 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -4376460854441140467, guid: cc2cfba0dd8043142bdcc67b15a7c522, type: 3}
+  m_PrefabInstance: {fileID: 1227391642}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &278398358
 Mesh:
   m_ObjectHideFlags: 0
@@ -4803,6 +4808,38 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d0413cab4dbf9e4dbe9aecdc070fc32, type: 3}
+--- !u!1 &740460170 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 163905537369339296, guid: cc2cfba0dd8043142bdcc67b15a7c522, type: 3}
+  m_PrefabInstance: {fileID: 1227391642}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1773428102 &740460172
+ParentConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740460170}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Weight: 1
+  m_TranslationAtRest: {x: 0, y: 0, z: 0}
+  m_RotationAtRest: {x: 0, y: 0, z: 0}
+  m_TranslationOffsets:
+  - {x: -0.038401127, y: 0, z: -1.1421402}
+  m_RotationOffsets:
+  - {x: 90, y: 0, z: -1.92568}
+  m_AffectTranslationX: 1
+  m_AffectTranslationY: 1
+  m_AffectTranslationZ: 1
+  m_AffectRotationX: 1
+  m_AffectRotationY: 1
+  m_AffectRotationZ: 1
+  m_Active: 1
+  m_IsLocked: 0
+  m_Sources:
+  - sourceTransform: {fileID: 2030262149}
+    weight: 1
 --- !u!1 &757288091
 GameObject:
   m_ObjectHideFlags: 0
@@ -8796,7 +8833,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 163905537369339296, guid: cc2cfba0dd8043142bdcc67b15a7c522, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 740460172}
   m_SourcePrefab: {fileID: 100100000, guid: cc2cfba0dd8043142bdcc67b15a7c522, type: 3}
 --- !u!4 &1227391643 stripped
 Transform:
@@ -12771,6 +12811,7 @@ GameObject:
   - component: {fileID: 1749401282}
   - component: {fileID: 1749401283}
   - component: {fileID: 1749401284}
+  - component: {fileID: 1749401285}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -13122,7 +13163,6 @@ MonoBehaviour:
   _movement: {fileID: 1749401273}
   _flight: {fileID: 1749401276}
   _input: {fileID: 1749401274}
-  _wingsAnimator: {fileID: 1227391644}
   _walkReferenceSpeed: 5
   _minMoveMultiplier: 0.6
   _maxMoveMultiplier: 2.5
@@ -13131,6 +13171,27 @@ MonoBehaviour:
   _speedDamp: 0.1
   _flyBlendSmoothTime: 0.2
   _airGraceTime: 0.1
+--- !u!114 &1749401285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749401270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c330633e901b2004fa3f92c029bfb5fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerWings
+  _flight: {fileID: 1749401276}
+  _animator: {fileID: 1749401284}
+  _leftWing: {fileID: 236651162}
+  _rightWing: {fileID: 1849977142}
+  _axis: {x: 0, y: 1, z: 0}
+  _amplitude: 35
+  _frequency: 4
+  _restAngle: 0
+  _blendSmoothTime: 0.15
 --- !u!43 &1793575333
 Mesh:
   m_ObjectHideFlags: 0
@@ -14754,6 +14815,11 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!4 &1849977142 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6722323787031320521, guid: cc2cfba0dd8043142bdcc67b15a7c522, type: 3}
+  m_PrefabInstance: {fileID: 1227391642}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1964154490
 GameObject:
   m_ObjectHideFlags: 0
@@ -15337,6 +15403,11 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!4 &2030262149 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4693311903742109400, guid: cc2cfba0dd8043142bdcc67b15a7c522, type: 3}
+  m_PrefabInstance: {fileID: 1227391642}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &2069705763
 Mesh:
   m_ObjectHideFlags: 0
