@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3379349135440786147
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3094585691628853365}
+  - component: {fileID: 7822643748276295122}
+  m_Layer: 0
+  m_Name: SkyVisualController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3094585691628853365
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3379349135440786147}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.49994, y: 7.7, z: -4.9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7822643748276295122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3379349135440786147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 615776464bff78e458c5bd18104e6b2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkyVisualController
+  sun: {fileID: 0}
+  moon: {fileID: 0}
+  skyCenter: {fileID: 3094585691628853365}
+  skyboxMaterial: {fileID: 2100000, guid: 1cf6f4c6e6e0518419839d3f5448dd99, type: 2}
+  dayTint: {r: 0.9622642, g: 0.8810413, b: 0.503827, a: 1}
+  nightTint: {r: 0.20392157, g: 0.23921569, b: 0.29411766, a: 1}
+  dayTransition: 0
+  nightTransition: 1
+  dayExposure: 1
+  nightExposure: 0.34
+  skyDistance: 150
+  orbitOffset: 355
+  sunsetHour: 19
+  sunsetDuration: 1
+  arcAngle: 120
+  maximumAltitude: 60
+  sunLight: {fileID: 0}
+  nightLightColor: {r: 0.3, g: 0.38, b: 0.65, a: 1}
+  dawnLightColor: {r: 0.9622642, g: 0.81637275, b: 0.6581524, a: 1}
+  nightLightIntensity: 1.76
+  dawnLightIntensity: 1.79
+  nightAmbientColor: {r: 0.015619445, g: 0.066826105, b: 0.254717, a: 1}
+  dawnAmbientColor: {r: 0.6132076, g: 0.2652931, b: 0.08966714, a: 1}
+  nightAmbientIntensity: 1.86
+  dawnAmbientIntensity: 1.87
