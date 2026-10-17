@@ -37,7 +37,7 @@ public class PlayerInteractor : MonoBehaviour
             return;
         }
 
-        IInteractable target = FindClosest();
+        IInteractable target = FindClosest(out bool blockedInRange);
 
         if (target != null)
         {
@@ -49,8 +49,6 @@ public class PlayerInteractor : MonoBehaviour
             Debug.Log("No hay ningún objeto interactuable en rango");
             _carrier.DropLast();
         }
-
-        IInteractable target = FindClosest(out bool blockedInRange);
 
         if (target != null) target.Interact(this);
         else if (!blockedInRange) _carrier.DropLast(); // sin nada en rango, suelta el último objeto

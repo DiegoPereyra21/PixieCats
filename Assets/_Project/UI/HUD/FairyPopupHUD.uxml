@@ -1,7 +1,8 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/_Project/UI/HUD/FairyPopupHUD.uss?fileID=7433441132597879392&amp;guid=fa6205a1e36023d4aa8d1ec05135558f&amp;type=3#FairyPopupHUD"/>
-    <ui:VisualElement name="FairyPopupRoot" picking-mode="Ignore" class="fairy-popup-root" style="flex-grow: 1;"/>
-    <ui:VisualElement name="PopupPanel" picking-mode="Ignore" class="fairy-popup-panel" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/_Project/Art/UI/poppup-fill.png?fileID=2800000&amp;guid=613fcbbbd94562248ae0facff284060a&amp;type=3#poppup-fill&quot;); -unity-background-scale-mode: scale-to-fit; display: flex; -unity-font-definition: url(&quot;project://database/Assets/_Project/Fonts/Handlee-Regular.ttf?fileID=12800000&amp;guid=1a3e39fffd120a046915f726453b464d&amp;type=3#Handlee-Regular&quot;);">
-        <ui:Label text="Texto de prueba para dialogos" name="PopupText" picking-mode="Ignore" class="fairy-popup-text" style="height: 186px; width: 253px; left: 75px; bottom: 9px;"/>
+    <ui:VisualElement name="FairyPopupRoot" picking-mode="Ignore" class="fairy-popup-root" style="flex-grow: 1; display: flex;">
+        <ui:VisualElement name="PopupPanel" picking-mode="Ignore" class="fairy-popup-panel" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/_Project/Art/UI/poppup-fill.png?fileID=2800000&amp;guid=613fcbbbd94562248ae0facff284060a&amp;type=3#poppup-fill&quot;); -unity-background-scale-mode: scale-to-fit; display: none; -unity-font-definition: url(&quot;project://database/Assets/_Project/Fonts/Handlee-Regular.ttf?fileID=12800000&amp;guid=1a3e39fffd120a046915f726453b464d&amp;type=3#Handlee-Regular&quot;);">
+            <ui:Label text="Texto de prueba para dialogos" name="PopupText" picking-mode="Ignore" class="fairy-popup-text" style="height: 186px; width: 253px; left: 75px; bottom: 9px;"/>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

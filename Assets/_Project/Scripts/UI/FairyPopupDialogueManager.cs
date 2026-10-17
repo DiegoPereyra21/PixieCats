@@ -52,14 +52,6 @@ public class FairyPopupDialogueManager : MonoBehaviour
         if (popupPanel == null)
             return;
 
-        if (displayTimer > 0f)
-        {
-            displayTimer -= Time.deltaTime;
-
-            if (displayTimer <= 0f)
-                popupPanel.style.display = DisplayStyle.None;
-        }
-
         timer += Time.deltaTime;
 
         if (timer >= interval)
@@ -67,20 +59,43 @@ public class FairyPopupDialogueManager : MonoBehaviour
             timer = 0f;
             ShowRandomDialogue();
         }
+
+        if (displayTimer > 0f)
+        {
+            displayTimer -= Time.deltaTime;
+
+            if (displayTimer <= 0f)
+                popupPanel.style.display = DisplayStyle.None;
+        }
     }
 
     private void ShowRandomDialogue()
     {
-        if (dialogueTable == null || dialogueTable.Dialogues == null || dialogueTable.Dialogues.Length == 0)
+        if (dialogueTable == null)
+        {
+            Debug.LogError("FairyPopup: falta asignar Dialogue Table.");
             return;
+        }
+
+        if (dialogueTable.Dialogues == null ||
+            dialogueTable.Dialogues.Length == 0)
+        {
+            Debug.LogWarning("FairyPopup: la tabla no contiene diálogos.");
+            return;
+        }
 
         FairyPopupDialogueData dialogue = GetRandomDialogue();
 
         if (dialogue == null)
+        {
+            Debug.LogWarning("FairyPopup: no se pudo elegir un diálogo.");
             return;
+        }
 
         lastDialogue = dialogue;
         popupText.text = dialogue.Text;
+
+        Debug.Log($"FairyPopup: mostrando diálogo: {dialogue.Text}");
 
         popupPanel.style.display = DisplayStyle.Flex;
         displayTimer = displayDuration;

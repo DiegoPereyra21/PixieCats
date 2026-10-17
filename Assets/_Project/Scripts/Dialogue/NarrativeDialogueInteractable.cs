@@ -9,6 +9,8 @@ public class NarrativeDialogueInteractable : MonoBehaviour, IInteractable
     [Header("Resaltado")]
     [SerializeField] private GameObject highlightVisual;
 
+    public bool IsBlocked => !CanInteract;
+
     public bool CanInteract => dialogue != null && NarrativeDialogueManager.Instance != null && !NarrativeDialogueManager.Instance.IsDialogueOpen;
 
     public void Interact(PlayerInteractor interactor)
