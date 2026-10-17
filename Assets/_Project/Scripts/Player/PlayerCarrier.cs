@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,6 +24,8 @@ public class PlayerCarrier : MonoBehaviour
     [Header("Peso en vuelo")]
     [SerializeField] private float _sinkPerWeight = 0.8f; // caída (m/s) por punto de peso al recibir un objeto
     [SerializeField] private float _maxSink = 10f;
+    [SerializeField] private float _liftPerWeight = 0.4f; // empujón hacia arriba (m/s) por punto de peso al soltar
+    [SerializeField] private float _maxLift = 5f;
 
     [Header("Tirar")]
     [SerializeField] private float _dropDistance = 2.2f; // delante del player, para no aparecer dentro de su collider
@@ -32,6 +35,10 @@ public class PlayerCarrier : MonoBehaviour
     [Header("Eventos (opcionales)")]
     [SerializeField] private VoidEventChannelSO _onItemStored;
     [SerializeField] private VoidEventChannelSO _onItemDropped;
+
+    // peso del objeto guardado o soltado
+    public event Action<float> ItemStored;
+    public event Action<float> ItemDropped;
 
     private readonly Stack<PickupObject> _stored = new Stack<PickupObject>();
     private Rigidbody _rb;
@@ -87,6 +94,15 @@ public class PlayerCarrier : MonoBehaviour
         pickup.OnDropped(position, velocity);
         Refresh();
 
+        // en vuelo, soltar peso da un empujón hacia arriba (espejo del hundimiento)
+        if (_flight.IsFlying)
+        {
+            float lift = Mathf.Min(pickup.Weight * _liftPerWeight, _maxLift);
+            Vector3 current = _rb.linearVelocity;
+            _rb.linearVelocity = new Vector3(current.x, current.y + lift, current.z);
+        }
+
+        ItemDropped?.Invoke(pickup.Weight);
         if (_onItemDropped != null) _onItemDropped.Raise();
     }
 
@@ -104,6 +120,7 @@ public class PlayerCarrier : MonoBehaviour
             _rb.linearVelocity = new Vector3(velocity.x, velocity.y - sink, velocity.z);
         }
 
+        ItemStored?.Invoke(pickup.Weight);
         if (_onItemStored != null) _onItemStored.Raise();
     }
 

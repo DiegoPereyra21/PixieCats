@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _sprintSpeed = 12f;
     [SerializeField] private float _acceleration = 50f;
     [SerializeField] private float _rotationSpeed = 20f;
+    [SerializeField] private float _flyRotationSpeed = 6f; // giro en vuelo + lento q en suelo
 
     [Header("Salto")]
     [SerializeField] private float _jumpHeight = 3f;
@@ -129,12 +130,14 @@ public class PlayerMovement : MonoBehaviour
 
         Landed?.Invoke(impact);
     }
-
     private void Rotate()
     {
-        // siempre mira hacia donde apunta la cámara
+        // siempre mira hacia donde apunta la cámara; en vuelo gira más lento, y con peso todavía más
+        float speed = _rotationSpeed;
+        if (_flight != null && _flight.IsFlying) speed = _flyRotationSpeed / Mathf.Sqrt(_flight.WeightFactor);
+
         Quaternion target = Quaternion.Euler(0f, _cameraTransform.eulerAngles.y, 0f);
-        _rb.MoveRotation(Quaternion.Slerp(_rb.rotation, target, _rotationSpeed * Time.fixedDeltaTime));
+        _rb.MoveRotation(Quaternion.Slerp(_rb.rotation, target, speed * Time.fixedDeltaTime));
     }
 
     private void Jump()

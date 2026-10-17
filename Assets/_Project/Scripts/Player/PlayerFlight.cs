@@ -34,6 +34,7 @@ public class PlayerFlight : MonoBehaviour
 
     public bool IsFlying { get; private set; }
     public float CurrentWeight => _currentWeight;
+    public float WeightFactor => 1f + _currentWeight * _weightInfluence;
 
     public event Action TookOff;
 

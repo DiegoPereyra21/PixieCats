@@ -225,6 +225,7 @@ GameObject:
   - component: {fileID: 320560116}
   - component: {fileID: 320560122}
   - component: {fileID: 320560123}
+  - component: {fileID: 320560124}
   m_Layer: 0
   m_Name: FreeLook Camera
   m_TagString: Untagged
@@ -508,6 +509,30 @@ MonoBehaviour:
   _extraFov: 12
   _referenceSpeed: 27
   _smoothTime: 0.25
+--- !u!114 &320560124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320560115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineImpulseListener
+  ApplyAfter: 2
+  ChannelMask: 1
+  Gain: 1
+  Use2DDistance: 0
+  UseCameraSpace: 1
+  SignalCombinationMode: 0
+  ReactionSettings:
+    m_SecondaryNoise: {fileID: 0}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    Duration: 1
+    m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &354501700
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,7 +678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9a5f4ee91b323343a95449fc4fbede5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickupObject
-  _weight: 8
+  _weight: 50
   _repickDelay: 0.75
   _absorbTime: 0.2
   _highlightColor: {r: 0.8, g: 0.6, b: 0.15, a: 1}
@@ -730,7 +755,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 8eddd0ac2f3f4814a8b2d91c7d281ed4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -771,8 +796,8 @@ Transform:
   m_GameObject: {fileID: 385710362}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -29.34, y: 1.19, z: 22.86}
-  m_LocalScale: {x: 1.12, y: 1.12, z: 1.12}
+  m_LocalPosition: {x: -24.35, y: 3.59, z: 14.39}
+  m_LocalScale: {x: 2.129792, y: 2.129792, z: 2.129792}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -1167,7 +1192,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 8eddd0ac2f3f4814a8b2d91c7d281ed4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1324,7 +1349,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 8eddd0ac2f3f4814a8b2d91c7d281ed4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1594,7 +1619,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 8eddd0ac2f3f4814a8b2d91c7d281ed4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1794,7 +1819,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 8eddd0ac2f3f4814a8b2d91c7d281ed4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2028,6 +2053,8 @@ GameObject:
   - component: {fileID: 1749401278}
   - component: {fileID: 1749401277}
   - component: {fileID: 1749401279}
+  - component: {fileID: 1749401281}
+  - component: {fileID: 1749401280}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -2099,6 +2126,7 @@ MonoBehaviour:
   _sprintSpeed: 12
   _acceleration: 50
   _rotationSpeed: 20
+  _flyRotationSpeed: 6
   _jumpHeight: 3
   _coyoteTime: 0.1
   _jumpBufferTime: 0.15
@@ -2221,6 +2249,8 @@ MonoBehaviour:
   _maxLandSquash: 3
   _sinkPerWeight: 0.8
   _maxSink: 10
+  _liftPerWeight: 0.4
+  _maxLift: 5
   _dropDistance: 2.2
   _throwForce: 4
   _throwUpForce: 1.5
@@ -2240,12 +2270,87 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerVisualTilt
   _rb: {fileID: 1749401272}
   _flight: {fileID: 1749401276}
+  _input: {fileID: 1749401274}
   _visual: {fileID: 291852375}
   _maxPitch: 25
   _maxRoll: 20
   _referenceSpeed: 27
   _smoothTime: 0.15
+  _brakePitch: 40
+  _brakeFlareTime: 0.35
   _weightDamping: 0.05
+--- !u!114 &1749401280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749401270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1e2d2da97be469419f08d5645dd7ffa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraImpulseController
+  _movement: {fileID: 1749401273}
+  _carrier: {fileID: 1749401278}
+  _maxLandForce: 0.2
+  _maxLandImpact: 20
+  _maxItemForce: 0.3
+  _heavyWeight: 20
+  _minItemWeight: 3
+--- !u!114 &1749401281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749401270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineImpulseSource
+  ImpulseDefinition:
+    ImpulseChannel: 1
+    ImpulseShape: 2
+    CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    ImpulseDuration: 0.2
+    ImpulseType: 0
+    DissipationRate: 0.25
+    RawSignal: {fileID: 0}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    RepeatMode: 0
+    Randomize: 1
+    TimeEnvelope:
+      AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      AttackTime: 0
+      SustainTime: 0.2
+      DecayTime: 0.7
+      ScaleWithImpact: 1
+      HoldForever: 0
+    ImpactRadius: 100
+    DirectionMode: 0
+    DissipationMode: 2
+    DissipationDistance: 100
+    PropagationSpeed: 343
+  DefaultVelocity: {x: 0, y: -1, z: 0}
 --- !u!1 &1836617607
 GameObject:
   m_ObjectHideFlags: 0
@@ -2529,7 +2634,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 8eddd0ac2f3f4814a8b2d91c7d281ed4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2643,7 +2748,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 8eddd0ac2f3f4814a8b2d91c7d281ed4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
