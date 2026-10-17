@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cef7a719fc2c82b46b8cd65e0e97d1f8, type: 3}
+  m_Name: FairyPopupDialogueTable
+  m_EditorClassIdentifier: Assembly-CSharp::FairyPopupDialogueTable
+  dialogues:
+  - {fileID: 11400000, guid: f47efcb18ca06dc47bda8d2d8d59139d, type: 2}
+  - {fileID: 11400000, guid: 5b602538146d97d41b2cb73131949e0f, type: 2}
+  - {fileID: 11400000, guid: 2de8f1a3da64a8549ac3d4848e7e68c3, type: 2}
+  - {fileID: 11400000, guid: c1486df2a0c55bd4086c89b4857e6dbd, type: 2}
+  - {fileID: 11400000, guid: b76e37d1b55926c4bbf41f2eb0832be9, type: 2}

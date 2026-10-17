@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class GameHUD : MonoBehaviour
+public class GameplayHUD : MonoBehaviour
 {
     [SerializeField] private UIDocument uiDocument;
 

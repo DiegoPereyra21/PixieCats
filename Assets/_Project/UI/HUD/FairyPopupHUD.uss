@@ -1,0 +1,36 @@
+.fairy-popup-root {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    picking-mode: ignore;
+}
+
+.fairy-popup-panel {
+    position: absolute;
+
+    width: 560px;
+    height: 340px;
+    max-width: 560px;
+
+    padding: 60px 84px 96px 84px;
+
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: none;
+}
+
+.fairy-popup-text {
+    color: rgb(25, 24, 28);
+    font-size: 30px;
+    -unity-font-style: bold;
+
+    white-space: normal;
+    -unity-text-align: middle-center;
+
+    padding: 0;
+}
