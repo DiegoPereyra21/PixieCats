@@ -13122,6 +13122,7 @@ MonoBehaviour:
   _movement: {fileID: 1749401273}
   _flight: {fileID: 1749401276}
   _input: {fileID: 1749401274}
+  _wingsAnimator: {fileID: 1227391644}
   _walkReferenceSpeed: 5
   _minMoveMultiplier: 0.6
   _maxMoveMultiplier: 2.5
