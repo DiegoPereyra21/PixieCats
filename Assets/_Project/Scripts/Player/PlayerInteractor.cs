@@ -23,15 +23,15 @@ public class PlayerInteractor : MonoBehaviour
     private void Update()
     {
         // el objeto que se resalta es el mismo que agarraría E
-        SetHighlighted(FindClosest());
+        SetHighlighted(FindClosest(out _));
     }
 
     private void OnInteractPressed()
     {
-        IInteractable target = FindClosest();
+        IInteractable target = FindClosest(out bool blockedInRange);
 
         if (target != null) target.Interact(this);
-        else _carrier.DropLast(); // sin nada en rango, suelta el último objeto
+        else if (!blockedInRange) _carrier.DropLast(); // sin nada en rango, suelta el último objeto
     }
 
     private void SetHighlighted(IInteractable target)
@@ -43,8 +43,10 @@ public class PlayerInteractor : MonoBehaviour
         _highlighted?.SetHighlighted(true);
     }
 
-    private IInteractable FindClosest()
+    private IInteractable FindClosest(out bool blockedInRange)
     {
+        blockedInRange = false;
+
         Vector3 center = transform.position + Vector3.up; // centro del cuerpo
         int count = Physics.OverlapSphereNonAlloc(center, _interactRadius, _hits, _interactMask, QueryTriggerInteraction.Ignore);
 
@@ -54,7 +56,14 @@ public class PlayerInteractor : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             IInteractable interactable = _hits[i].GetComponentInParent<IInteractable>();
-            if (interactable == null || !interactable.CanInteract) continue;
+            if (interactable == null) continue;
+
+            if (!interactable.CanInteract)
+            {
+                // hay algo bloqueado cerca: E no debe tirar objetos por error
+                if (interactable.IsBlocked) blockedInRange = true;
+                continue;
+            }
 
             float distance = (_hits[i].transform.position - center).sqrMagnitude;
             if (distance < closestDistance)

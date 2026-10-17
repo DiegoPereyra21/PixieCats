@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 389ef0b61a71450439bddaa476b7b6a2, type: 3}
+  m_Name: MissionChainDay1
+  m_EditorClassIdentifier: Assembly-CSharp::MissionChainSO
+  _missions:
+  - {fileID: 11400000, guid: 8bb36541069b43c44ace7d8938e439f5, type: 2}
+  - {fileID: 11400000, guid: c1a1f95e053705744addeeb953850f40, type: 2}
+  - {fileID: 11400000, guid: ddb8a0bd559386e468a4ca9c7154d81c, type: 2}
