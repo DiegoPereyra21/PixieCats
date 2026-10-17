@@ -15,6 +15,7 @@ public class PlayerFlight : MonoBehaviour
     [SerializeField] private float _flapAscendSpeed = 6f;     // subida al mantener Space
     [SerializeField] private float _glideDescendSpeed = 2.5f; // bajada al soltar Space
     [SerializeField] private float _verticalAcceleration = 12f;
+    [SerializeField] private float _maxDescendSpeed = 12f; //para q si pesa demasiado pueda seguir volando
     [SerializeField] private float _maxHeight = 20f;          // Y de mundo
     [SerializeField] private float _ceilingSoftZone = 2f;     // distancia donde la subida se frena
 
@@ -85,7 +86,7 @@ public class PlayerFlight : MonoBehaviour
         }
         else
         {
-            targetY = -_glideDescendSpeed * weightFactor;
+            targetY = -Mathf.Min(_glideDescendSpeed * weightFactor, _maxDescendSpeed);
         }
 
         // oscilación constante; con más peso aletea más lento (fase acumulada para evitar saltos al cambiar el peso)
