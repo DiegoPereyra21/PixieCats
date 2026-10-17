@@ -5,6 +5,7 @@ public class PlayerVisualTilt : MonoBehaviour
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private PlayerFlight _flight;
     [SerializeField] private PlayerInputReader _input;
+    [SerializeField] private PlayerAnimator _animator;
     [SerializeField] private Transform _visual;
 
     [Header("Inclinación")]
@@ -12,6 +13,9 @@ public class PlayerVisualTilt : MonoBehaviour
     [SerializeField] private float _maxRoll = 20f;        // lateral
     [SerializeField] private float _referenceSpeed = 27f; // velocidad con la que llega al máximo (vuelo con sprint)
     [SerializeField] private float _smoothTime = 0.15f;
+
+    [Header("Pose de vuelo")]
+    [SerializeField] private float _flyPitchOffset = -45f; // endereza la pose horizontal de Flying (más negativo = más vertical)
 
     [Header("Freno (S)")]
     [SerializeField] private float _brakePitch = 40f;       // inclinación hacia atrás al frenar a máxima velocidad
@@ -41,6 +45,9 @@ public class PlayerVisualTilt : MonoBehaviour
             target.x = Mathf.Clamp(local.z / _referenceSpeed, -1f, 1f) * _maxPitch / weightScale;
             target.y = Mathf.Clamp(-local.x / _referenceSpeed, -1f, 1f) * _maxRoll / weightScale; // roll hacia donde va
         }
+
+        // la animación Flying va casi horizontal; se endereza en proporción a cuánto de esa pose se está usando
+        target.x += _flyPitchOffset * _animator.FlyBlend;
 
         // gesto de freno: al empezar a frenar se inclina hacia atrás según la velocidad que traía
         bool braking = _flight.IsFlying && _input.BrakeHeld;
