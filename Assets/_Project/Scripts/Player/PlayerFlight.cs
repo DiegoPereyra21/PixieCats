@@ -9,6 +9,7 @@ public class PlayerFlight : MonoBehaviour
     [Header("Horizontal")]
     [SerializeField] private float _flySpeed = 25f;
     [SerializeField] private float _flyAcceleration = 30f;
+    [SerializeField] private float _sprintMultiplier = 1.5f;
 
     [Header("Vertical")]
     [SerializeField] private float _flapAscendSpeed = 6f;     // subida al mantener Space
@@ -61,8 +62,19 @@ public class PlayerFlight : MonoBehaviour
 
         float weightFactor = 1f + _carriedWeight * _weightInfluence;
 
-        // el peso hace más lento el avance (la mitad de influencia que en vertical)
-        _movement.MoveHorizontal(_flySpeed / (1f + _carriedWeight * _weightInfluence * 0.5f), _flyAcceleration);
+        if (_input.BrakeHeld)
+        {
+            // S frena de golpe en horizontal, la vertical sigue
+            Vector3 current = _rb.linearVelocity;
+            _rb.linearVelocity = new Vector3(0f, current.y, 0f);
+        }
+        else
+        {
+            float speed = _input.Sprint ? _flySpeed * _sprintMultiplier : _flySpeed;
+
+            // el peso hace más lento el avance (la mitad de influencia que en vertical)
+            _movement.MoveHorizontal(speed / (1f + _carriedWeight * _weightInfluence * 0.5f), _flyAcceleration);
+        }
 
         float targetY;
         if (_input.JumpHeld)
