@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerCarrier : MonoBehaviour
 {
     [SerializeField] private PlayerFlight _flight;
+    [SerializeField] private PlayerMovement _movement;
     [SerializeField] private Transform _bag; // la esfera
 
     [Header("Tamaño de la bolsa")]
@@ -14,7 +15,14 @@ public class PlayerCarrier : MonoBehaviour
     [Header("Pulso (resorte)")]
     [SerializeField] private float _springStiffness = 120f;
     [SerializeField] private float _springDamping = 9f; // más bajo = más rebote
-    [SerializeField] private float _pulseKick = 3f;     // impulso extra al recibir un objeto
+    [SerializeField] private float _pulseKick = 3f;     // impulso al recibir un objeto
+    [SerializeField] private float _takeoffKick = 1.5f; // impulso al despegar
+    [SerializeField] private float _landSquashPerSpeed = 0.2f;
+    [SerializeField] private float _maxLandSquash = 3f;
+
+    [Header("Peso en vuelo")]
+    [SerializeField] private float _sinkPerWeight = 0.8f; // caída (m/s) por punto de peso al recibir un objeto
+    [SerializeField] private float _maxSink = 10f;
 
     [Header("Tirar")]
     [SerializeField] private float _dropDistance = 2.2f; // delante del player, para no aparecer dentro de su collider
@@ -39,6 +47,18 @@ public class PlayerCarrier : MonoBehaviour
         _bag.localScale = Vector3.one * _scale;
     }
 
+    private void OnEnable()
+    {
+        if (_movement != null) _movement.Landed += OnLanded;
+        if (_flight != null) _flight.TookOff += OnTookOff;
+    }
+
+    private void OnDisable()
+    {
+        if (_movement != null) _movement.Landed -= OnLanded;
+        if (_flight != null) _flight.TookOff -= OnTookOff;
+    }
+
     private void Update()
     {
         // resorte subamortiguado: crece pasándose un poco y se asienta
@@ -55,15 +75,6 @@ public class PlayerCarrier : MonoBehaviour
         pickup.AbsorbInto(_bag, () => OnItemArrived(pickup));
     }
 
-    private void OnItemArrived(PickupObject pickup)
-    {
-        _stored.Push(pickup);
-        Refresh();
-        _scaleVelocity += _pulseKick;
-
-        if (_onItemStored != null) _onItemStored.Raise();
-    }
-
     public void DropLast()
     {
         if (_stored.Count == 0) return;
@@ -78,6 +89,27 @@ public class PlayerCarrier : MonoBehaviour
 
         if (_onItemDropped != null) _onItemDropped.Raise();
     }
+
+    private void OnItemArrived(PickupObject pickup)
+    {
+        _stored.Push(pickup);
+        Refresh();
+        _scaleVelocity += _pulseKick;
+
+        // en vuelo, el peso hunde al hada de golpe y PlayerFlight la recupera
+        if (_flight.IsFlying)
+        {
+            float sink = Mathf.Min(pickup.Weight * _sinkPerWeight, _maxSink);
+            Vector3 velocity = _rb.linearVelocity;
+            _rb.linearVelocity = new Vector3(velocity.x, velocity.y - sink, velocity.z);
+        }
+
+        if (_onItemStored != null) _onItemStored.Raise();
+    }
+
+    private void OnLanded(float impact) => _scaleVelocity -= Mathf.Min(impact * _landSquashPerSpeed, _maxLandSquash);
+
+    private void OnTookOff() => _scaleVelocity += _takeoffKick;
 
     private void Refresh()
     {

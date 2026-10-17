@@ -9,8 +9,8 @@ public class PlayerInputReader : MonoBehaviour
     public Vector2 Move { get; private set; }
     public bool Sprint { get; private set; }
     public bool JumpHeld { get; private set; }
-    public bool JumpRequested { get; private set; }
     public bool BrakeHeld => Move.y < BrakeThreshold;
+    public float LastJumpPressTime { get; private set; } = float.NegativeInfinity;
 
     public event Action JumpPressed;
     public event Action InteractPressed;
@@ -36,13 +36,16 @@ public class PlayerInputReader : MonoBehaviour
 
         if (_jump.WasPressedThisFrame())
         {
-            // se guarda hasta el próximo FixedUpdate para no perder el salto
-            JumpRequested = true;
+            // se guarda la hora antes del evento: si el vuelo usa este Space, lo consume
+            LastJumpPressTime = Time.time;
             JumpPressed?.Invoke();
         }
 
         if (_interact.WasPressedThisFrame()) InteractPressed?.Invoke();
     }
 
-    public void ConsumeJump() => JumpRequested = false;
+    // true si hubo un Space dentro de la ventana de buffer
+    public bool JumpBuffered(float window) => Time.time - LastJumpPressTime <= window;
+
+    public void ConsumeJump() => LastJumpPressTime = float.NegativeInfinity;
 }
