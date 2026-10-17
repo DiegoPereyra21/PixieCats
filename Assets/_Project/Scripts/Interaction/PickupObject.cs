@@ -47,6 +47,7 @@ public class PickupObject : MonoBehaviour, IInteractable
     // Vuela hacia el destino achicándose; al llegar avisa y se desactiva
     public void AbsorbInto(Transform target, Action onArrived)
     {
+        if (IsHeld) return; // evita agarrarlo dos veces
         IsHeld = true;
         SetHighlighted(false);
         Grabbed?.Invoke(this);

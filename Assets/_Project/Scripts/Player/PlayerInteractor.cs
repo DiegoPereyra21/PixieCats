@@ -28,31 +28,14 @@ public class PlayerInteractor : MonoBehaviour
 
     private void OnInteractPressed()
     {
-        Debug.Log("PlayerInteractor recibió la interacción");
-
-        if (NarrativeDialogueManager.Instance != null &&
-            NarrativeDialogueManager.Instance.IsDialogueOpen)
-        {
-            Debug.Log("Hay un diálogo abierto");
+        // con un diálogo abierto, E solo avanza el diálogo
+        if (NarrativeDialogueManager.Instance != null && NarrativeDialogueManager.Instance.IsDialogueOpen)
             return;
-        }
 
         IInteractable target = FindClosest(out bool blockedInRange);
 
-        if (target != null)
-        {
-            Debug.Log("Objeto detectado: " + ((MonoBehaviour)target).name);
-            target.Interact(this);
-        }
-        else
-        {
-            Debug.Log("No hay ningún objeto interactuable en rango");
-            _carrier.DropLast();
-        }
-
         if (target != null) target.Interact(this);
         else if (!blockedInRange) _carrier.DropLast(); // sin nada en rango, suelta el último objeto
-
     }
 
     private void SetHighlighted(IInteractable target)
