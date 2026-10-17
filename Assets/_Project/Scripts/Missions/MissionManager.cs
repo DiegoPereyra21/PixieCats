@@ -8,39 +8,64 @@ public class MissionManager : MonoBehaviour
     [SerializeField] private Transform _spawnParent; // opcional, ordena la jerarquía
 
     public MissionDataSO ActiveMission => _active;
+    public float TimeRemaining => _timeRemaining;
+    public bool IsTimerPaused => _pauseRequests > 0;
 
     public event Action StateChanged;                               // cualquier cambio de estado
     public event Action<MissionDataSO> MissionAccepted;
     public event Action<MissionDataSO, int, int> ProgressChanged;   // misión, juntados, requeridos
     public event Action<MissionDataSO> DeliveryRejected;            // se intentó entregar sin los ítems
     public event Action<MissionDataSO> MissionCompleted;
-    public event Action AllMissionsCompleted;
+    public event Action<MissionDataSO> MissionFailed;               // se terminó el tiempo
+    public event Action<MissionDataSO, float> TimerChanged;         // misión, segundos restantes
+    public event Action ChainFinished;                              // no quedan misiones (completadas o fallidas)
 
     private readonly List<PickupObject> _spawned = new List<PickupObject>();
+    private readonly HashSet<MissionDataSO> _failed = new HashSet<MissionDataSO>();
     private int _currentIndex;
     private MissionDataSO _active;
+    private PlayerCarrier _carrier;
     private int _held;
+    private float _timeRemaining;
+    private int _pauseRequests;
+
+    private void Update()
+    {
+        if (_active == null || _active.TimeLimit <= 0f || IsTimerPaused) return;
+
+        _timeRemaining = Mathf.Max(0f, _timeRemaining - Time.deltaTime);
+        TimerChanged?.Invoke(_active, _timeRemaining);
+
+        if (_timeRemaining <= 0f) Fail();
+    }
 
     public MissionState GetState(MissionDataSO mission)
     {
         int index = _chain.IndexOf(mission);
 
         if (index < 0 || index > _currentIndex) return MissionState.Unavailable;
-        if (index < _currentIndex) return MissionState.Completed;
+        if (index < _currentIndex) return _failed.Contains(mission) ? MissionState.Failed : MissionState.Completed;
         return _active == mission ? MissionState.InProgress : MissionState.Available;
     }
 
-    // Acepta la misión y hace aparecer sus ítems en el área
-    public bool TryAccept(MissionDataSO mission, SpawnArea area)
+    // Pausa el tiempo de la misión (diálogos, finales); cada PauseTimer necesita su ResumeTimer
+    public void PauseTimer() => _pauseRequests++;
+    public void ResumeTimer() => _pauseRequests = Mathf.Max(0, _pauseRequests - 1);
+
+    // Acepta la misión, hace aparecer sus ítems en el área y arranca el tiempo
+    public bool TryAccept(MissionDataSO mission, SpawnArea area, PlayerCarrier carrier)
     {
         if (GetState(mission) != MissionState.Available) return false;
 
         _active = mission;
+        _carrier = carrier;
         _held = 0;
+        _timeRemaining = mission.TimeLimit;
         SpawnItems(mission, area);
 
         MissionAccepted?.Invoke(mission);
         ProgressChanged?.Invoke(mission, _held, mission.RequiredCount);
+        if (mission.TimeLimit > 0f) TimerChanged?.Invoke(mission, _timeRemaining);
         StateChanged?.Invoke();
         return true;
     }
@@ -60,23 +85,52 @@ public class MissionManager : MonoBehaviour
         }
 
         carrier.RemoveStored(isMissionItem, mission.RequiredCount);
+        ClearSpawned(); // se destruyen los entregados y los de más que quedaron en el mundo
+        Advance();
 
-        // se destruyen los entregados y los de más que quedaron en el mundo
+        MissionCompleted?.Invoke(mission);
+        StateChanged?.Invoke();
+        CheckChainEnd();
+        return true;
+    }
+
+    private void Fail()
+    {
+        MissionDataSO mission = _active;
+
+        // los ítems de la misión desaparecen de la bolsa y del mundo
+        if (_carrier != null) _carrier.RemoveStored(_spawned.Contains, int.MaxValue);
+        ClearSpawned();
+
+        _failed.Add(mission);
+        Advance();
+
+        MissionFailed?.Invoke(mission);
+        StateChanged?.Invoke();
+        CheckChainEnd();
+    }
+
+    private void Advance()
+    {
+        _active = null;
+        _carrier = null;
+        _held = 0;
+        _timeRemaining = 0f;
+        _currentIndex++;
+    }
+
+    private void ClearSpawned()
+    {
         foreach (PickupObject item in _spawned)
         {
             if (item != null) Destroy(item.gameObject);
         }
         _spawned.Clear();
+    }
 
-        _active = null;
-        _held = 0;
-        _currentIndex++;
-
-        MissionCompleted?.Invoke(mission);
-        StateChanged?.Invoke();
-
-        if (_currentIndex >= _chain.Count) AllMissionsCompleted?.Invoke();
-        return true;
+    private void CheckChainEnd()
+    {
+        if (_currentIndex >= _chain.Count) ChainFinished?.Invoke();
     }
 
     private void SpawnItems(MissionDataSO mission, SpawnArea area)

@@ -38,7 +38,7 @@ public class QuestGiver : MonoBehaviour, IInteractable
         MissionState state = State;
         Interacted?.Invoke(state);
 
-        if (state == MissionState.Available) _manager.TryAccept(_mission, _spawnArea);
+        if (state == MissionState.Available) _manager.TryAccept(_mission, _spawnArea, interactor.Carrier);
         else if (state == MissionState.InProgress) _manager.TryDeliver(_mission, interactor.Carrier);
     }
 
