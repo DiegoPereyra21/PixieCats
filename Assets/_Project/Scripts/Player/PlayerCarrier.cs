@@ -6,20 +6,23 @@ public class PlayerCarrier : MonoBehaviour
 {
     [SerializeField] private PlayerFlight _flight;
     [SerializeField] private PlayerMovement _movement;
-    [SerializeField] private Transform _bag; // la esfera
+    [SerializeField] private Transform _bag;                  // raíz del modelo de la bolsa
+    [SerializeField] private SkinnedMeshRenderer _bagRenderer; // si está vacío, se busca dentro de _bag
+    [SerializeField] private Transform _absorbPoint;          // opcional: boca de la bolsa; si está vacío usa _bag
 
-    [Header("Tamaño de la bolsa")]
-    [SerializeField] private float _baseScale = 0.4f;
-    [SerializeField] private float _scalePerWeight = 0.05f;
-    [SerializeField] private float _maxScale = 2f;
+    [Header("Tamaño de la bolsa (blend shape)")]
+    [SerializeField] private string _blendShapeName = "bolsagrande";
+    [SerializeField] private float _fullBagWeight = 32f; // peso total con el que la bolsa llega al 100 %
+    [SerializeField] private float _minBlend = -20f;     // límites de lo que pueden estirar el pulso y el squash
+    [SerializeField] private float _maxBlend = 120f;
 
     [Header("Pulso (resorte)")]
     [SerializeField] private float _springStiffness = 120f;
-    [SerializeField] private float _springDamping = 9f; // más bajo = más rebote
-    [SerializeField] private float _pulseKick = 3f;     // impulso al recibir un objeto
-    [SerializeField] private float _takeoffKick = 1.5f; // impulso al despegar
-    [SerializeField] private float _landSquashPerSpeed = 0.2f;
-    [SerializeField] private float _maxLandSquash = 3f;
+    [SerializeField] private float _springDamping = 9f;      // más bajo = más rebote
+    [SerializeField] private float _pulseKick = 400f;        // impulso al recibir un objeto (puntos de blend por segundo)
+    [SerializeField] private float _takeoffKick = 200f;      // impulso al despegar
+    [SerializeField] private float _landSquashPerSpeed = 25f;
+    [SerializeField] private float _maxLandSquash = 400f;
 
     [Header("Peso en vuelo")]
     [SerializeField] private float _sinkPerWeight = 0.8f; // caída (m/s) por punto de peso al recibir un objeto
@@ -43,16 +46,18 @@ public class PlayerCarrier : MonoBehaviour
     // el último de la lista es el más reciente
     private readonly List<PickupObject> _stored = new List<PickupObject>();
     private Rigidbody _rb;
-    private float _targetScale;
-    private float _scale;
-    private float _scaleVelocity;
+    private int _blendIndex = -1;
+    private float _targetBlend;
+    private float _blend;
+    private float _blendVelocity;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        _targetScale = _baseScale;
-        _scale = _baseScale;
-        _bag.localScale = Vector3.one * _scale;
+
+        if (_bagRenderer == null) _bagRenderer = _bag.GetComponentInChildren<SkinnedMeshRenderer>();
+        FindBlendShape();
+        ApplyBlend();
     }
 
     private void OnEnable()
@@ -71,16 +76,18 @@ public class PlayerCarrier : MonoBehaviour
     {
         // resorte subamortiguado: crece pasándose un poco y se asienta
         float dt = Mathf.Min(Time.deltaTime, 0.033f); // evita inestabilidad con picos de frame
-        float acceleration = (_targetScale - _scale) * _springStiffness - _scaleVelocity * _springDamping;
-        _scaleVelocity += acceleration * dt;
-        _scale += _scaleVelocity * dt;
-        _bag.localScale = Vector3.one * Mathf.Max(0.01f, _scale);
+        float acceleration = (_targetBlend - _blend) * _springStiffness - _blendVelocity * _springDamping;
+        _blendVelocity += acceleration * dt;
+        _blend += _blendVelocity * dt;
+
+        ApplyBlend();
     }
 
     public void Store(PickupObject pickup)
     {
         // el objeto vuela a la bolsa y recién al llegar cuenta como guardado
-        pickup.AbsorbInto(_bag, () => OnItemArrived(pickup));
+        Transform target = _absorbPoint != null ? _absorbPoint : _bag;
+        pickup.AbsorbInto(target, () => OnItemArrived(pickup));
     }
 
     public void DropLast()
@@ -141,7 +148,7 @@ public class PlayerCarrier : MonoBehaviour
     {
         _stored.Add(pickup);
         Refresh();
-        _scaleVelocity += _pulseKick;
+        _blendVelocity += _pulseKick;
 
         // en vuelo, el peso hunde al hada de golpe y PlayerFlight la recupera
         if (_flight.IsFlying)
@@ -155,16 +162,41 @@ public class PlayerCarrier : MonoBehaviour
         if (_onItemStored != null) _onItemStored.Raise();
     }
 
-    private void OnLanded(float impact) => _scaleVelocity -= Mathf.Min(impact * _landSquashPerSpeed, _maxLandSquash);
+    private void OnLanded(float impact) => _blendVelocity -= Mathf.Min(impact * _landSquashPerSpeed, _maxLandSquash);
 
-    private void OnTookOff() => _scaleVelocity += _takeoffKick;
+    private void OnTookOff() => _blendVelocity += _takeoffKick;
 
     private void Refresh()
     {
         float totalWeight = 0f;
         foreach (PickupObject pickup in _stored) totalWeight += pickup.Weight;
 
-        _targetScale = Mathf.Min(_baseScale + totalWeight * _scalePerWeight, _maxScale);
+        _targetBlend = Mathf.Clamp01(totalWeight / _fullBagWeight) * 100f;
         _flight.SetCarriedWeight(totalWeight);
+    }
+
+    private void FindBlendShape()
+    {
+        if (_bagRenderer == null || _bagRenderer.sharedMesh == null)
+        {
+            Debug.LogError("PlayerCarrier: falta el SkinnedMeshRenderer de la bolsa.", this);
+            return;
+        }
+
+        Mesh mesh = _bagRenderer.sharedMesh;
+        _blendIndex = mesh.GetBlendShapeIndex(_blendShapeName);
+        if (_blendIndex >= 0) return;
+
+        // si el nombre no coincide, se listan los que tiene el modelo
+        string names = "";
+        for (int i = 0; i < mesh.blendShapeCount; i++) names += $"\n - {mesh.GetBlendShapeName(i)}";
+        Debug.LogError($"PlayerCarrier: no existe el blend shape '{_blendShapeName}'. Los del modelo son:{names}", this);
+    }
+
+    private void ApplyBlend()
+    {
+        if (_bagRenderer == null || _blendIndex < 0) return;
+
+        _bagRenderer.SetBlendShapeWeight(_blendIndex, Mathf.Clamp(_blend, _minBlend, _maxBlend));
     }
 }
