@@ -17,6 +17,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _rotationSpeed = 20f;
     [SerializeField] private float _flyRotationSpeed = 6f; // giro en vuelo + lento q en suelo
 
+    [Header("Peso")]
+    [SerializeField] private float _weightSpeedShare = 0.5f; // fracción del peso del vuelo que frena la caminata (0 = no frena)
+
     [Header("Salto")]
     [SerializeField] private float _jumpHeight = 3f;
     [SerializeField] private float _coyoteTime = 0.1f;
@@ -71,10 +74,14 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        float acceleration = Time.time < _slideUntil ? _acceleration * _landingGrip : _acceleration;
-        MoveHorizontal(_input.Sprint ? _sprintSpeed : _walkSpeed, acceleration);
+        // el peso frena la caminata con la misma fórmula que el avance en vuelo
+        float weightFactor = _flight != null ? _flight.WeightFactor : 1f;
+        float speedDivisor = 1f + (weightFactor - 1f) * _weightSpeedShare;
 
-        Jump();
+        float acceleration = Time.time < _slideUntil ? _acceleration * _landingGrip : _acceleration;
+        MoveHorizontal((_input.Sprint ? _sprintSpeed : _walkSpeed) / speedDivisor, acceleration);
+
+        Jump(weightFactor);
         ApplyFallGravity();
     }
 
@@ -130,6 +137,7 @@ public class PlayerMovement : MonoBehaviour
 
         Landed?.Invoke(impact);
     }
+
     private void Rotate()
     {
         // siempre mira hacia donde apunta la cámara; en vuelo gira más lento, y con peso todavía más
@@ -140,12 +148,15 @@ public class PlayerMovement : MonoBehaviour
         _rb.MoveRotation(Quaternion.Slerp(_rb.rotation, target, speed * Time.fixedDeltaTime));
     }
 
-    private void Jump()
+    private void Jump(float weightFactor)
     {
         if (!_input.JumpBuffered(_jumpBufferTime) || !CanGroundJump) return;
 
+        // el peso reduce la altura del salto
+        float height = _jumpHeight / weightFactor;
+
         // v = sqrt(2 * g * h)
-        float jumpVelocity = Mathf.Sqrt(_jumpHeight * -2f * Physics.gravity.y);
+        float jumpVelocity = Mathf.Sqrt(height * -2f * Physics.gravity.y);
         Vector3 velocity = _rb.linearVelocity;
         _rb.linearVelocity = new Vector3(velocity.x, jumpVelocity, velocity.z);
 

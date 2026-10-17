@@ -12,6 +12,10 @@ public class PickupObject : MonoBehaviour, IInteractable
     [SerializeField] private float _repickDelay = 0.75f;
     [SerializeField] private float _absorbTime = 0.2f;
 
+    [Header("Al tirarlo")]
+    [SerializeField] private float _popTime = 0.25f;  // duración de la aparición (escala 0 a 1)
+    [SerializeField] private float _dropSpin = 6f;    // giro inicial (rad/s), menor cuanto más pesa
+
     [Header("Resaltado")]
     [SerializeField, ColorUsage(false, true)] private Color _highlightColor = new Color(0.8f, 0.6f, 0.15f);
 
@@ -89,14 +93,40 @@ public class PickupObject : MonoBehaviour, IInteractable
     public void OnDropped(Vector3 position, Vector3 velocity)
     {
         transform.position = position;
-        transform.localScale = _originalScale;
         gameObject.SetActive(true);
 
         _rb.isKinematic = false;
         foreach (Collider c in _colliders) c.enabled = true;
 
         _rb.linearVelocity = velocity;
-        _rb.angularVelocity = Vector3.zero;
+        _rb.angularVelocity = UnityEngine.Random.onUnitSphere * (_dropSpin / (1f + _weight * 0.05f));
         _blockedUntil = Time.time + _repickDelay;
+
+        StartCoroutine(PopInRoutine());
+    }
+
+    private IEnumerator PopInRoutine()
+    {
+        float elapsed = 0f;
+
+        while (elapsed < _popTime)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / _popTime);
+
+            // escala mínima > 0 para no dejar el collider degenerado
+            transform.localScale = _originalScale * Mathf.Max(0.01f, EaseOutBack(t));
+            yield return null;
+        }
+
+        transform.localScale = _originalScale;
+    }
+
+    // sube pasándose un poco de 1 y se asienta
+    private static float EaseOutBack(float t)
+    {
+        const float c1 = 1.70158f;
+        const float c3 = c1 + 1f;
+        return 1f + c3 * Mathf.Pow(t - 1f, 3f) + c1 * Mathf.Pow(t - 1f, 2f);
     }
 }
