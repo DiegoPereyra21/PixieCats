@@ -11,6 +11,8 @@ public class QuestGiver : MonoBehaviour, IInteractable
     public MissionState State => _manager.GetState(_mission);
     public bool CanInteract => State == MissionState.Available || State == MissionState.InProgress;
     public bool IsBlocked => false;
+    public bool WasDeliveredLate => _manager.WasLate(_mission); // para un diálogo distinto si se entregó tarde
+
 
     // para los diálogos: cambia el estado de este NPC / se interactúa con él (con el estado previo a la acción)
     public event Action<MissionState> StateChanged;
@@ -38,7 +40,7 @@ public class QuestGiver : MonoBehaviour, IInteractable
         MissionState state = State;
         Interacted?.Invoke(state);
 
-        if (state == MissionState.Available) _manager.TryAccept(_mission, _spawnArea, interactor.Carrier);
+        if (state == MissionState.Available) _manager.TryAccept(_mission, _spawnArea);
         else if (state == MissionState.InProgress) _manager.TryDeliver(_mission, interactor.Carrier);
     }
 

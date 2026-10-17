@@ -12,14 +12,14 @@ public class MissionConsequences : MonoBehaviour
     {
         _manager.MissionAccepted += OnAccepted;
         _manager.MissionCompleted += OnCompleted;
-        _manager.MissionFailed += OnFailed;
+        _manager.AcceptDeadlineMissed += OnAcceptDeadlineMissed;
     }
 
     private void OnDisable()
     {
         _manager.MissionAccepted -= OnAccepted;
         _manager.MissionCompleted -= OnCompleted;
-        _manager.MissionFailed -= OnFailed;
+        _manager.AcceptDeadlineMissed -= OnAcceptDeadlineMissed;
     }
 
     private void OnAccepted(MissionDataSO mission)
@@ -31,7 +31,10 @@ public class MissionConsequences : MonoBehaviour
             _stats.Wellbeing.Add(-_stats.Rules.WellbeingCostPerMission);
     }
 
-    private void OnCompleted(MissionDataSO mission) => _stats.Reputation.Add(_stats.Rules.ReputationOnComplete);
+    private void OnCompleted(MissionDataSO mission, bool late)
+    {
+        _stats.Reputation.Add(late ? _stats.Rules.ReputationOnLateDelivery : _stats.Rules.ReputationOnComplete);
+    }
 
-    private void OnFailed(MissionDataSO mission) => _stats.Reputation.Add(-_stats.Rules.ReputationOnFail);
+    private void OnAcceptDeadlineMissed(MissionDataSO mission) => _stats.Reputation.Add(-_stats.Rules.ReputationOnLateAccept);
 }

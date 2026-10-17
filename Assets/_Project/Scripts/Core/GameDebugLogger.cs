@@ -9,6 +9,7 @@ public class GameDebugLogger : MonoBehaviour
     [SerializeField] private float _timerLogInterval = 10f;
 
     private int _lastTimerStep = -1;
+    private int _lastAcceptStep = -1;
 
     private void OnEnable()
     {
@@ -16,8 +17,10 @@ public class GameDebugLogger : MonoBehaviour
         _manager.ProgressChanged += OnProgress;
         _manager.DeliveryRejected += OnRejected;
         _manager.MissionCompleted += OnCompleted;
-        _manager.MissionFailed += OnFailed;
+        _manager.MissionLate += OnLate;
         _manager.TimerChanged += OnTimer;
+        _manager.AcceptTimerChanged += OnAcceptTimer;
+        _manager.AcceptDeadlineMissed += OnAcceptDeadlineMissed;
         _stats.Wellbeing.Changed += OnWellbeing;
         _stats.Reputation.Changed += OnReputation;
         _endings.EndingReached += OnEnding;
@@ -29,8 +32,10 @@ public class GameDebugLogger : MonoBehaviour
         _manager.ProgressChanged -= OnProgress;
         _manager.DeliveryRejected -= OnRejected;
         _manager.MissionCompleted -= OnCompleted;
-        _manager.MissionFailed -= OnFailed;
+        _manager.MissionLate -= OnLate;
         _manager.TimerChanged -= OnTimer;
+        _manager.AcceptTimerChanged -= OnAcceptTimer;
+        _manager.AcceptDeadlineMissed -= OnAcceptDeadlineMissed;
         _stats.Wellbeing.Changed -= OnWellbeing;
         _stats.Reputation.Changed -= OnReputation;
         _endings.EndingReached -= OnEnding;
@@ -52,23 +57,41 @@ public class GameDebugLogger : MonoBehaviour
 
     private void OnRejected(MissionDataSO m) => Debug.Log($"[Misión] {m.Title}: te faltan ítems para entregar");
 
-    private void OnCompleted(MissionDataSO m) => Debug.Log($"[Misión] Completada: {m.Title}");
+    private void OnCompleted(MissionDataSO m, bool late)
+    {
+        _lastAcceptStep = -1;
+        Debug.Log($"[Misión] Completada{(late ? " tarde" : "")}: {m.Title}");
+    }
 
-    private void OnFailed(MissionDataSO m) => Debug.Log($"[Misión] Fallida por tiempo: {m.Title}");
+    private void OnLate(MissionDataSO m) => Debug.Log($"[Misión] {m.Title}: se terminó el tiempo, la entrega será tarde");
 
     private void OnTimer(MissionDataSO m, float remaining)
     {
-        // solo loguea cada `_timerLogInterval` segundos
-        int step = Mathf.CeilToInt(remaining / _timerLogInterval);
-        if (step == _lastTimerStep) return;
-
-        _lastTimerStep = step;
-        Debug.Log($"[Misión] {m.Title}: quedan {remaining:0} s");
+        if (!ShouldLog(remaining, ref _lastTimerStep)) return;
+        Debug.Log($"[Misión] {m.Title}: quedan {remaining:0} s para entregar");
     }
+
+    private void OnAcceptTimer(MissionDataSO next, float remaining)
+    {
+        if (!ShouldLog(remaining, ref _lastAcceptStep)) return;
+        Debug.Log($"[Misión] Quedan {remaining:0} s para aceptar: {next.Title}");
+    }
+
+    private void OnAcceptDeadlineMissed(MissionDataSO next) => Debug.Log($"[Misión] No aceptaste a tiempo: {next.Title}");
 
     private void OnWellbeing(float value, float delta) => Debug.Log($"[Stats] Bienestar {value:0} ({delta:+0;-0})");
 
     private void OnReputation(float value, float delta) => Debug.Log($"[Stats] Reputación {value:0} ({delta:+0;-0})");
 
     private void OnEnding(EndingType ending) => Debug.Log($"[Final] {ending}");
+
+    // solo loguea cada `_timerLogInterval` segundos
+    private bool ShouldLog(float remaining, ref int lastStep)
+    {
+        int step = Mathf.CeilToInt(remaining / _timerLogInterval);
+        if (step == lastStep) return false;
+
+        lastStep = step;
+        return true;
+    }
 }

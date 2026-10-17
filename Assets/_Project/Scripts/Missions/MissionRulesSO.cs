@@ -12,7 +12,8 @@ public class MissionRulesSO : ScriptableObject
     [SerializeField] private float _startReputation = 50f;
     [SerializeField] private float _maxReputation = 100f;
     [SerializeField] private float _reputationOnComplete = 10f;
-    [SerializeField] private float _reputationOnFail = 20f;
+    [SerializeField] private float _reputationOnLateDelivery = 5f; // entregada fuera de tiempo
+    [SerializeField] private float _reputationOnLateAccept = 20f;  // se restan si no aceptás a tiempo
 
     public float StartWellbeing => _startWellbeing;
     public float WellbeingCostPerMission => _wellbeingCostPerMission;
@@ -20,5 +21,6 @@ public class MissionRulesSO : ScriptableObject
     public float StartReputation => _startReputation;
     public float MaxReputation => _maxReputation;
     public float ReputationOnComplete => _reputationOnComplete;
-    public float ReputationOnFail => _reputationOnFail;
+    public float ReputationOnLateDelivery => _reputationOnLateDelivery;
+    public float ReputationOnLateAccept => _reputationOnLateAccept;
 }

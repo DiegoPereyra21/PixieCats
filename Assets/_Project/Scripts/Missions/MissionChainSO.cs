@@ -8,6 +8,7 @@ public class MissionChainSO : ScriptableObject
     [SerializeField] private List<MissionDataSO> _missions = new List<MissionDataSO>();
 
     public int Count => _missions.Count;
+    public MissionDataSO this[int index] => _missions[index];
 
     public int IndexOf(MissionDataSO mission) => _missions.IndexOf(mission);
 }
