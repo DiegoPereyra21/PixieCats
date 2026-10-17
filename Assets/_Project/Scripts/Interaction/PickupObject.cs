@@ -1,26 +1,30 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(InteractionHighlight))]
 public class PickupObject : MonoBehaviour, IInteractable
 {
-    private static readonly int EmissionColorId = Shader.PropertyToID("_EmissionColor");
-
     [SerializeField] private float _weight = 1f;
     [SerializeField] private float _repickDelay = 0.75f;
     [SerializeField] private float _absorbTime = 0.2f;
 
-    [Header("Resaltado")]
-    [SerializeField, ColorUsage(false, true)] private Color _highlightColor = new Color(0.8f, 0.6f, 0.15f);
+    [Header("Al tirarlo")]
+    [SerializeField] private float _popTime = 0.25f;  // duración de la aparición (escala 0 a 1)
+    [SerializeField] private float _dropSpin = 6f;    // giro inicial (rad/s), menor cuanto más pesa
 
     public float Weight => _weight;
-    public bool CanInteract => !_isAbsorbing && Time.time >= _blockedUntil;
+    public bool IsHeld { get; private set; }     // desde que lo agarran hasta que lo tiran
+    public bool IsPickable { get; set; } = true; // lo apaga el sistema de misiones al llegar al cupo
+    public bool CanInteract => IsPickable && !_isAbsorbing && Time.time >= _blockedUntil;
+    public bool IsBlocked => !IsPickable && !IsHeld; // fuera de cupo de la misión
+
+    public event Action<PickupObject> Grabbed;
+    public event Action<PickupObject> Dropped;
 
     private Rigidbody _rb;
     private Collider[] _colliders;
-    private Material[] _materials;
+    private InteractionHighlight _highlight;
     private Vector3 _originalScale;
     private float _blockedUntil;
     private bool _isAbsorbing;
@@ -31,30 +35,22 @@ public class PickupObject : MonoBehaviour, IInteractable
         _colliders = GetComponentsInChildren<Collider>();
         _originalScale = transform.localScale;
 
-        // .materials crea instancias propias, así el resaltado no afecta a otros objetos
-        List<Material> materials = new List<Material>();
-        foreach (Renderer r in GetComponentsInChildren<Renderer>()) materials.AddRange(r.materials);
-        _materials = materials.ToArray();
+        // en objetos viejos de la escena el componente puede faltar
+        _highlight = GetComponent<InteractionHighlight>();
+        if (_highlight == null) _highlight = gameObject.AddComponent<InteractionHighlight>();
     }
 
     public void Interact(PlayerInteractor interactor) => interactor.Carrier.Store(this);
 
-    public void SetHighlighted(bool highlighted)
-    {
-        foreach (Material m in _materials)
-        {
-            if (!m.HasProperty(EmissionColorId)) continue;
-
-            // URP Lit ignora la emisión si el keyword está apagado
-            if (highlighted) m.EnableKeyword("_EMISSION");
-            m.SetColor(EmissionColorId, highlighted ? _highlightColor : Color.black);
-        }
-    }
+    public void SetHighlighted(bool highlighted) => _highlight.Set(highlighted);
 
     // Vuela hacia el destino achicándose; al llegar avisa y se desactiva
     public void AbsorbInto(Transform target, Action onArrived)
     {
+        IsHeld = true;
         SetHighlighted(false);
+        Grabbed?.Invoke(this);
+
         StartCoroutine(AbsorbRoutine(target, onArrived));
     }
 
@@ -89,14 +85,43 @@ public class PickupObject : MonoBehaviour, IInteractable
     public void OnDropped(Vector3 position, Vector3 velocity)
     {
         transform.position = position;
-        transform.localScale = _originalScale;
         gameObject.SetActive(true);
 
         _rb.isKinematic = false;
         foreach (Collider c in _colliders) c.enabled = true;
 
         _rb.linearVelocity = velocity;
-        _rb.angularVelocity = Vector3.zero;
+        _rb.angularVelocity = UnityEngine.Random.onUnitSphere * (_dropSpin / (1f + _weight * 0.05f));
         _blockedUntil = Time.time + _repickDelay;
+
+        IsHeld = false;
+        Dropped?.Invoke(this);
+
+        StartCoroutine(PopInRoutine());
+    }
+
+    private IEnumerator PopInRoutine()
+    {
+        float elapsed = 0f;
+
+        while (elapsed < _popTime)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / _popTime);
+
+            // escala mínima > 0 para no dejar el collider degenerado
+            transform.localScale = _originalScale * Mathf.Max(0.01f, EaseOutBack(t));
+            yield return null;
+        }
+
+        transform.localScale = _originalScale;
+    }
+
+    // sube pasándose un poco de 1 y se asienta
+    private static float EaseOutBack(float t)
+    {
+        const float c1 = 1.70158f;
+        const float c3 = c1 + 1f;
+        return 1f + c3 * Mathf.Pow(t - 1f, 3f) + c1 * Mathf.Pow(t - 1f, 2f);
     }
 }

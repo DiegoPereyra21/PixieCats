@@ -40,7 +40,8 @@ public class PlayerCarrier : MonoBehaviour
     public event Action<float> ItemStored;
     public event Action<float> ItemDropped;
 
-    private readonly Stack<PickupObject> _stored = new Stack<PickupObject>();
+    // el último de la lista es el más reciente
+    private readonly List<PickupObject> _stored = new List<PickupObject>();
     private Rigidbody _rb;
     private float _targetScale;
     private float _scale;
@@ -86,7 +87,8 @@ public class PlayerCarrier : MonoBehaviour
     {
         if (_stored.Count == 0) return;
 
-        PickupObject pickup = _stored.Pop();
+        PickupObject pickup = _stored[_stored.Count - 1];
+        _stored.RemoveAt(_stored.Count - 1);
 
         Vector3 position = transform.position + Vector3.up + transform.forward * _dropDistance;
         Vector3 velocity = _rb.linearVelocity + transform.forward * _throwForce + Vector3.up * _throwUpForce;
@@ -106,9 +108,38 @@ public class PlayerCarrier : MonoBehaviour
         if (_onItemDropped != null) _onItemDropped.Raise();
     }
 
+    // Cuenta los objetos guardados que cumplen la condición
+    public int CountStored(Predicate<PickupObject> match)
+    {
+        int count = 0;
+        foreach (PickupObject pickup in _stored)
+        {
+            if (match(pickup)) count++;
+        }
+
+        return count;
+    }
+
+    // Saca de la bolsa hasta `count` objetos que cumplan la condición (los más recientes primero)
+    public List<PickupObject> RemoveStored(Predicate<PickupObject> match, int count)
+    {
+        List<PickupObject> removed = new List<PickupObject>();
+
+        for (int i = _stored.Count - 1; i >= 0 && removed.Count < count; i--)
+        {
+            if (!match(_stored[i])) continue;
+
+            removed.Add(_stored[i]);
+            _stored.RemoveAt(i);
+        }
+
+        Refresh();
+        return removed;
+    }
+
     private void OnItemArrived(PickupObject pickup)
     {
-        _stored.Push(pickup);
+        _stored.Add(pickup);
         Refresh();
         _scaleVelocity += _pulseKick;
 
