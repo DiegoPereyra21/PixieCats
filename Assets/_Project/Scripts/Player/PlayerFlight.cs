@@ -7,32 +7,40 @@ public class PlayerFlight : MonoBehaviour
     [SerializeField] private PlayerMovement _movement;
 
     [Header("Horizontal")]
-    [SerializeField] private float _flySpeed = 25f;
-    [SerializeField] private float _flyAcceleration = 30f;
+    [SerializeField] private float _flySpeed = 18f;
+    [SerializeField] private float _flyAcceleration = 10f;
     [SerializeField] private float _sprintMultiplier = 1.5f;
 
     [Header("Vertical")]
     [SerializeField] private float _flapAscendSpeed = 6f;     // subida al mantener Space
-    [SerializeField] private float _glideDescendSpeed = 2.5f; // bajada al soltar Space
-    [SerializeField] private float _verticalAcceleration = 12f;
-    [SerializeField] private float _maxDescendSpeed = 12f; //para q si pesa demasiado pueda seguir volando
+    [SerializeField] private float _glideDescendSpeed = 3f;   // bajada al soltar Space
+    [SerializeField] private float _maxDescendSpeed = 12f;    // tope de caída con peso
+    [SerializeField] private float _verticalAcceleration = 25f;
     [SerializeField] private float _maxHeight = 20f;          // Y de mundo
     [SerializeField] private float _ceilingSoftZone = 2f;     // distancia donde la subida se frena
 
     [Header("Aleteo")]
-    [SerializeField] private float _bobAmplitude = 0.8f;
-    [SerializeField] private float _bobFrequency = 3f;
+    [SerializeField] private float _bobAmplitude = 2f;
+    [SerializeField] private float _bobFrequency = 6f;
 
     [Header("Peso")]
     [SerializeField] private float _carriedWeight;
-    [SerializeField] private float _weightInfluence = 0.15f;
+    [SerializeField] private float _weightInfluence = 0.1f;
+    [SerializeField] private float _weightSmoothTime = 0.4f;  // tiempo en que el peso efectivo alcanza al real
 
     public bool IsFlying { get; private set; }
+    public float CurrentWeight => _currentWeight;
 
     private Rigidbody _rb;
     private float _bobPhase;
+    private float _currentWeight;
+    private float _weightVelocity;
 
-    private void Awake() => _rb = GetComponent<Rigidbody>();
+    private void Awake()
+    {
+        _rb = GetComponent<Rigidbody>();
+        _currentWeight = _carriedWeight;
+    }
 
     private void OnEnable() => _input.JumpPressed += OnJumpPressed;
 
@@ -52,6 +60,9 @@ public class PlayerFlight : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // el peso efectivo persigue al real, así recoger o soltar no cambia la velocidad de golpe
+        _currentWeight = Mathf.SmoothDamp(_currentWeight, _carriedWeight, ref _weightVelocity, _weightSmoothTime, Mathf.Infinity, Time.fixedDeltaTime);
+
         if (!IsFlying) return;
 
         // aterrizar corta el vuelo
@@ -61,7 +72,7 @@ public class PlayerFlight : MonoBehaviour
             return;
         }
 
-        float weightFactor = 1f + _carriedWeight * _weightInfluence;
+        float weightFactor = 1f + _currentWeight * _weightInfluence;
 
         if (_input.BrakeHeld)
         {
@@ -74,7 +85,7 @@ public class PlayerFlight : MonoBehaviour
             float speed = _input.Sprint ? _flySpeed * _sprintMultiplier : _flySpeed;
 
             // el peso hace más lento el avance (la mitad de influencia que en vertical)
-            _movement.MoveHorizontal(speed / (1f + _carriedWeight * _weightInfluence * 0.5f), _flyAcceleration);
+            _movement.MoveHorizontal(speed / (1f + _currentWeight * _weightInfluence * 0.5f), _flyAcceleration);
         }
 
         float targetY;
