@@ -10,9 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 46529e89c9c688e4c91aa00f4b8d83cf, type: 3}
-  m_Name: Character_00_Intro
+  m_Name: Character_00_Intro 1
   m_EditorClassIdentifier: Assembly-CSharp::NarrativeDialogueData
-  dialogueId: character_00_intro
+  dialogueId: character_01_intro
   lines:
-  - character: {fileID: 11400000, guid: 698561cd506adc343b0e18df892d6740, type: 2}
-    text: 
+  - character: {fileID: 11400000, guid: c76a334378bab2b418d8ca4383a106bc, type: 2}
+    emotion: 0
+    text: '
+
+      curandera'
+  - character: {fileID: 11400000, guid: c76a334378bab2b418d8ca4383a106bc, type: 2}
+    emotion: 0
+    text: '
+
+      curandera'
