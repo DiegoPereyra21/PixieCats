@@ -660,7 +660,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneLoader
   _menuScene: Menu
-  _gameplayScene: Gameplay
+  _gameplayScene: Gameplay Katze
   _transitionScene: Transition
 --- !u!4 &1015817425
 Transform:

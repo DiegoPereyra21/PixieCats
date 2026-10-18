@@ -52,7 +52,7 @@ public class PlayerInteractor : MonoBehaviour
         blockedInRange = false;
 
         Vector3 center = transform.position + Vector3.up; // centro del cuerpo
-        int count = Physics.OverlapSphereNonAlloc(center, _interactRadius, _hits, _interactMask, QueryTriggerInteraction.Ignore);
+        int count = Physics.OverlapSphereNonAlloc(center, _interactRadius, _hits, _interactMask, QueryTriggerInteraction.Collide);
 
         IInteractable closest = null;
         float closestDistance = float.MaxValue;

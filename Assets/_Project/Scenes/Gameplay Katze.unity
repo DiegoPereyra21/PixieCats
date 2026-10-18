@@ -10487,7 +10487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneLoader
   _menuScene: Menu
-  _gameplayScene: Gameplay
+  _gameplayScene: Gameplay Katze
   _transitionScene: Transition
 --- !u!43 &989151418
 Mesh:
