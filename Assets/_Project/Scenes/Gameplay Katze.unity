@@ -15664,7 +15664,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7467907847758910912, guid: 8f1d263d450f0c3488ae5e5be2f484e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1688722754}
+    - targetCorrespondingSourceObject: {fileID: 7467907847758910912, guid: 8f1d263d450f0c3488ae5e5be2f484e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1688722753}
   m_SourcePrefab: {fileID: 100100000, guid: 8f1d263d450f0c3488ae5e5be2f484e3, type: 3}
 --- !u!43 &900067104
 Mesh:
@@ -29694,6 +29700,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 753508825222843634, guid: 2c7ee968c4b79eb41bc3844662918f22, type: 3}
   m_PrefabInstance: {fileID: 1687067977}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1688722749 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7467907847758910912, guid: 8f1d263d450f0c3488ae5e5be2f484e3, type: 3}
+  m_PrefabInstance: {fileID: 895919767}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1688722751 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7564282892794169468, guid: 8f1d263d450f0c3488ae5e5be2f484e3, type: 3}
+  m_PrefabInstance: {fileID: 895919767}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688722749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+--- !u!114 &1688722753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688722749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80c337827c2b306428863a402c366df6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MissionPanelHUD
+  _uiDocument: {fileID: 1688722751}
+  _manager: {fileID: 394876082}
+--- !u!114 &1688722754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688722749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc21d89e442ddd541960c655fb2eae25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStatusHUD
+  _uiDocument: {fileID: 1688722751}
+  _stats: {fileID: 1638180946}
 --- !u!43 &1692982011
 Mesh:
   m_ObjectHideFlags: 0

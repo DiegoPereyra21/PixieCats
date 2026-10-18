@@ -12,6 +12,8 @@ public class MissionManager : MonoBehaviour
     public bool IsActiveMissionLate => _active != null && _late.Contains(_active);
     public bool IsAcceptTimerRunning => _acceptTimerRunning;
     public float AcceptTimeRemaining => _acceptTimeRemaining;
+    // próxima misión por aceptar (null si hay una activa o ya no quedan)
+    public MissionDataSO NextMission => _active == null && _currentIndex < _chain.Count ? _chain[_currentIndex] : null;
     public bool IsTimerPaused => _pauseRequests > 0;
 
     public event Action StateChanged;                                // cualquier cambio de estado
