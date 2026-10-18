@@ -8,17 +8,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3639632106598175584, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2f729fd1f84abc9468b41de20bd3d5ef, type: 2}
     - target: {fileID: 4647324385062708199, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 6.5473385
       objectReference: {fileID: 0}
     - target: {fileID: 4647324385062708199, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 7.9880075
       objectReference: {fileID: 0}
     - target: {fileID: 4647324385062708199, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 16.999235
       objectReference: {fileID: 0}
     - target: {fileID: 4647324385062708199, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
       propertyPath: m_LocalRotation.w
@@ -48,9 +52,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5882934047031487849, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 44dbf844a4f2a5045b122cc9df0f9802, type: 2}
+    - target: {fileID: 6846854510666091856, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 07d924d87bb4d934f9ef3b08f21da39b, type: 2}
+    - target: {fileID: 7133275729928684118, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 774e960bdc9f06f4c8ef5dc18e8717a2, type: 2}
     - target: {fileID: 9075520032188471383, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
       propertyPath: m_Name
-      value: NPC
+      value: NPC4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

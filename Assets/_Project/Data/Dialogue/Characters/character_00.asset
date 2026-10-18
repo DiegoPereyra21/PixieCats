@@ -16,3 +16,4 @@ MonoBehaviour:
   characterName: John El Pescador
   normalPortrait: {fileID: -772476928182944988, guid: 05d69a2ec534822469f052b845f0567e, type: 3}
   angryPortrait: {fileID: 6140602326124486855, guid: c8683c8eefeeb294898c4a3288469698, type: 3}
+  introDialogue: {fileID: 11400000, guid: c09c350de6f99b84d8b271a9eea54fc0, type: 2}

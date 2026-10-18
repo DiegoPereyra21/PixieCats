@@ -16,3 +16,5 @@ MonoBehaviour:
   characterName: Frixie
   normalPortrait: {fileID: 0}
   angryPortrait: {fileID: 0}
+  hasIntroDialogue: 0
+  introDialogue: {fileID: 0}

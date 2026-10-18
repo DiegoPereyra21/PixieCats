@@ -16,3 +16,4 @@ MonoBehaviour:
   characterName: Isabella, Lider del campamento
   normalPortrait: {fileID: -7427154827904743395, guid: 1e6afdb8518042c488a2fe57e459fc6a, type: 3}
   angryPortrait: {fileID: -5852661693299625799, guid: fd17260d14073ed4291ef718e0ff98c1, type: 3}
+  introDialogue: {fileID: 11400000, guid: 28f6959206425e64b932c6317b4a60b7, type: 2}

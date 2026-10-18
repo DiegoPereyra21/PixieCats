@@ -16,3 +16,4 @@ MonoBehaviour:
   characterName: Luana, La curandera
   normalPortrait: {fileID: 1247990257645352770, guid: 44d2ccc0d6d39fb40b29cb02637e1ab3, type: 3}
   angryPortrait: {fileID: -680405701363408045, guid: d4328bbe870f1804284df90a3eef3e77, type: 3}
+  introDialogue: {fileID: 11400000, guid: 8b0989f6a8ab27a458097cac4b7f98dd, type: 2}

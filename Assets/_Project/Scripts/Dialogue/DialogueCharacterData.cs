@@ -15,8 +15,15 @@ public class DialogueCharacterData : ScriptableObject
     [SerializeField] private Sprite normalPortrait;
     [SerializeField] private Sprite angryPortrait;
 
+    [Header("Primer dialogo")]
+    [SerializeField] private bool hasIntroDialogue = true;
+    [SerializeField] private NarrativeDialogueData introDialogue;
+
     public string CharacterId => characterId;
     public string CharacterName => characterName;
     public Sprite NormalPortrait => normalPortrait;
     public Sprite AngryPortrait => angryPortrait;
+
+    public bool HasIntroDialogue => hasIntroDialogue;
+    public NarrativeDialogueData IntroDialogue => introDialogue;
 }

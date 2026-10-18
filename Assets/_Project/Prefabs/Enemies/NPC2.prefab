@@ -12,17 +12,21 @@ PrefabInstance:
       propertyPath: _mission
       value: 
       objectReference: {fileID: 11400000, guid: c1a1f95e053705744addeeb953850f40, type: 2}
+    - target: {fileID: 3639632106598175584, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: eedc03e21507ffd4ca3de9c6b560bde4, type: 2}
     - target: {fileID: 4647324385062708199, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -50.99791
       objectReference: {fileID: 0}
     - target: {fileID: 4647324385062708199, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 7.970453
       objectReference: {fileID: 0}
     - target: {fileID: 4647324385062708199, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 3.7163353
       objectReference: {fileID: 0}
     - target: {fileID: 4647324385062708199, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
       propertyPath: m_LocalRotation.w
@@ -52,6 +56,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5882934047031487849, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2aab4a490ed64514f9cbcc4325a3bed4, type: 2}
+    - target: {fileID: 6846854510666091856, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2aab4a490ed64514f9cbcc4325a3bed4, type: 2}
+    - target: {fileID: 7133275729928684118, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: fb44d9433e1dbd649af8253078a028da, type: 2}
     - target: {fileID: 9075520032188471383, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
       propertyPath: m_Name
       value: NPC2

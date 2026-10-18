@@ -16,3 +16,4 @@ MonoBehaviour:
   characterName: Oufel, Explorador del bosque
   normalPortrait: {fileID: 1254501800722312324, guid: d2acdccb8172dfe4caac2c55f9ede4aa, type: 3}
   angryPortrait: {fileID: 4464920347237329751, guid: 34c7334f26d43c2438f9561311c058e0, type: 3}
+  introDialogue: {fileID: 11400000, guid: 7a444cda57b7af1449e01f4da6f745f8, type: 2}
