@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 00
   m_EditorClassIdentifier: Assembly-CSharp::FairyPopupDialogueData
   dialogueId: 00
-  text: Que cansada estoy...
+  text: Que lindo dia...
   minWellbeing: 75
   maxWellbeing: 100

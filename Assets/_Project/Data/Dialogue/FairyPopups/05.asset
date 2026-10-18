@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 05
   m_EditorClassIdentifier: Assembly-CSharp::FairyPopupDialogueData
   dialogueId: 05
-  text: "Mis amigos dicen que me extra\xF1an mucho ultimamente"
+  text: Que lindo esta el bosque hoy
   minWellbeing: 75
   maxWellbeing: 100

@@ -1,8 +1,52 @@
-<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/_Project/UI/HUD/GameplayHUD.uss?fileID=7433441132597879392&amp;guid=473a07caf8be1654baf34260c40d46fa&amp;type=3#GameplayHUD"/>
-    <ui:VisualElement name="HUDContainer" style="flex-grow: 1;">
-        <ui:VisualElement name="TimePanel" class="time-panel" style="flex-grow: 1;">
-            <ui:Label text="Label" name="TimeLabel" class="time-label"/>
+    <ui:VisualElement name="GameplayHUDRoot" class="gameplay-hud-root">
+        <ui:VisualElement name="PlayerStatusContainer" class="player-status-container">
+            <ui:VisualElement name="DayClock" class="day-clock">
+                <ui:Label name="TimeLabel" text="08:00" class="time-label"/>
+                <ui:VisualElement name="DayPhaseIndicator" class="day-phase-indicator"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="AttributesContainer" class="attributes-container">
+                <ui:VisualElement name="ReputationContainer" class="attribute-container">
+                    <ui:VisualElement name="ReputationIcon" class="attribute-icon"/>
+                    <ui:VisualElement name="ReputationBar" class="attribute-bar">
+                        <ui:VisualElement name="ReputationFill" class="attribute-fill"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="WellbeingContainer" class="attribute-container">
+                    <ui:VisualElement name="WellbeingIcon" class="attribute-icon"/>
+                    <ui:VisualElement name="WellbeingBar" class="attribute-bar">
+                        <ui:VisualElement name="WellbeingFill" class="attribute-fill"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="MissionPanel" class="mission-panel">
+            <ui:VisualElement name="MissionEmptyState" class="mission-state">
+                <ui:Label name="MissionEmptyText" text="Mision Activa" class="mission-empty-text" style="font-size: 30px; -unity-font-definition: url(&quot;project://database/Assets/_Project/Fonts/Handlee-Regular.ttf?fileID=12800000&amp;guid=1a3e39fffd120a046915f726453b464d&amp;type=3#Handlee-Regular&quot;);"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="MissionPendingState" class="mission-state">
+                <ui:Label name="MissionRequesterName" text="Nombre del que esta dando&#10; la quest que todavia &#10;no aceptamos" class="mission-requester-name" style="-unity-font-definition: url(&quot;project://database/Assets/_Project/Fonts/Handlee-Regular.ttf?fileID=12800000&amp;guid=1a3e39fffd120a046915f726453b464d&amp;type=3#Handlee-Regular&quot;);"/>
+                <ui:Label name="MissionSearchTimer" text="Aca va el timer we" class="mission-timer"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="MissionAcceptedState" class="mission-state">
+                <ui:Label name="MissionAcceptedRequester" text="Pepito" class="mission-requester-name"/>
+                <ui:Label name="MissionRequestDetails" text="detalles de la quest" class="mission-request-details"/>
+                <ui:Label name="MissionObjective" text="la cosa que buscamos" class="mission-objective"/>
+                <ui:Label name="MissionCompletionTimer" text="el tiempo que tenemos para terminar la mision" class="mission-timer"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="MissionAlert" class="mission-alert">
+            <ui:Label name="MissionAlertIcon" text="!" class="mission-alert-icon"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="ActiveStatusContainer" class="active-status-container">
+            <ui:VisualElement name="StatusEffectSlot1" class="status-effect-slot"/>
+            <ui:VisualElement name="StatusEffectSlot2" class="status-effect-slot"/>
+            <ui:VisualElement name="StatusEffectSlot3" class="status-effect-slot"/>
+            <ui:Button name="OpenStatusEffectsButton" text="Estados" class="open-status-effects-button"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="NavigationContainer" class="navigation-container">
+            <ui:VisualElement name="ScreenEdgeIndicator" class="screen-edge-indicator" style="top: 1016px; left: 985px;"/>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

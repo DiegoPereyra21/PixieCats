@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 01
   m_EditorClassIdentifier: Assembly-CSharp::FairyPopupDialogueData
   dialogueId: 01
-  text: Quiza deberia tomar un descanso..
+  text: Se me antoja algo dulce, algo como un kilo de dulce de leche
   minWellbeing: 75
   maxWellbeing: 100

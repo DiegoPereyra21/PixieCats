@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 02
   m_EditorClassIdentifier: Assembly-CSharp::FairyPopupDialogueData
   dialogueId: 02
-  text: Los humanos si que tienen problemas resolviendo cosas
+  text: Los humanos si que tienen problemas resolviendo cosas jaja
   minWellbeing: 75
   maxWellbeing: 100

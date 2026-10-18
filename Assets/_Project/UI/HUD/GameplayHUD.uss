@@ -1,16 +1,274 @@
 
-.time-panel {
+
+.gameplay-hud-root {
     position: absolute;
-    top: 24px;
-    right: 24px;
-    padding: 10px 18px;
-    background-color: rgba(15, 20, 40, 0.75);
-    border-radius: 8px;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    color: #493522;
+}
+
+.player-status-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    flex-direction: row;
+    align-items: center;
+
+    padding: 10px;
+    background-color: #E8D5A9;
+    border-width: 2px;
+    border-color: #493522;
+    border-radius: 16px;
+}
+
+.day-clock {
+    width: 100px;
+    height: 100px;
+
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #E8D5A9;
+    border-width: 3px;
+    border-color: #493522;
+    border-radius: 50%;
 }
 
 .time-label {
-    color: rgb(240, 235, 220);
-    font-size: 28px;
+    color: #493522;
+    font-size: 18px;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
+}
+
+.day-phase-indicator {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 8px;
+    bottom: 8px;
+
+    border-width: 2px;
+    border-color: #C69A55;
+    border-radius: 50%;
+}
+
+.attributes-container {
+    flex-direction: column;
+    justify-content: center;
+
+    width: 155px;
+    margin-left: 12px;
+}
+
+.attribute-container {
+    flex-direction: row;
+    align-items: center;
+
+    height: 25px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.attribute-icon {
+    width: 22px;
+    height: 22px;
+    margin-right: 8px;
+
+    background-color: #C69A55;
+    border-width: 1px;
+    border-color: #493522;
+    border-radius: 50%;
+}
+
+.attribute-bar {
+    flex-grow: 1;
+    height: 12px;
+
+    overflow: hidden;
+    background-color: #493522;
+
+    border-width: 1px;
+    border-color: #493522;
+    border-radius: 6px;
+}
+
+.attribute-fill {
+    width: 50%;
+    height: 100%;
+
+    background-color: #C69A55;
+    border-radius: 5px;
+}
+
+#ReputationFill {
+    background-color: #C69A55;
+}
+
+#WellbeingFill {
+    background-color: #8A9A50;
+}
+
+.mission-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: 310px;
+    min-height: 100px;
+    max-height: 42%;
+
+    padding: 14px;
+
+    background-color: #E8D5A9;
+    border-width: 2px;
+    border-color: #493522;
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+.mission-state {
+    flex-direction: column;
+    flex-shrink: 0;
+    margin-bottom: 8px;
+}
+
+.mission-empty-text {
+    color: #493522;
+    font-size: 14px;
+}
+
+.mission-requester-name {
+    color: #493522;
+    font-size: 18px;
+    -unity-font-style: bold;
+
+    margin-bottom: 6px;
+}
+
+.mission-request-details,
+.mission-objective {
+    color: #493522;
+    font-size: 14px;
+
+    white-space: normal;
+    margin-bottom: 6px;
+}
+
+.mission-timer {
+    color: #33243F;
+    font-size: 16px;
+    -unity-font-style: bold;
+}
+
+.mission-alert {
+    position: absolute;
+    left: 50%;
+    top: 42%;
+
+    width: 58px;
+    height: 58px;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: #E8D5A9;
+    border-width: 3px;
+    border-color: #C69A55;
+    border-radius: 50%;
+}
+
+.mission-alert-icon {
+    color: #33243F;
+    font-size: 38px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.active-status-container {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+
+    flex-direction: column;
+    align-items: center;
+
+    padding: 8px;
+
+    background-color: #E8D5A9;
+    border-width: 2px;
+    border-color: #493522;
+    border-radius: 12px;
+}
+
+.status-effect-slot {
+    width: 44px;
+    height: 44px;
+
+    margin-top: 4px;
+    margin-bottom: 4px;
+
+    background-color: #C69A55;
+    border-width: 2px;
+    border-color: #493522;
+    border-radius: 8px;
+}
+
+.open-status-effects-button {
+    min-height: 30px;
+    margin-top: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+
+    color: #E8D5A9;
+    background-color: #33243F;
+
+    border-width: 1px;
+    border-color: #493522;
+    border-radius: 6px;
+}
+
+.navigation-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    flex-grow: 1;
+}
+
+.screen-edge-indicator {
+    position: absolute;
+
+    width: 30px;
+    height: 30px;
+
+    background-color: #33243F;
+    border-width: 2px;
+    border-color: #C69A55;
+    border-radius: 50%;
+}
+
+.is-hidden {
+    display: none;
+}
+
+.is-visible {
+    display: flex;
 }

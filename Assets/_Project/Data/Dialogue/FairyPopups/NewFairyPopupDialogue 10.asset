@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: NewFairyPopupDialogue 10
   m_EditorClassIdentifier: Assembly-CSharp::FairyPopupDialogueData
   dialogueId: 
-  text: 
+  text: "Mis amigos dicen que me extra\xF1an mucho ultimamente, yo tambien los extra\xF1o..."
   minWellbeing: 0
   maxWellbeing: 25

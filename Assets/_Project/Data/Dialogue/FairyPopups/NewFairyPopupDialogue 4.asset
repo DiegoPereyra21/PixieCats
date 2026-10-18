@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: NewFairyPopupDialogue 4
   m_EditorClassIdentifier: Assembly-CSharp::FairyPopupDialogueData
   dialogueId: 
-  text: 
+  text: Me cansa existir...
   minWellbeing: 0
   maxWellbeing: 25

@@ -108,14 +108,14 @@ Material:
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
-    - _PencilStrength: 0.476
+    - _PencilStrength: 0.592
     - _QueueControl: 0
     - _QueueOffset: 0
     - _RealShadowDarkness: 10
     - _ReceiveShadows: 1
     - _ScreenSpaceReflections: 1
     - _ScreenSpaceReflectionsContributeTransparent: 1
-    - _ShadowDarkness: 0.534
+    - _ShadowDarkness: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1

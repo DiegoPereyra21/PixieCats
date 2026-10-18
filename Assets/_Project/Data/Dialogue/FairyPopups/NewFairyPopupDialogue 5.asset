@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: NewFairyPopupDialogue 5
   m_EditorClassIdentifier: Assembly-CSharp::FairyPopupDialogueData
   dialogueId: 
-  text: 
+  text: Un poco de cafe me vendria bien
   minWellbeing: 0
   maxWellbeing: 25
