@@ -74,6 +74,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 886102910504232928, guid: 0ebaf992ec8b3d447ae316d618af8039, type: 3}
+      propertyPath: _weight
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1280174308692007244, guid: 0ebaf992ec8b3d447ae316d618af8039, type: 3}
       propertyPath: m_Name
       value: HongoNormal_1

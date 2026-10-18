@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public enum EndingType
@@ -13,6 +14,10 @@ public class GameEndings : MonoBehaviour
 {
     [SerializeField] private PlayerStats _stats;
     [SerializeField] private MissionManager _manager;
+
+    [Header("Pantalla de final")]
+    [SerializeField] private SceneLoader _sceneLoader;       // opcional: si está, tras un final de medidor se va a la transición
+    [SerializeField] private float _transitionDelay = 2f;    // segundos antes de cambiar de escena
 
     public bool HasEnded { get; private set; }
 
@@ -53,5 +58,17 @@ public class GameEndings : MonoBehaviour
         HasEnded = true;
         _manager.PauseTimer(); // que la misión en curso no falle después del final
         EndingReached?.Invoke(ending);
+
+        // terminar la cadena de misiones sigue su flujo normal (portal de hongos)
+        if (ending == EndingType.ChainFinished) return;
+
+        GameSession.SetEnding(ending);
+        if (_sceneLoader != null) StartCoroutine(LoadTransitionAfterDelay());
+    }
+
+    private IEnumerator LoadTransitionAfterDelay()
+    {
+        yield return new WaitForSeconds(_transitionDelay);
+        _sceneLoader.LoadTransition();
     }
 }

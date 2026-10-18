@@ -422,8 +422,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b343564d28cd379479fd37d6609cf3d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TransitionScene
+  _uiDocument: {fileID: 1483384694}
+  _texts: {fileID: 11400000, guid: ed063386cb1a7c647a96c505f2df60db, type: 2}
   _nextScene: Gameplay Katze
   _duration: 3
+  _endingScene: Menu
+  _endingDuration: 6
 --- !u!4 &1730923309
 Transform:
   m_ObjectHideFlags: 0

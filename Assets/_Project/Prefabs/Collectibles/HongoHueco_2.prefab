@@ -48,6 +48,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2939425939803390762, guid: 9f9f39ca5fd4dbb4ea1c294befdbddac, type: 3}
+      propertyPath: _weight
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 3837900824486133126, guid: 9f9f39ca5fd4dbb4ea1c294befdbddac, type: 3}
       propertyPath: m_Name
       value: HongoHueco_2

@@ -22,3 +22,4 @@ MonoBehaviour:
   _timeLimit: 90
   _acceptTimeLimit: 30
   _requester: {fileID: 11400000, guid: 303cfd9900a0fe54d8a3bf8e2c44f165, type: 2}
+  dialogue: {fileID: 11400000, guid: 7a444cda57b7af1449e01f4da6f745f8, type: 2}
