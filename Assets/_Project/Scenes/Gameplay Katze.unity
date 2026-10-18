@@ -15326,7 +15326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FairyPopupDialogueManager
   uiDocument: {fileID: 871149124}
   dialogueTable: {fileID: 11400000, guid: 1ae58290c669b7240bc048f8f26e7229, type: 2}
-  interval: 5
+  interval: 25
   displayDuration: 4
 --- !u!114 &871149126
 MonoBehaviour:

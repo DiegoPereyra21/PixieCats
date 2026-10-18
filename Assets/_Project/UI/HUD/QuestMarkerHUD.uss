@@ -32,8 +32,8 @@
 .arrow {
     position: absolute;
     left: 0;
-    top: -48px;
-    width: 96px;
-    height: 96px;
+    top: -65px;
+    width: 130px;
+    height: 130px;
     -unity-background-scale-mode: scale-to-fit;
 }

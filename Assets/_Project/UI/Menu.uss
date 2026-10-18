@@ -124,16 +124,12 @@
 
 #MainButtons {
     position: absolute;
-
-    left: 4%;
-    bottom: 6%;
-
+    left: 3%;
+    bottom: 3%;
     top: auto;
     right: auto;
-
-    width: 280px;
+    width: 380px;
     height: auto;
-
     flex-direction: column;
 }
 

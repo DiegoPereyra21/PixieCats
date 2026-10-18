@@ -77,7 +77,7 @@ public class MainMenu : MonoBehaviour
     private void OnStartClicked()
     {
         GameSession.Reset();
-        _sceneLoader.LoadGameplay();
+        _sceneLoader.LoadTransition();
     }
 
     private void RegisterSounds(Button button)

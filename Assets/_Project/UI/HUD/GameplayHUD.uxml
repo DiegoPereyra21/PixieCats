@@ -23,23 +23,23 @@
         </ui:VisualElement>
         <ui:VisualElement name="MissionPanel" class="mission-panel">
             <ui:VisualElement name="MissionEmptyState" class="mission-state">
-                <ui:Label name="MissionEmptyText" text="Mision Activa" class="mission-empty-text" style="font-size: 30px; -unity-font-definition: url(&quot;project://database/Assets/_Project/Fonts/Handlee-Regular.ttf?fileID=12800000&amp;guid=1a3e39fffd120a046915f726453b464d&amp;type=3#Handlee-Regular&quot;);"/>
+                <ui:Label name="MissionEmptyText" text="Mision Activa" class="mission-empty-text" style="font-size: 35px; -unity-font-definition: url(&quot;project://database/Assets/_Project/Fonts/Handlee-Regular.ttf?fileID=12800000&amp;guid=1a3e39fffd120a046915f726453b464d&amp;type=3#Handlee-Regular&quot;); -unity-font-style: bold; -unity-text-align: upper-center;"/>
             </ui:VisualElement>
             <ui:VisualElement name="MissionPendingState" class="mission-state">
-                <ui:Label name="MissionRequesterName" text="Nombre del que esta dando&#10; la quest que todavia &#10;no aceptamos" class="mission-requester-name" style="-unity-font-definition: url(&quot;project://database/Assets/_Project/Fonts/Handlee-Regular.ttf?fileID=12800000&amp;guid=1a3e39fffd120a046915f726453b464d&amp;type=3#Handlee-Regular&quot;);"/>
-                <ui:Label name="MissionSearchTimer" text="Aca va el timer we" class="mission-timer"/>
+                <ui:Label name="MissionRequesterName" text="Nombre del que esta dando&#10; la quest que todavia &#10;no aceptamos" class="mission-requester-name" style="-unity-font-definition: url(&quot;project://database/Assets/_Project/Fonts/Handlee-Regular.ttf?fileID=12800000&amp;guid=1a3e39fffd120a046915f726453b464d&amp;type=3#Handlee-Regular&quot;); font-size: 22px;"/>
+                <ui:Label name="MissionSearchTimer" text="Aca va el timer we" class="mission-timer" style="font-size: 19px;"/>
             </ui:VisualElement>
             <ui:VisualElement name="MissionAcceptedState" class="mission-state">
-                <ui:Label name="MissionAcceptedRequester" text="Pepito" class="mission-requester-name"/>
-                <ui:Label name="MissionRequestDetails" text="detalles de la quest" class="mission-request-details"/>
-                <ui:Label name="MissionObjective" text="la cosa que buscamos" class="mission-objective"/>
-                <ui:Label name="MissionCompletionTimer" text="el tiempo que tenemos para terminar la mision" class="mission-timer"/>
+                <ui:Label name="MissionAcceptedRequester" text="Pepito" class="mission-requester-name" style="font-size: 23px;"/>
+                <ui:Label name="MissionRequestDetails" text="detalles de la quest" class="mission-request-details" style="font-size: 19px;"/>
+                <ui:Label name="MissionObjective" text="la cosa que buscamos" class="mission-objective" style="font-size: 19px;"/>
+                <ui:Label name="MissionCompletionTimer" text="el tiempo que tenemos para terminar la mision" class="mission-timer" style="font-size: 19px;"/>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="MissionAlert" class="mission-alert" style="top: 31px; left: 658px;">
+        <ui:VisualElement name="MissionAlert" class="mission-alert" style="top: 23px; left: 1044px;">
             <ui:Label name="MissionAlertIcon" text="!" class="mission-alert-icon" style="left: 1px;"/>
         </ui:VisualElement>
-     <ui:VisualElement name="ActiveStatusContainer" class="active-status-container" style="display: none;">
+        <ui:VisualElement name="ActiveStatusContainer" class="active-status-container" style="display: none;">
             <ui:VisualElement name="StatusEffectSlot1" class="status-effect-slot"/>
             <ui:VisualElement name="StatusEffectSlot2" class="status-effect-slot"/>
             <ui:VisualElement name="StatusEffectSlot3" class="status-effect-slot"/>
