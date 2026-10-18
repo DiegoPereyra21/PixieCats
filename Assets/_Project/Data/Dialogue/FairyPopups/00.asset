@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FairyPopupDialogueData
   dialogueId: 00
   text: Que cansada estoy...
-  minWellbeing: 0
+  minWellbeing: 75
   maxWellbeing: 100

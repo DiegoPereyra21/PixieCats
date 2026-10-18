@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: tttestr
+  m_Name: forest-hand-draw
   m_Shader: {fileID: -6465566751694194690, guid: efc97f017f72f2a40abbc59761501524, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
