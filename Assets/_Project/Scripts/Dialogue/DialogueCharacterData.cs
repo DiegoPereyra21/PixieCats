@@ -11,10 +11,12 @@ public class DialogueCharacterData : ScriptableObject
     [SerializeField] private string characterId;
     [SerializeField] private string characterName;
 
-    [Header("Retrato")]
-    [SerializeField] private Sprite portrait;
+    [Header("Retratos")]
+    [SerializeField] private Sprite normalPortrait;
+    [SerializeField] private Sprite angryPortrait;
 
     public string CharacterId => characterId;
     public string CharacterName => characterName;
-    public Sprite Portrait => portrait;
+    public Sprite NormalPortrait => normalPortrait;
+    public Sprite AngryPortrait => angryPortrait;
 }
