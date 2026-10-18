@@ -132,7 +132,7 @@ public class NarrativeDialogueManager : MonoBehaviour
             Sprite portrait = character.GetPortrait(line.Emotion);
 
             if (portrait == null)
-                Debug.LogWarning($"Dialogo: '{character.CharacterName}' no tiene retrato ({line.Emotion}).", character);
+                Debug.Log($"Dialogo línea {currentLineIndex}: character={(line.Character != null ? line.Character.name : "NULL")}, emotion={line.Emotion}", currentDialogue);
 
             if (characterPortrait != null)
                 characterPortrait.sprite = portrait;
