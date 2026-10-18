@@ -6726,6 +6726,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameEndings
   _stats: {fileID: 1638180946}
   _manager: {fileID: 394876082}
+  _sceneLoader: {fileID: 1010442784}
+  _transitionDelay: 2
 --- !u!114 &394876086
 MonoBehaviour:
   m_ObjectHideFlags: 0

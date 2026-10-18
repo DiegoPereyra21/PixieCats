@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MissionDataSO
   _title: Mision 2 - Collectible_Heavy
   _itemPrefabs:
-  - {fileID: 2939425939803390762, guid: 9f9f39ca5fd4dbb4ea1c294befdbddac, type: 3}
-  - {fileID: 2670714467241875975, guid: 13df0585779c1d94c8b6179e452a6157, type: 3}
+  - {fileID: 5672189782559054727, guid: a49541a008fa2724fb103ce30e40fc5a, type: 3}
+  - {fileID: 3809278137817946332, guid: 79693e9353d838b45951872ac4e7e804, type: 3}
   _itemPrefab: {fileID: 0}
   _requiredCount: 5
   _extraCount: 15
   _timeLimit: 90
   _acceptTimeLimit: 30
+  _requester: {fileID: 11400000, guid: c76a334378bab2b418d8ca4383a106bc, type: 2}
+  dialogue: {fileID: 11400000, guid: 8b0989f6a8ab27a458097cac4b7f98dd, type: 2}
