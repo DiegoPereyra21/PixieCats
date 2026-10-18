@@ -5687,7 +5687,7 @@ MonoBehaviour:
   _flight: {fileID: 1638180942}
   _radiusExtra: 2
   _heightExtra: 1.2
-  _flyDamping: 2.5
+  _flyDamping: 1.5
   _smoothTime: 0.5
 --- !u!1 &335018483 stripped
 GameObject:
@@ -13186,17 +13186,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: FairyPopupHUD
       objectReference: {fileID: 0}
+    - target: {fileID: 634914579022200598, guid: 7d0413cab4dbf9e4dbe9aecdc070fc32, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3600916308139071317, guid: 7d0413cab4dbf9e4dbe9aecdc070fc32, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 1638180945}
     - target: {fileID: 3600916308139071317, guid: 7d0413cab4dbf9e4dbe9aecdc070fc32, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3600916308139071317, guid: 7d0413cab4dbf9e4dbe9aecdc070fc32, type: 3}
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 1618657052}
+    - target: {fileID: 3600916308139071317, guid: 7d0413cab4dbf9e4dbe9aecdc070fc32, type: 3}
+      propertyPath: worldOffset.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3600916308139071317, guid: 7d0413cab4dbf9e4dbe9aecdc070fc32, type: 3}
+      propertyPath: worldOffset.z
+      value: 7.16
+      objectReference: {fileID: 0}
     - target: {fileID: 5288744253838638692, guid: 7d0413cab4dbf9e4dbe9aecdc070fc32, type: 3}
       propertyPath: interval
-      value: 20
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6689386749337100826, guid: 7d0413cab4dbf9e4dbe9aecdc070fc32, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15239,6 +15255,92 @@ MonoBehaviour:
   _sizeDistance: 25
   _maxSizeScale: 5
   _fadeSmoothTime: 0.4
+--- !u!1 &871149122
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 871149123}
+  - component: {fileID: 871149124}
+  - component: {fileID: 871149126}
+  - component: {fileID: 871149125}
+  m_Layer: 6
+  m_Name: FairyPopupWorld
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &871149123
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871149122}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2, y: 1.92, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1638180945}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &871149124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871149122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: 7a10b04d273822940a847c019a884c63, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 7b9e65542c451234dbead60c7dd4716d, type: 3}
+  m_SortingOrder: 0
+  m_Position: 0
+  m_WorldSpaceSizeMode: 0
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 7
+  m_WorldSpaceCollider: {fileID: 0}
+--- !u!114 &871149125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871149122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28e7a765a2f69ac4b8ff78c5521c6c7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FairyPopupDialogueManager
+  uiDocument: {fileID: 871149124}
+  dialogueTable: {fileID: 11400000, guid: 1ae58290c669b7240bc048f8f26e7229, type: 2}
+  interval: 5
+  displayDuration: 4
+--- !u!114 &871149126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871149122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b1b7108470a51247ad444aa99578602, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FairyPopupBillboard
+  _camera: {fileID: 1618657052}
 --- !u!43 &871292343
 Mesh:
   m_ObjectHideFlags: 0
@@ -28298,6 +28400,14 @@ PrefabInstance:
       value: -1.1421413
       objectReference: {fileID: 0}
     - target: {fileID: 2627946811448665841, guid: ed3eb6b6e8c11534d8368cbf664ff034, type: 3}
+      propertyPath: _flySpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2627946811448665841, guid: ed3eb6b6e8c11534d8368cbf664ff034, type: 3}
+      propertyPath: _flyAcceleration
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2627946811448665841, guid: ed3eb6b6e8c11534d8368cbf664ff034, type: 3}
       propertyPath: _groundMask.m_Bits
       value: 72
       objectReference: {fileID: 0}
@@ -28347,7 +28457,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 6437755017506513804, guid: ed3eb6b6e8c11534d8368cbf664ff034, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 871149123}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7888510499887351365, guid: ed3eb6b6e8c11534d8368cbf664ff034, type: 3}
       insertIndex: -1

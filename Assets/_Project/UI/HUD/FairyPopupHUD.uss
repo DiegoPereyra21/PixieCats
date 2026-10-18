@@ -22,6 +22,19 @@
     background-repeat: no-repeat;
 
     display: none;
+
+    /* nace desde la punta de la colita (abajo al centro) */
+    transform-origin: 50% 100%;
+    scale: 0.3 0.3;
+    opacity: 0;
+    transition-property: scale, opacity;
+    transition-duration: 0.25s, 0.2s;
+    transition-timing-function: ease-out-back, ease-out;
+}
+
+.fairy-popup-panel--visible {
+    scale: 1 1;
+    opacity: 1;
 }
 
 .fairy-popup-text {
