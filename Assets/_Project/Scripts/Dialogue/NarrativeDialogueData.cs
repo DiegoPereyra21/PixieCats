@@ -18,14 +18,22 @@ public class NarrativeDialogueData : ScriptableObject
     public NarrativeDialogueLine[] Lines => lines;
 }
 
+public enum PortraitEmotion
+{
+    Normal,
+    Angry
+}
+
 [Serializable]
 public class NarrativeDialogueLine
 {
     [SerializeField] private DialogueCharacterData character;
+    [SerializeField] private PortraitEmotion emotion;
 
     [TextArea(3, 6)]
     [SerializeField] private string text;
 
     public DialogueCharacterData Character => character;
+    public PortraitEmotion Emotion => emotion;
     public string Text => text;
 }

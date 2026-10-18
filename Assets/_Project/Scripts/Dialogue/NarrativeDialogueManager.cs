@@ -56,6 +56,9 @@ public class NarrativeDialogueManager : MonoBehaviour
         dialogueText = root.Q<Label>("DialogueText");
         nextButton = root.Q<Button>("NextButton");
 
+        if (characterPortrait == null)
+            Debug.LogWarning("NarrativeDialogueManager: 'CharacterPortrait' no existe o no es un Image en el UXML.");
+
         if (dialogueRoot == null || characterName == null || dialogueText == null || nextButton == null)
         {
             Debug.LogError("Faltan elementos en NarrativeDialogueHUD. Revisa los nombres del UXML.");
@@ -126,11 +129,16 @@ public class NarrativeDialogueManager : MonoBehaviour
         {
             characterName.text = character.CharacterName;
 
+            Sprite portrait = character.GetPortrait(line.Emotion);
+
+            if (portrait == null)
+                Debug.LogWarning($"Dialogo: '{character.CharacterName}' no tiene retrato ({line.Emotion}).", character);
+
             if (characterPortrait != null)
-                characterPortrait.sprite = character.NormalPortrait;
+                characterPortrait.sprite = portrait;
 
             if (portraitContainer != null)
-                portraitContainer.style.display = character.NormalPortrait != null ? DisplayStyle.Flex : DisplayStyle.None;
+                portraitContainer.style.display = portrait != null ? DisplayStyle.Flex : DisplayStyle.None;
         }
         else
         {
