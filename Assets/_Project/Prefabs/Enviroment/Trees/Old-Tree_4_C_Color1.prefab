@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5754084199372789682, guid: 1533b3c0ce2e46749ab1ef44060e12f9, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -2321517925081462293, guid: 1533b3c0ce2e46749ab1ef44060e12f9, type: 3}
     - target: {fileID: 919132149155446097, guid: 1533b3c0ce2e46749ab1ef44060e12f9, type: 3}
       propertyPath: m_Name
       value: Tree_4_C_Color1

@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: a64fc0fac5ff1b14781748e6a4a762c1, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 0af7ee2f186d4834da037538b4e31f78, type: 2}
     - target: {fileID: 919132149155446097, guid: a64fc0fac5ff1b14781748e6a4a762c1, type: 3}
       propertyPath: m_Name
       value: Tree_Bare_2_B_Color1
