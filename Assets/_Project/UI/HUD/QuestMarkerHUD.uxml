@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="QuestMarkerHUD.uss" />
+    <ui:VisualElement name="QuestMarkerRoot" picking-mode="Ignore" class="quest-root">
+        <ui:VisualElement name="Marker" picking-mode="Ignore" class="marker marker--hidden">
+            <ui:VisualElement name="Pivot" picking-mode="Ignore" class="marker-pivot">
+                <ui:VisualElement name="Arrow" picking-mode="Ignore" class="marker-arrow" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Badge" picking-mode="Ignore" class="marker-badge">
+                <ui:Label name="BadgeIcon" text="!" picking-mode="Ignore" class="marker-icon" />
+            </ui:VisualElement>
+            <ui:Label name="DistanceLabel" text="0 m" picking-mode="Ignore" class="marker-distance" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
