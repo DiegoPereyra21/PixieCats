@@ -1,40 +1,46 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-[DefaultExecutionOrder(1000)] // después de Cinemachine, para que el marcador no tiemble
+public enum QuestArrowAnchor
+{
+    Player,         // la flecha gira alrededor del hada
+    ScreenPosition  // la flecha queda fija en un punto de la pantalla
+}
+
+[DefaultExecutionOrder(1000)] // después de Cinemachine, para que la flecha no tiemble
 public class QuestMarkerHUD : MonoBehaviour
 {
     private static readonly Color Gold = new Color32(235, 185, 60, 255);
-    private static readonly Color Mint = new Color32(120, 220, 190, 255);
+    private static readonly Color Outline = new Color32(15, 20, 40, 230);
 
     [SerializeField] private UIDocument _uiDocument;
     [SerializeField] private Transform _player;
     [SerializeField] private Camera _camera; // si está vacía usa Camera.main
+    [Header("Imagen")]
+    [SerializeField] private Sprite _arrowSprite; // si está vacía se dibuja la flecha por código
 
-    [Header("Marcador")]
-    [SerializeField] private float _heightOffset = 3f;    // altura sobre el NPC a la que se ancla el ícono
-    [SerializeField] private float _edgeMargin = 90f;     // px de panel entre el marcador y el borde
-    [SerializeField] private float _hideDistance = 6f;    // más cerca que esto se oculta (ya se ve el resaltado)
-    [SerializeField] private float _followSmoothTime = 0.06f;
+    [Header("Posición")]
+    [SerializeField] private QuestArrowAnchor _anchorMode = QuestArrowAnchor.Player;
+    [SerializeField] private float _anchorHeight = 1f;                         // altura sobre los pies del Player a la que se ancla
+    [SerializeField] private float _orbitRadius = 110f;                        // px de panel entre el hada y la flecha (modo Player)
+    [SerializeField] private Vector2 _screenAnchor = new Vector2(0.5f, 0.18f); // modo ScreenPosition (0,0 = arriba a la izquierda)
+
+    [Header("Cuándo se muestra")]
+    [SerializeField] private float _hideDistance = 6f; // más cerca que esto se oculta (ya se ve el resaltado)
 
     [Header("Animación")]
-    [SerializeField] private float _bobAmplitude = 5f;    // vaivén del ícono sobre el NPC (px)
-    [SerializeField] private float _bobSpeed = 3f;
-    [SerializeField] private float _arrowPulse = 5f;      // cuánto late la flecha hacia afuera (px)
+    [SerializeField] private float _angleSmoothTime = 0.1f;
+    [SerializeField] private float _pulse = 4f; // cuánto late la flecha hacia afuera (px)
 
     private QuestGiver[] _givers;
     private VisualElement _root;
-    private VisualElement _marker;
+    private VisualElement _anchorElement;
     private VisualElement _pivot;
     private VisualElement _arrow;
-    private Label _icon;
-    private Label _distanceLabel;
 
-    private Color _accent = Gold;
-    private Vector2 _current;
-    private Vector2 _velocity;
-    private bool _hasPosition;
-    private int _lastDistance = -1;
+    private float _heading;
+    private float _headingVelocity;
+    private bool _hasHeading;
 
     private void Start()
     {
@@ -44,21 +50,20 @@ public class QuestMarkerHUD : MonoBehaviour
         VisualElement document = _uiDocument.rootVisualElement;
         document.pickingMode = PickingMode.Ignore;
 
-        _root = document.Q("QuestMarkerRoot");
-        _marker = document.Q("Marker");
-        _pivot = document.Q("Pivot");
+        _root = document.Q("QuestArrowRoot");
+        _anchorElement = document.Q("ArrowAnchor");
+        _pivot = document.Q("ArrowPivot");
         _arrow = document.Q("Arrow");
-        _icon = document.Q<Label>("BadgeIcon");
-        _distanceLabel = document.Q<Label>("DistanceLabel");
 
-        if (_root == null || _marker == null || _pivot == null || _arrow == null || _icon == null || _distanceLabel == null)
+        if (_root == null || _anchorElement == null || _pivot == null || _arrow == null)
         {
             Debug.LogError("QuestMarkerHUD: faltan elementos en el UXML. Revisá los nombres.", this);
             enabled = false;
             return;
         }
 
-        _arrow.generateVisualContent += DrawArrow;
+        if (_arrowSprite != null) _arrow.style.backgroundImage = new StyleBackground(_arrowSprite);
+        else _arrow.generateVisualContent += DrawArrow;
     }
 
     private void OnDisable()
@@ -70,56 +75,66 @@ public class QuestMarkerHUD : MonoBehaviour
     {
         QuestGiver target = FindTarget();
         bool dialogueOpen = NarrativeDialogueManager.Instance != null && NarrativeDialogueManager.Instance.IsDialogueOpen;
-        float distance = target != null ? Vector3.Distance(_player.position, target.transform.position) : 0f;
-
-        bool visible = target != null && !dialogueOpen && distance > _hideDistance;
-        _marker.EnableInClassList("marker--hidden", !visible);
-
-        if (!visible)
-        {
-            _hasPosition = false; // al reaparecer salta directo a su lugar, sin deslizarse
-            return;
-        }
 
         float w = _root.resolvedStyle.width;
         float h = _root.resolvedStyle.height;
-        if (float.IsNaN(w) || float.IsNaN(h) || w <= 0f || h <= 0f) return;
+        bool layoutReady = !float.IsNaN(w) && !float.IsNaN(h) && w > 0f && h > 0f;
 
-        Vector3 world = target.transform.position + Vector3.up * _heightOffset;
-        Vector3 viewport = _camera.WorldToViewportPoint(world);
-        bool behind = viewport.z < 0f;
+        Vector3 toTarget = target != null ? target.transform.position - _player.position : Vector3.zero;
 
-        Vector2 center = new Vector2(w, h) * 0.5f;
-        Vector2 point = new Vector2(viewport.x * w, (1f - viewport.y) * h);
-        if (behind) point = center * 2f - point; // detrás de la cámara: se refleja para apuntar al lado correcto
-
-        Vector2 dir = point - center;
-        if (dir.sqrMagnitude < 1f) dir = new Vector2(0f, 1f); // justo detrás: abajo
-
-        // si el punto cae fuera del rectángulo útil, se lleva hasta el borde en esa misma dirección
-        float limitX = center.x - _edgeMargin;
-        float limitY = center.y - _edgeMargin;
-        float scale = Mathf.Min(limitX / Mathf.Max(Mathf.Abs(dir.x), 0.001f), limitY / Mathf.Max(Mathf.Abs(dir.y), 0.001f));
-
-        bool offscreen = behind || scale < 1f;
-        if (offscreen) point = center + dir * scale;
-        else point.y += Mathf.Sin(Time.time * _bobSpeed) * _bobAmplitude;
-
-        _current = _hasPosition ? Vector2.SmoothDamp(_current, point, ref _velocity, _followSmoothTime) : point;
-        _hasPosition = true;
-
-        _marker.style.left = _current.x;
-        _marker.style.top = _current.y;
-        _marker.EnableInClassList("marker--onscreen", !offscreen);
-
-        if (offscreen)
+        if (target == null || dialogueOpen || !layoutReady || toTarget.magnitude <= _hideDistance)
         {
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            _pivot.style.rotate = new Rotate(new Angle(angle, AngleUnit.Degree));
-            _arrow.style.translate = new Translate(Mathf.Sin(Time.time * 8f) * _arrowPulse, Length.Percent(-50f));
+            Hide();
+            return;
         }
 
-        ApplyState(target.State == MissionState.InProgress, Mathf.RoundToInt(distance));
+        // brújula: ángulo horizontal entre hacia dónde mira la cámara y el NPC (0 = adelante, 90 = derecha)
+        Vector3 flat = new Vector3(toTarget.x, 0f, toTarget.z);
+
+        if (flat.sqrMagnitude > 0.25f)
+        {
+            Vector3 forward = Vector3.ProjectOnPlane(_camera.transform.forward, Vector3.up);
+            if (forward.sqrMagnitude < 0.0001f) forward = Vector3.ProjectOnPlane(_camera.transform.up, Vector3.up); // cámara mirando recto arriba o abajo
+
+            float heading = Vector3.SignedAngle(forward, flat, Vector3.up);
+            _heading = _hasHeading ? Mathf.SmoothDampAngle(_heading, heading, ref _headingVelocity, _angleSmoothTime) : heading;
+            _hasHeading = true;
+        }
+        else if (!_hasHeading)
+        {
+            Hide(); // el NPC está justo arriba o abajo y todavía no hay dirección que mostrar
+            return;
+        }
+        // si está justo arriba o abajo, conserva la última dirección
+
+        Vector2 anchor;
+        if (_anchorMode == QuestArrowAnchor.Player)
+        {
+            Vector3 viewport = _camera.WorldToViewportPoint(_player.position + Vector3.up * _anchorHeight);
+            anchor = viewport.z > 0f
+                ? new Vector2(viewport.x * w, (1f - viewport.y) * h)
+                : new Vector2(w, h) * 0.5f;
+        }
+        else
+        {
+            anchor = new Vector2(_screenAnchor.x * w, _screenAnchor.y * h);
+        }
+
+        _anchorElement.style.left = anchor.x;
+        _anchorElement.style.top = anchor.y;
+        _anchorElement.EnableInClassList("arrow-anchor--hidden", false);
+
+        // la flecha se dibuja apuntando a la derecha: arriba de la pantalla (adelante) = -90
+        _pivot.style.rotate = new Rotate(new Angle(_heading - 90f, AngleUnit.Degree));
+
+        float offset = _anchorMode == QuestArrowAnchor.Player ? _orbitRadius : -_arrow.contentRect.width * 0.5f;
+        _arrow.style.translate = new Translate(offset + Mathf.Sin(Time.time * 6f) * _pulse, 0f);
+    }
+
+    private void Hide()
+    {
+        _anchorElement.EnableInClassList("arrow-anchor--hidden", true);
+        _hasHeading = false; // al reaparecer salta directo a la dirección correcta
     }
 
     private QuestGiver FindTarget()
@@ -142,41 +157,31 @@ public class QuestMarkerHUD : MonoBehaviour
         return best;
     }
 
-    private void ApplyState(bool deliver, int distance)
-    {
-        _marker.EnableInClassList("marker--deliver", deliver);
-        _icon.text = deliver ? "?" : "!";
-
-        Color accent = deliver ? Mint : Gold;
-        if (accent != _accent)
-        {
-            _accent = accent;
-            _arrow.MarkDirtyRepaint();
-        }
-
-        if (distance != _lastDistance)
-        {
-            _lastDistance = distance;
-            _distanceLabel.text = distance + " m";
-        }
-    }
-
-    // punta de flecha con muesca, apuntando a la derecha (el pivot la rota hacia el NPC)
+    // punta de flecha con muesca, apuntando a la derecha (el pivot la rota)
     private void DrawArrow(MeshGenerationContext context)
     {
         Painter2D painter = context.painter2D;
         Rect rect = _arrow.contentRect;
+        const float margin = 6f;
 
-        painter.fillColor = _accent;
-        painter.strokeColor = _accent;
-        painter.lineWidth = 4f;
         painter.lineJoin = LineJoin.Round;
 
+        // primero el contorno oscuro (más grueso) y encima el relleno dorado
+        DrawShape(painter, rect, margin, Outline, 10f);
+        DrawShape(painter, rect, margin, Gold, 3f);
+    }
+
+    private static void DrawShape(Painter2D painter, Rect rect, float margin, Color color, float lineWidth)
+    {
+        painter.fillColor = color;
+        painter.strokeColor = color;
+        painter.lineWidth = lineWidth;
+
         painter.BeginPath();
-        painter.MoveTo(new Vector2(2f, 2f));
-        painter.LineTo(new Vector2(rect.width - 2f, rect.height * 0.5f));
-        painter.LineTo(new Vector2(2f, rect.height - 2f));
-        painter.LineTo(new Vector2(rect.width * 0.3f, rect.height * 0.5f));
+        painter.MoveTo(new Vector2(margin, margin));
+        painter.LineTo(new Vector2(rect.width - margin, rect.height * 0.5f));
+        painter.LineTo(new Vector2(margin, rect.height - margin));
+        painter.LineTo(new Vector2(rect.width * 0.35f, rect.height * 0.5f));
         painter.ClosePath();
         painter.Fill();
         painter.Stroke();
