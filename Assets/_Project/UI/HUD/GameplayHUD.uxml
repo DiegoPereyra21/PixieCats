@@ -39,7 +39,7 @@
         <ui:VisualElement name="MissionAlert" class="mission-alert" style="top: 31px; left: 658px;">
             <ui:Label name="MissionAlertIcon" text="!" class="mission-alert-icon" style="left: 1px;"/>
         </ui:VisualElement>
-        <ui:VisualElement name="ActiveStatusContainer" enabled="true" class="active-status-container">
+     <ui:VisualElement name="ActiveStatusContainer" class="active-status-container" style="display: none;">
             <ui:VisualElement name="StatusEffectSlot1" class="status-effect-slot"/>
             <ui:VisualElement name="StatusEffectSlot2" class="status-effect-slot"/>
             <ui:VisualElement name="StatusEffectSlot3" class="status-effect-slot"/>

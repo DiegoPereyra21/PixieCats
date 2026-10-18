@@ -30,4 +30,10 @@ public class DialogueCharacterData : ScriptableObject
 
     public bool HasIntroDialogue => hasIntroDialogue;
     public NarrativeDialogueData IntroDialogue => introDialogue;
+
+    public Sprite GetPortrait(PortraitEmotion emotion)
+    {
+        if (emotion == PortraitEmotion.Angry && angryPortrait != null) return angryPortrait;
+        return normalPortrait;
+    }
 }
