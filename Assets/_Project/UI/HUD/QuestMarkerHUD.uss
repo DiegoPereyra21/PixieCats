@@ -1,0 +1,87 @@
+.quest-root {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.marker {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    opacity: 1;
+    transition-property: opacity;
+    transition-duration: 0.25s;
+}
+
+.marker--hidden {
+    opacity: 0;
+}
+
+.marker-badge {
+    position: absolute;
+    left: -30px;
+    top: -30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    border-width: 3px;
+    border-color: rgb(235, 185, 60);
+    background-color: rgba(15, 20, 40, 0.85);
+    align-items: center;
+    justify-content: center;
+}
+
+.marker-icon {
+    color: rgb(235, 185, 60);
+    font-size: 34px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.marker-distance {
+    position: absolute;
+    left: -60px;
+    top: 38px;
+    width: 120px;
+    color: rgb(240, 235, 220);
+    font-size: 22px;
+    -unity-font-style: bold;
+    -unity-text-align: upper-center;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.marker-pivot {
+    position: absolute;
+    left: -52px;
+    top: -52px;
+    width: 104px;
+    height: 104px;
+    opacity: 1;
+    transition-property: opacity;
+    transition-duration: 0.2s;
+}
+
+.marker-arrow {
+    position: absolute;
+    right: -6px;
+    top: 50%;
+    width: 22px;
+    height: 26px;
+    translate: 0 -50%;
+}
+
+.marker--onscreen .marker-pivot {
+    opacity: 0;
+}
+
+.marker--deliver .marker-badge {
+    border-color: rgb(120, 220, 190);
+}
+
+.marker--deliver .marker-icon {
+    color: rgb(120, 220, 190);
+}
