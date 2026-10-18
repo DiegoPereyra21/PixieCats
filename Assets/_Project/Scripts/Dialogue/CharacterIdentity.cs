@@ -14,6 +14,7 @@ public class CharacterIdentity : MonoBehaviour
     public string CharacterName => characterData != null ? characterData.CharacterName : string.Empty;
 
     public Sprite NormalPortrait => characterData != null ? characterData.NormalPortrait : null;
-
     public Sprite AngryPortrait => characterData != null ? characterData.AngryPortrait : null;
+    public Sprite HappyPortrait => characterData != null ? characterData.HappyPortrait : null;
+    public Sprite SadPortrait => characterData != null ? characterData.SadPortrait : null;
 }
