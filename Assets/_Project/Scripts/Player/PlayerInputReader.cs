@@ -30,11 +30,14 @@ public class PlayerInputReader : MonoBehaviour
 
     private void Update()
     {
-        Move = _move.ReadValue<Vector2>();
-        Sprint = _sprint.IsPressed();
-        JumpHeld = _jump.IsPressed();
+        // con un diálogo abierto el jugador no se mueve ni salta
+        bool blocked = NarrativeDialogueManager.Instance != null && NarrativeDialogueManager.Instance.IsDialogueOpen;
 
-        if (_jump.WasPressedThisFrame())
+        Move = blocked ? Vector2.zero : _move.ReadValue<Vector2>();
+        Sprint = !blocked && _sprint.IsPressed();
+        JumpHeld = !blocked && _jump.IsPressed();
+
+        if (_jump.WasPressedThisFrame() && !blocked)
         {
             // se guarda la hora antes del evento: si el vuelo usa este Space, lo consume
             LastJumpPressTime = Time.time;

@@ -1,6 +1,7 @@
 
 using UnityEngine;
 using UnityEngine.UIElements;
+using System;
 
 public class NarrativeDialogueManager : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class NarrativeDialogueManager : MonoBehaviour
     private bool isDialogueOpen;
 
     public bool IsDialogueOpen => isDialogueOpen;
+
+    public event Action<NarrativeDialogueData> DialogueEnded;
 
     private void Awake()
     {
@@ -161,9 +164,13 @@ public class NarrativeDialogueManager : MonoBehaviour
         if (playerInput != null)
             playerInput.InteractPressed -= AdvanceDialogue;
 
+        NarrativeDialogueData finished = currentDialogue;
+
         isDialogueOpen = false;
         currentDialogue = null;
 
         dialogueRoot.style.display = DisplayStyle.None;
+
+        DialogueEnded?.Invoke(finished);
     }
 }

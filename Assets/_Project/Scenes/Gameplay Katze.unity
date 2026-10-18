@@ -28287,6 +28287,10 @@ PrefabInstance:
       propertyPath: m_TranslationOffsets.Array.data[0].z
       value: -1.1421413
       objectReference: {fileID: 0}
+    - target: {fileID: 2627946811448665841, guid: ed3eb6b6e8c11534d8368cbf664ff034, type: 3}
+      propertyPath: _groundMask.m_Bits
+      value: 72
+      objectReference: {fileID: 0}
     - target: {fileID: 6437755017506513804, guid: ed3eb6b6e8c11534d8368cbf664ff034, type: 3}
       propertyPath: m_LocalPosition.x
       value: -87.709366

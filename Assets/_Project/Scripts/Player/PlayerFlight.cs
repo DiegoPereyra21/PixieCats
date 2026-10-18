@@ -17,7 +17,9 @@ public class PlayerFlight : MonoBehaviour
     [SerializeField] private float _glideDescendSpeed = 3f;   // bajada al soltar Space
     [SerializeField] private float _maxDescendSpeed = 12f;    // tope de caída con peso
     [SerializeField] private float _verticalAcceleration = 25f;
-    [SerializeField] private float _maxHeight = 20f;          // Y de mundo
+    [SerializeField] private float _maxHeight = 20f;          // altura máxima sobre el suelo de abajo
+    [SerializeField] private LayerMask _groundMask = ~0;      // excluir la layer Player
+    [SerializeField] private float _groundProbeDistance = 200f;
     [SerializeField] private float _ceilingSoftZone = 2f;     // distancia donde la subida se frena
 
     [Header("Despegue")]
@@ -35,7 +37,7 @@ public class PlayerFlight : MonoBehaviour
     public bool IsFlying { get; private set; }
     public float CurrentWeight => _currentWeight;
     public float WeightFactor => 1f + _currentWeight * _weightInfluence;
-
+    private float _lastGroundY;
     public event Action TookOff;
 
     private Rigidbody _rb;
@@ -84,6 +86,7 @@ public class PlayerFlight : MonoBehaviour
         }
 
         float weightFactor = 1f + _currentWeight * _weightInfluence;
+        float ceiling = GetGroundY() + _maxHeight;
 
         if (_input.BrakeHeld)
         {
@@ -103,7 +106,7 @@ public class PlayerFlight : MonoBehaviour
         if (_input.JumpHeld)
         {
             // cerca del techo la subida se frena gradualmente
-            float ceilingFactor = Mathf.Clamp01((_maxHeight - _rb.position.y) / _ceilingSoftZone);
+            float ceilingFactor = Mathf.Clamp01((ceiling - _rb.position.y) / _ceilingSoftZone);
             targetY = (_flapAscendSpeed / weightFactor) * ceilingFactor;
         }
         else
@@ -115,7 +118,7 @@ public class PlayerFlight : MonoBehaviour
         _bobPhase += (_bobFrequency / weightFactor) * Time.fixedDeltaTime;
         targetY += Mathf.Sin(_bobPhase) * _bobAmplitude;
 
-        if (_rb.position.y >= _maxHeight) targetY = Mathf.Min(targetY, 0f);
+        if (_rb.position.y >= ceiling) targetY = Mathf.Min(targetY, 0f);
 
         Vector3 velocity = _rb.linearVelocity;
         velocity.y = Mathf.MoveTowards(velocity.y, targetY, _verticalAcceleration * Time.fixedDeltaTime);
@@ -124,6 +127,7 @@ public class PlayerFlight : MonoBehaviour
 
     private void StartFlight()
     {
+        _lastGroundY = _rb.position.y;
         IsFlying = true;
         _rb.useGravity = false; // la velocidad vertical la controla este script
         _bobPhase = 0f;
@@ -141,5 +145,16 @@ public class PlayerFlight : MonoBehaviour
     {
         IsFlying = false;
         _rb.useGravity = true;
+    }
+
+    // Y del suelo bajo el hada; si no encuentra nada (vacío) conserva el último valor conocido
+    private float GetGroundY()
+    {
+        Vector3 origin = _rb.position + Vector3.up * 0.5f;
+
+        if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, _groundProbeDistance, _groundMask, QueryTriggerInteraction.Ignore))
+            _lastGroundY = hit.point.y;
+
+        return _lastGroundY;
     }
 }

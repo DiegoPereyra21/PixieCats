@@ -11,7 +11,9 @@ public class MissionDataSO : ScriptableObject
     [SerializeField, Min(0)] private int _extraCount = 2;          // ítems de más que aparecen
     [SerializeField, Min(0)] private float _timeLimit = 90f;       // segundos para entregar; 0 = sin límite
     [SerializeField, Min(0)] private float _acceptTimeLimit = 30f; // segundos para aceptarla tras completar la anterior; 0 = sin límite
+    [SerializeField] private DialogueCharacterData _requester; // quien da la misión
 
+    public DialogueCharacterData Requester => _requester;
     public string Title => _title;
     public PickupObject ItemPrefab => _itemPrefabs != null && _itemPrefabs.Length > 0 ? _itemPrefabs[0] : _itemPrefab;
     public int RequiredCount => _requiredCount;
