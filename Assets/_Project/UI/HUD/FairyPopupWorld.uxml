@@ -1,0 +1,8 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/UI/HUD/FairyPopupHUD.uss?fileID=7433441132597879392&amp;guid=fa6205a1e36023d4aa8d1ec05135558f&amp;type=3#FairyPopupHUD"/>
+    <ui:VisualElement name="FairyPopupRoot" picking-mode="Ignore" style="position: absolute; left: 0; top: 0; width: 420px; height: 255px;">
+        <ui:VisualElement name="PopupPanel" picking-mode="Ignore" class="fairy-popup-panel" style="left: 0; top: 0; background-image: url(&quot;project://database/Assets/_Project/Art/UI/Furia%20Ehe/popup.png?fileID=2800000&amp;guid=20e7d8a5ee3ac014db243f2371491720&amp;type=3#popup&quot;); -unity-background-scale-mode: stretch-to-fill; width: 420px; height: 255px; max-width: 420px; padding-top: 45px; padding-right: 63px; padding-bottom: 72px; padding-left: 63px;">
+            <ui:Label text="Texto de prueba para dialogos" name="PopupText" picking-mode="Ignore" class="fairy-popup-text" style="flex-grow: 1; font-size: 24px; -unity-text-align: middle-center; white-space: normal; -unity-font-definition: url(&quot;project://database/Assets/_Project/Fonts/Handlee-Regular.ttf?fileID=12800000&amp;guid=1a3e39fffd120a046915f726453b464d&amp;type=3#Handlee-Regular&quot;);"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

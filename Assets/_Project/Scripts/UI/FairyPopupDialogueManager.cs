@@ -1,9 +1,11 @@
-
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class FairyPopupDialogueManager : MonoBehaviour
 {
+    private const string VisibleClass = "fairy-popup-panel--visible";
+    private const long HideDelayMs = 300; // un poco más que la transición del USS (0.25 s)
+
     [Header("Referencias")]
     [SerializeField] private UIDocument uiDocument;
     [SerializeField] private FairyPopupDialogueTable dialogueTable;
@@ -18,6 +20,7 @@ public class FairyPopupDialogueManager : MonoBehaviour
     private float timer;
     private float displayTimer;
     private FairyPopupDialogueData lastDialogue;
+    private IVisualElementScheduledItem hideItem;
 
     private void Awake()
     {
@@ -65,7 +68,7 @@ public class FairyPopupDialogueManager : MonoBehaviour
             displayTimer -= Time.deltaTime;
 
             if (displayTimer <= 0f)
-                popupPanel.style.display = DisplayStyle.None;
+                HidePopup();
         }
     }
 
@@ -97,8 +100,26 @@ public class FairyPopupDialogueManager : MonoBehaviour
 
         Debug.Log($"FairyPopup: mostrando diálogo: {dialogue.Text}");
 
-        popupPanel.style.display = DisplayStyle.Flex;
+        ShowPopup();
         displayTimer = displayDuration;
+    }
+
+    private void ShowPopup()
+    {
+        hideItem?.Pause(); // si se estaba cerrando, se cancela
+
+        popupPanel.style.display = DisplayStyle.Flex;
+
+        // la clase se agrega un instante después para que la transición del USS se vea
+        popupPanel.schedule.Execute(() => popupPanel.AddToClassList(VisibleClass)).StartingIn(30);
+    }
+
+    private void HidePopup()
+    {
+        popupPanel.RemoveFromClassList(VisibleClass);
+
+        // display none recién cuando terminó de achicarse
+        hideItem = popupPanel.schedule.Execute(() => popupPanel.style.display = DisplayStyle.None).StartingIn(HideDelayMs);
     }
 
     private FairyPopupDialogueData GetRandomDialogue()
