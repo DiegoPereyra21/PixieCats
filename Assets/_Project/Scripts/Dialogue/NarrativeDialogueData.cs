@@ -21,7 +21,9 @@ public class NarrativeDialogueData : ScriptableObject
 public enum PortraitEmotion
 {
     Normal,
-    Angry
+    Angry,
+    Happy,
+    Sad
 }
 
 [Serializable]
@@ -36,4 +38,5 @@ public class NarrativeDialogueLine
     public DialogueCharacterData Character => character;
     public PortraitEmotion Emotion => emotion;
     public string Text => text;
+    public Sprite Portrait => character != null ? character.GetPortrait(emotion) : null;
 }

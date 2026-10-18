@@ -16,11 +16,13 @@ MonoBehaviour:
   lines:
   - character: {fileID: 11400000, guid: c76a334378bab2b418d8ca4383a106bc, type: 2}
     emotion: 0
-    text: '
-
-      curandera'
+    text: Buenos dias, Frixie. Llegas un poco mas tarde de lo habitual...
+  - character: {fileID: 11400000, guid: a19afb1f1bb4df945b20f463d4858430, type: 2}
+    emotion: 0
+    text: Hmm? Ah, si, ultimamente nos vemos todos los dias ahora que lo pienso
   - character: {fileID: 11400000, guid: c76a334378bab2b418d8ca4383a106bc, type: 2}
     emotion: 0
-    text: '
-
-      curandera'
+    text: Si bueno, eres la unica criatura amable en este bosque, no se que haria sin tu ayuda
+  - character: {fileID: 11400000, guid: c76a334378bab2b418d8ca4383a106bc, type: 2}
+    emotion: 0
+    text: Y ahora que lo pienso....

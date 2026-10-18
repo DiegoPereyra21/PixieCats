@@ -1,2 +1,16 @@
 fileFormatVersion: 2
 guid: ca58fe88c4dcbd84d98b6a6044fc425c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - normalPortrait: {instanceID: 0}
+  - angryPortrait: {instanceID: 0}
+  - happyPortrait: {instanceID: 0}
+  - sadPortrait: {instanceID: 0}
+  - introDialogue: {fileID: 11400000, guid: f68f05bc301584d498ced3071aa3bb7f, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
