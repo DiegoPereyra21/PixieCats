@@ -4012,13 +4012,14 @@ MonoBehaviour:
   _uiDocument: {fileID: 608260274}
   _player: {fileID: 1749401271}
   _camera: {fileID: 1618657052}
-  _heightOffset: 3
-  _edgeMargin: 90
+  _arrowSprite: {fileID: 609439330203869409, guid: 6eba9e28aacf7b8449741f1db696ff6d, type: 3}
+  _anchorMode: 1
+  _anchorHeight: 1
+  _orbitRadius: 46.8
+  _screenAnchor: {x: 0.5, y: 0.18}
   _hideDistance: 6
-  _followSmoothTime: 0.06
-  _bobAmplitude: 5
-  _bobSpeed: 3
-  _arrowPulse: 5
+  _angleSmoothTime: 0.08
+  _pulse: 4
 --- !u!114 &608260274
 MonoBehaviour:
   m_ObjectHideFlags: 0
