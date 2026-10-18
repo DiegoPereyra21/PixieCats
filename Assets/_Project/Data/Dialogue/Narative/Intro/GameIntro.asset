@@ -15,10 +15,14 @@ MonoBehaviour:
   dialogueId: game_intro
   lines:
   - character: {fileID: 11400000, guid: a19afb1f1bb4df945b20f463d4858430, type: 2}
+    emotion: 2
     text: Todos los dias vengo al mundo mortal para ayudar a las personas del bosque...
   - character: {fileID: 11400000, guid: a19afb1f1bb4df945b20f463d4858430, type: 2}
-    text: Como sabras, es algo un tanto inusual para alguien de mi reino, no tenemos fama de ser muy solidarios
+    emotion: 0
+    text: Es verdad que es algo un poco inusual para alguien de mi reino
   - character: {fileID: 11400000, guid: a19afb1f1bb4df945b20f463d4858430, type: 2}
-    text: Pero me gusta ayudar a otros, y no tengo corazon para abandonar a esta buena gente
+    emotion: 2
+    text: Pero me gusta ayudar a otros, y no tengo corazon para abandonar a esta gente tan amable
   - character: {fileID: 11400000, guid: a19afb1f1bb4df945b20f463d4858430, type: 2}
-    text: "Que? Vas a acompa\xF1arme en mis tareas? Genial! Vamos a exlorar a ver que encontramos para hacer... "
+    emotion: 2
+    text: Aun asi tengo que tener cuidado, cosas malas le pasan a las hadas que se quedan demasiado en el mundo mortal...

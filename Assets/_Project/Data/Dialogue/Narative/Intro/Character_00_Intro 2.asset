@@ -15,4 +15,17 @@ MonoBehaviour:
   dialogueId: character_02_intro
   lines:
   - character: {fileID: 11400000, guid: d459102aab794044aa5f12cc144ad614, type: 2}
-    text: 
+    emotion: 0
+    text: Hola Frixie! Me alegra ver que contamos con tu presencia hoy tambien
+  - character: {fileID: 11400000, guid: d459102aab794044aa5f12cc144ad614, type: 2}
+    emotion: 0
+    text: "Que tal te trata esta ma\xF1ana?"
+  - character: {fileID: 11400000, guid: a19afb1f1bb4df945b20f463d4858430, type: 2}
+    emotion: 2
+    text: 'Hola Isabella! Excelente excelente! '
+  - character: {fileID: 11400000, guid: a19afb1f1bb4df945b20f463d4858430, type: 2}
+    emotion: 2
+    text: Que tal todo por aqui? Alguien necesita algo?
+  - character: {fileID: 11400000, guid: d459102aab794044aa5f12cc144ad614, type: 2}
+    emotion: 0
+    text: Ahora que lo dices...

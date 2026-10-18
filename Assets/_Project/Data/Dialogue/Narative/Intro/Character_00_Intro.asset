@@ -15,6 +15,11 @@ MonoBehaviour:
   dialogueId: character_00_intro
   lines:
   - character: {fileID: 11400000, guid: 698561cd506adc343b0e18df892d6740, type: 2}
-    text: Hola criatura del bosque! Seguramente eres Frixie, cierto? Unos viajeros me contaron que si necesitaba ayuda mientras atravesaba el bosque podria pedirtela
+    emotion: 0
+    text: Hola criatura del bosque! Seguramente eres Frixie, cierto? Unas personas cerca de aqui me contaron que si necesitaba ayuda mientras atravesaba el bosque podria pedirtela
   - character: {fileID: 11400000, guid: 698561cd506adc343b0e18df892d6740, type: 2}
+    emotion: 0
     text: Mi nombre es John, viajo de region en region buscando lugares nuevos para pescar, un gusto!
+  - character: {fileID: 11400000, guid: a19afb1f1bb4df945b20f463d4858430, type: 2}
+    emotion: 2
+    text: 'Hola John, un gusto conocerte! En que puedo ayudar? '

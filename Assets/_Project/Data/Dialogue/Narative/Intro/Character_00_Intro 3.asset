@@ -15,4 +15,14 @@ MonoBehaviour:
   dialogueId: character_03_intro
   lines:
   - character: {fileID: 11400000, guid: 303cfd9900a0fe54d8a3bf8e2c44f165, type: 2}
-    text: 
+    emotion: 0
+    text: 'Ah Buenos Dias Frixie! Que hace mi hada favorita por estos lados tan temprano? '
+  - character: {fileID: 11400000, guid: a19afb1f1bb4df945b20f463d4858430, type: 2}
+    emotion: 2
+    text: Jeje holis Oufel...
+  - character: {fileID: 11400000, guid: a19afb1f1bb4df945b20f463d4858430, type: 2}
+    emotion: 2
+    text: Los mejores lugares del bosque estan lejos de los ojos de la gente
+  - character: {fileID: 11400000, guid: 303cfd9900a0fe54d8a3bf8e2c44f165, type: 2}
+    emotion: 0
+    text: No podria estar mas de acuerdo querida, de hecho... llegas en muy buen momento

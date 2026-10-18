@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46529e89c9c688e4c91aa00f4b8d83cf, type: 3}
+  m_Name: Tutorial
+  m_EditorClassIdentifier: Assembly-CSharp::NarrativeDialogueData
+  dialogueId: tutorial
+  lines:
+  - character: {fileID: 11400000, guid: a19afb1f1bb4df945b20f463d4858430, type: 2}
+    emotion: 0
+    text: A ver repasemos lo basico, no sea cosa que me olvido de algo...
+  - character: {fileID: 11400000, guid: a19afb1f1bb4df945b20f463d4858430, type: 2}
+    emotion: 0
+    text: 'Primero: siempre siempre siempre tengo que volver al reino de las hadas antes del amanecer '
+  - character: {fileID: 11400000, guid: a19afb1f1bb4df945b20f463d4858430, type: 2}
+    emotion: 0
+    text: Para volver a casa solo tengo que interactuar con circulo de hongos en medio del bosque
+  - character: {fileID: 11400000, guid: a19afb1f1bb4df945b20f463d4858430, type: 2}
+    emotion: 0
+    text: Los espiritus dicen "interactua apretando E", no se que significa pero bueno...
+  - character: {fileID: 11400000, guid: a19afb1f1bb4df945b20f463d4858430, type: 2}
+    emotion: 0
+    text: 'Segundo: siempre que alguien necesite ayuda una flecha magica me va a guiar hasta ellos '
+  - character: {fileID: 11400000, guid: a19afb1f1bb4df945b20f463d4858430, type: 2}
+    emotion: 0
+    text: 'Tercero: tengo que cuidar mi reputacion (barra violeta) y mi bienestar (barra roja)'
+  - character: {fileID: 11400000, guid: a19afb1f1bb4df945b20f463d4858430, type: 2}
+    emotion: 0
+    text: 'Cuarto: las misiones tienen un tiempo para ser aceptadas, tengo que ser responsable!'
+  - character: {fileID: 11400000, guid: a19afb1f1bb4df945b20f463d4858430, type: 2}
+    emotion: 0
+    text: Siempre que acepte una mision voy a poder ver los detalles en mi pantalla de notas magica
+  - character: {fileID: 11400000, guid: a19afb1f1bb4df945b20f463d4858430, type: 2}
+    emotion: 2
+    text: Listo, ahora deberia ir a explorar...
