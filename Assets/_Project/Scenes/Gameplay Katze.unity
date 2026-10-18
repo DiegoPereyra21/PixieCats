@@ -28054,11 +28054,11 @@ MonoBehaviour:
   _uiDocument: {fileID: 1625491382}
   _player: {fileID: 1638180945}
   _camera: {fileID: 1618657052}
-  _arrowSprite: {fileID: 609439330203869409, guid: 6eba9e28aacf7b8449741f1db696ff6d, type: 3}
+  _arrowSprite: {fileID: 8205950651708530623, guid: c19e54646d386654a8bdcc1b2ed0f6b1, type: 3}
   _anchorMode: 1
   _anchorHeight: 1
   _orbitRadius: 46.8
-  _screenAnchor: {x: 0.5, y: 0.18}
+  _screenAnchor: {x: 0.5, y: 0.09}
   _hideDistance: 6
   _angleSmoothTime: 0.08
   _pulse: 4
