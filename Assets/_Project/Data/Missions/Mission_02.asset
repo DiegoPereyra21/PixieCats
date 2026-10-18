@@ -15,4 +15,6 @@ MonoBehaviour:
   _title: Mision 2 - Collectible_Heavy
   _itemPrefab: {fileID: 4909253884071207693, guid: b0e29ab97b5b5f646a76d64e7b998bd3, type: 3}
   _requiredCount: 1
-  _extraCount: 1
+  _extraCount: 3
+  _timeLimit: 90
+  _acceptTimeLimit: 30
