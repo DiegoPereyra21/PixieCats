@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueCharacterData
   characterId: 'player '
   characterName: Frixie
-  normalPortrait: {fileID: 0}
-  angryPortrait: {fileID: 0}
+  normalPortrait: {fileID: 3742494132270206069, guid: 22af1e36dc66a2e49a45c4ed588258af, type: 3}
+  angryPortrait: {fileID: -5766207957432013279, guid: 3fe6107186f1ed54796d65e1cd50b4a9, type: 3}
+  happyPortrait: {fileID: -3177113145807610373, guid: 9f67c0d5374fa6141a0eaf7952e863d1, type: 3}
+  sadPortrait: {fileID: 6929572624249513155, guid: 50158271043723c4998296ec2d44c299, type: 3}
   hasIntroDialogue: 0
   introDialogue: {fileID: 0}

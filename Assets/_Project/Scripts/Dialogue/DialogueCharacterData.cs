@@ -14,6 +14,8 @@ public class DialogueCharacterData : ScriptableObject
     [Header("Retratos")]
     [SerializeField] private Sprite normalPortrait;
     [SerializeField] private Sprite angryPortrait;
+    [SerializeField] private Sprite happyPortrait;
+    [SerializeField] private Sprite sadPortrait;
 
     [Header("Primer dialogo")]
     [SerializeField] private bool hasIntroDialogue = true;
@@ -23,6 +25,8 @@ public class DialogueCharacterData : ScriptableObject
     public string CharacterName => characterName;
     public Sprite NormalPortrait => normalPortrait;
     public Sprite AngryPortrait => angryPortrait;
+    public Sprite HappyPortrait => happyPortrait;
+    public Sprite SadPortrait => sadPortrait;
 
     public bool HasIntroDialogue => hasIntroDialogue;
     public NarrativeDialogueData IntroDialogue => introDialogue;

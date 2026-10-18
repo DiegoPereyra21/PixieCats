@@ -13,6 +13,8 @@ public class MissionDataSO : ScriptableObject
     [SerializeField, Min(0)] private float _acceptTimeLimit = 30f; // segundos para aceptarla tras completar la anterior; 0 = sin límite
     [SerializeField] private DialogueCharacterData _requester; // quien da la misión
 
+    [SerializeField] public NarrativeDialogueData dialogue;
+
     public DialogueCharacterData Requester => _requester;
     public string Title => _title;
     public PickupObject ItemPrefab => _itemPrefabs != null && _itemPrefabs.Length > 0 ? _itemPrefabs[0] : _itemPrefab;
