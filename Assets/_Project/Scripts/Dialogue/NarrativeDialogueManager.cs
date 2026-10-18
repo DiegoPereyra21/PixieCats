@@ -124,10 +124,10 @@ public class NarrativeDialogueManager : MonoBehaviour
             characterName.text = character.CharacterName;
 
             if (characterPortrait != null)
-                characterPortrait.sprite = character.Portrait;
+                characterPortrait.sprite = character.NormalPortrait;
 
             if (portraitContainer != null)
-                portraitContainer.style.display = character.Portrait != null ? DisplayStyle.Flex : DisplayStyle.None;
+                portraitContainer.style.display = character.NormalPortrait != null ? DisplayStyle.Flex : DisplayStyle.None;
         }
         else
         {

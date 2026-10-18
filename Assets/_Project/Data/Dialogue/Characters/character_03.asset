@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca58fe88c4dcbd84d98b6a6044fc425c, type: 3}
-  m_Name: Warrior
+  m_Name: character_03
   m_EditorClassIdentifier: Assembly-CSharp::DialogueCharacterData
-  characterId: warrior
-  characterName: Guerrero
-  portrait: {fileID: 21300000, guid: 63af1a36c8a92f6489b7bbc774aee8a3, type: 3}
+  characterId: character_03
+  characterName: Oufel, Explorador del bosque
+  normalPortrait: {fileID: 1254501800722312324, guid: d2acdccb8172dfe4caac2c55f9ede4aa, type: 3}
+  angryPortrait: {fileID: 4464920347237329751, guid: 34c7334f26d43c2438f9561311c058e0, type: 3}
