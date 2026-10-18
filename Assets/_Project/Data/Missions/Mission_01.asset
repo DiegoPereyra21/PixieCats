@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mission_01
   m_EditorClassIdentifier: Assembly-CSharp::MissionDataSO
   _title: Mision 1 - Collectible_Light
-  _itemPrefab: {fileID: 4909253884071207693, guid: d6085cbc9d06a954bb23be687a59000b, type: 3}
+  _itemPrefab: {fileID: 7234176634463872912, guid: 21b767803236e1c4d9806a44e631d3ce, type: 3}
   _requiredCount: 1
   _extraCount: 5
   _timeLimit: 90
