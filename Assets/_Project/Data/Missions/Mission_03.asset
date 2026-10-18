@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MissionDataSO
   _title: Mision 3 - Collectible_Light
   _itemPrefabs:
-  - {fileID: 2825814556684022974, guid: 03867afac38e67747b71b4d7464b1a65, type: 3}
-  - {fileID: 8483538793853798629, guid: 794fa9e0d90e64b4ebd98160e4ce4f75, type: 3}
+  - {fileID: 7234176634463872912, guid: 21b767803236e1c4d9806a44e631d3ce, type: 3}
   _itemPrefab: {fileID: 0}
   _requiredCount: 4
   _extraCount: 8
   _timeLimit: 90
   _acceptTimeLimit: 30
+  _requester: {fileID: 0}

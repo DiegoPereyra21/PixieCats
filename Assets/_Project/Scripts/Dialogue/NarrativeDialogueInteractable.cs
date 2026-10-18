@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class NarrativeDialogueInteractable : MonoBehaviour, IInteractable
@@ -6,12 +5,26 @@ public class NarrativeDialogueInteractable : MonoBehaviour, IInteractable
     [Header("Dialogo")]
     [SerializeField] private NarrativeDialogueData dialogue;
 
+    [Header("Inicio automatico")]
+    [SerializeField] private bool playOnStart = false; // dialogo interno: se abre solo al cargar la escena
+
     [Header("Resaltado")]
     [SerializeField] private GameObject highlightVisual;
 
+    private bool autoPlayed;
+
     public bool IsBlocked => !CanInteract;
 
-    public bool CanInteract => dialogue != null && NarrativeDialogueManager.Instance != null && !NarrativeDialogueManager.Instance.IsDialogueOpen;
+    // un dialogo automatico no se puede repetir con E
+    public bool CanInteract => !(playOnStart && autoPlayed) && dialogue != null && NarrativeDialogueManager.Instance != null && !NarrativeDialogueManager.Instance.IsDialogueOpen;
+
+    private void Start()
+    {
+        if (!playOnStart || dialogue == null || NarrativeDialogueManager.Instance == null)
+            return;
+
+        autoPlayed = NarrativeDialogueManager.Instance.StartDialogue(dialogue);
+    }
 
     public void Interact(PlayerInteractor interactor)
     {

@@ -26,7 +26,7 @@ public class MissionManager : MonoBehaviour
     public event Action<MissionDataSO, float> AcceptTimerChanged;    // próxima misión, segundos para aceptar
     public event Action<MissionDataSO> AcceptDeadlineMissed;         // no se aceptó a tiempo
     public event Action ChainFinished;                               // no quedan misiones
-
+    private int _delivered; // ítems ya entregados de la misión activa
     private readonly List<PickupObject> _spawned = new List<PickupObject>();
     private readonly HashSet<MissionDataSO> _late = new HashSet<MissionDataSO>();
     private int _currentIndex;
@@ -70,6 +70,7 @@ public class MissionManager : MonoBehaviour
         _acceptTimerRunning = false;
         _active = mission;
         _held = 0;
+        _delivered = 0;
         _timeRemaining = mission.TimeLimit;
         SpawnItems(mission, area);
 
@@ -81,6 +82,7 @@ public class MissionManager : MonoBehaviour
     }
 
     // Entrega los ítems de la bolsa; si alcanzan, completa la misión (a tiempo o tarde)
+    // Entrega los ítems de la bolsa que sirvan para la misión; se puede hacer por partes y se completa al llegar al total
     public bool TryDeliver(MissionDataSO mission, PlayerCarrier carrier)
     {
         if (GetState(mission) != MissionState.InProgress) return false;
@@ -88,19 +90,41 @@ public class MissionManager : MonoBehaviour
         // solo cuentan los ítems de esta misión que ya están guardados en la bolsa
         Predicate<PickupObject> isMissionItem = _spawned.Contains;
 
-        if (carrier.CountStored(isMissionItem) < mission.RequiredCount)
+        int missing = mission.RequiredCount - _delivered;
+        int available = carrier.CountStored(isMissionItem);
+
+        if (available <= 0)
         {
             DeliveryRejected?.Invoke(mission);
             return false;
         }
 
+        // se entregan solo los que faltan, aunque lleve de más
+        List<PickupObject> removed = carrier.RemoveStored(isMissionItem, Mathf.Min(available, missing));
+
+        foreach (PickupObject item in removed)
+        {
+            _spawned.Remove(item);
+            Destroy(item.gameObject);
+        }
+
+        _delivered += removed.Count;
+        _held -= removed.Count; // lo entregado ya no está en la bolsa
+
+        // entrega parcial: la misión sigue activa
+        if (_delivered < mission.RequiredCount)
+        {
+            ProgressChanged?.Invoke(mission, _held + _delivered, mission.RequiredCount);
+            return true;
+        }
+
         bool late = _late.Contains(mission);
 
-        carrier.RemoveStored(isMissionItem, mission.RequiredCount);
-        ClearSpawned(); // se destruyen los entregados y los de más que quedaron en el mundo
+        ClearSpawned(); // se destruyen los de más que quedaron en el mundo
 
         _active = null;
         _held = 0;
+        _delivered = 0;
         _timeRemaining = 0f;
         _currentIndex++;
 
@@ -204,12 +228,12 @@ public class MissionManager : MonoBehaviour
         if (_active == null) return;
 
         // al llegar al cupo no se pueden agarrar más ítems de la misión
-        bool full = _held >= _active.RequiredCount;
+        bool full = _held + _delivered >= _active.RequiredCount;
         foreach (PickupObject item in _spawned)
         {
             if (!item.IsHeld) item.IsPickable = !full;
         }
 
-        ProgressChanged?.Invoke(_active, _held, _active.RequiredCount);
+        ProgressChanged?.Invoke(_active, _held + _delivered, _active.RequiredCount);
     }
 }
