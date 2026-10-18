@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Linq;
 
 public enum QuestArrowAnchor
 {
@@ -32,7 +33,7 @@ public class QuestMarkerHUD : MonoBehaviour
     [SerializeField] private float _angleSmoothTime = 0.1f;
     [SerializeField] private float _pulse = 4f; // cuánto late la flecha hacia afuera (px)
 
-    private QuestGiver[] _givers;
+    private IGuideTarget[] _targets;
     private VisualElement _root;
     private VisualElement _anchorElement;
     private VisualElement _pivot;
@@ -45,7 +46,7 @@ public class QuestMarkerHUD : MonoBehaviour
     private void Start()
     {
         if (_camera == null) _camera = Camera.main;
-        _givers = FindObjectsByType<QuestGiver>(FindObjectsSortMode.None);
+        _targets = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<IGuideTarget>().ToArray();
 
         VisualElement document = _uiDocument.rootVisualElement;
         document.pickingMode = PickingMode.Ignore;
@@ -73,14 +74,14 @@ public class QuestMarkerHUD : MonoBehaviour
 
     private void LateUpdate()
     {
-        QuestGiver target = FindTarget();
+        IGuideTarget target = FindTarget();
         bool dialogueOpen = NarrativeDialogueManager.Instance != null && NarrativeDialogueManager.Instance.IsDialogueOpen;
 
         float w = _root.resolvedStyle.width;
         float h = _root.resolvedStyle.height;
         bool layoutReady = !float.IsNaN(w) && !float.IsNaN(h) && w > 0f && h > 0f;
 
-        Vector3 toTarget = target != null ? target.transform.position - _player.position : Vector3.zero;
+        Vector3 toTarget = target != null ? target.GuidePosition - _player.position : Vector3.zero;
 
         if (target == null || dialogueOpen || !layoutReady || toTarget.magnitude <= _hideDistance)
         {
@@ -137,19 +138,19 @@ public class QuestMarkerHUD : MonoBehaviour
         _hasHeading = false; // al reaparecer salta directo a la dirección correcta
     }
 
-    private QuestGiver FindTarget()
+    private IGuideTarget FindTarget()
     {
-        QuestGiver best = null;
+        IGuideTarget best = null;
         float bestSqr = float.MaxValue;
 
-        foreach (QuestGiver giver in _givers)
+        foreach (IGuideTarget candidate in _targets)
         {
-            if (!giver.CanInteract) continue;
+            if (!candidate.IsGuideActive) continue;
 
-            float sqr = (giver.transform.position - _player.position).sqrMagnitude;
+            float sqr = (candidate.GuidePosition - _player.position).sqrMagnitude;
             if (sqr < bestSqr)
             {
-                best = giver;
+                best = candidate;
                 bestSqr = sqr;
             }
         }

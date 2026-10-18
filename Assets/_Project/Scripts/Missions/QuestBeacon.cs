@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class QuestBeacon : MonoBehaviour
 {
-    [SerializeField] private QuestGiver _giver;
+    [FormerlySerializedAs("_giver")]
+    [SerializeField] private MonoBehaviour _target; // un QuestGiver o el MushroomPortal (cualquier IGuideTarget)
     [SerializeField] private Transform _player;
     [SerializeField] private ParticleSystem[] _systems;
 
@@ -13,14 +15,23 @@ public class QuestBeacon : MonoBehaviour
     [SerializeField] private float _maxSizeScale = 5f;
     [SerializeField] private float _fadeSmoothTime = 0.4f;
 
+    private IGuideTarget _guide;
     private float[] _baseRates;
     private float[] _baseSizes;
     private float _alpha;
     private float _alphaVelocity;
-    private bool _active;
 
     private void Awake()
     {
+        _guide = _target as IGuideTarget;
+
+        if (_guide == null)
+        {
+            Debug.LogError("QuestBeacon: _target tiene que ser un componente que implemente IGuideTarget.", this);
+            enabled = false;
+            return;
+        }
+
         _baseRates = new float[_systems.Length];
         _baseSizes = new float[_systems.Length];
 
@@ -31,20 +42,10 @@ public class QuestBeacon : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        _giver.StateChanged += OnStateChanged;
-        _active = _giver.CanInteract;
-    }
-
-    private void OnDisable() => _giver.StateChanged -= OnStateChanged;
-
-    private void OnStateChanged(MissionState state) => _active = _giver.CanInteract;
-
     private void Update()
     {
         float distance = Vector3.Distance(_player.position, transform.position);
-        float target = _active ? Mathf.InverseLerp(_hideDistance, _fullDistance, distance) : 0f;
+        float target = _guide.IsGuideActive ? Mathf.InverseLerp(_hideDistance, _fullDistance, distance) : 0f;
         _alpha = Mathf.SmoothDamp(_alpha, target, ref _alphaVelocity, _fadeSmoothTime);
 
         float sizeScale = Mathf.Clamp(distance / _sizeDistance, 1f, _maxSizeScale);

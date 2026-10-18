@@ -1,13 +1,15 @@
 using UnityEngine;
 
 [RequireComponent(typeof(InteractionHighlight))]
-public class MushroomPortal : MonoBehaviour, IInteractable
+public class MushroomPortal : MonoBehaviour, IInteractable, IGuideTarget
 {
     [SerializeField] private MissionManager _manager;
     [SerializeField] private SceneLoader _sceneLoader;
 
     public bool CanInteract => _chainFinished && !_used;
     public bool IsBlocked => false;
+    public bool IsGuideActive => CanInteract;
+    public Vector3 GuidePosition => transform.position;
 
     private InteractionHighlight _highlight;
     private bool _chainFinished;
