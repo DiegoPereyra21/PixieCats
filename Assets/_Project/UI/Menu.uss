@@ -1,0 +1,192 @@
+.menu-root {
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(14, 20, 48);
+}
+
+.menu-card {
+    width: 440px;
+    max-width: 90%;
+    padding: 42px;
+    align-items: center;
+    background-color: rgb(32, 39, 77);
+    border-radius: 18px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: rgb(73, 85, 139);
+    border-bottom-color: rgb(73, 85, 139);
+    border-left-color: rgb(73, 85, 139);
+    border-right-color: rgb(73, 85, 139);
+}
+
+.subtitle {
+    color: rgb(180, 189, 244);
+    font-size: 13px;
+    margin-bottom: 8px;
+    -unity-text-align: middle-center;
+}
+
+.menu-title {
+    color: rgb(244, 240, 255);
+    font-size: 43px;
+    -unity-font-style: bold;
+    margin-bottom: 28px;
+    -unity-text-align: middle-center;
+}
+
+.menu-buttons,
+.options-panel {
+    width: 100%;
+    align-items: center;
+}
+
+.menu-button {
+    width: 100%;
+    height: 55px;
+    margin-bottom: 13px;
+    background-color: rgb(53, 70, 118);
+    color: rgb(255, 255, 255);
+    border-radius: 10px;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    font-size: 19px;
+    -unity-font-style: bold;
+}
+
+.menu-button:hover {
+    background-color: rgb(120, 105, 232);
+}
+
+.menu-button:active {
+    background-color: rgb(81, 70, 179);
+}
+
+.play-button {
+    background-color: rgb(108, 93, 211);
+}
+
+.options-panel {
+    display: none;
+}
+
+.options-title {
+    color: rgb(244, 240, 255);
+    font-size: 25px;
+    margin-bottom: 24px;
+    -unity-font-style: bold;
+}
+
+.options-control {
+    width: 100%;
+    color: rgb(230, 231, 255);
+    margin-bottom: 20px;
+}
+
+.menu-card {
+    border-top-color: rgb(130, 115, 205);
+    border-bottom-color: rgb(81, 77, 137);
+}
+
+.menu-button {
+    transition-property: background-color, scale;
+    transition-duration: 0.13s;
+}
+
+.menu-button:hover {
+    scale: 1.035 1.035;
+}
+
+.menu-button:active {
+    scale: 0.98 0.98;
+}
+
+.menu-button:focus {
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-color: rgb(183, 167, 255);
+    border-bottom-color: rgb(183, 167, 255);
+    border-left-color: rgb(183, 167, 255);
+    border-right-color: rgb(183, 167, 255);
+}
+
+#MenuRoot {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+#MainButtons {
+    position: absolute;
+
+    left: 4%;
+    bottom: 6%;
+
+    top: auto;
+    right: auto;
+
+    width: 280px;
+    height: auto;
+
+    flex-direction: column;
+}
+
+    .options-card {
+    width: 500px;
+    padding: 35px;
+
+    background-color: rgba(25, 32, 67, 0.92);
+
+    border-width: 2px;
+    border-color: #7867B8;
+    border-radius: 18px;
+}
+
+.options-card Label {
+    color: #F1E9FF;
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+
+.options-card Slider {
+    height: 42px;
+    margin-bottom: 18px;
+}
+
+.options-card Button {
+    height: 65px;
+    font-size: 25px;
+    background-color: #6754B7;
+    color: white;
+    border-radius: 10px;
+    margin-top: 18px;
+}
+
+.options-card Button:hover {
+    background-color: #8975E3;
+}
+
+    /* Barra del slider */
+.options-card .unity-base-slider__tracker {
+    background-color: #39456F;
+    height: 8px;
+    border-radius: 4px;
+}
+
+/* Control deslizante */
+.options-card .unity-base-slider__dragger {
+    background-color: #A18AFF;
+    border-radius: 6px;
+    width: 16px;
+}
+
+    .options-card .unity-toggle__checkmark {
+    background-color: #6C5DD3;
+    border-radius: 4px;
+}
