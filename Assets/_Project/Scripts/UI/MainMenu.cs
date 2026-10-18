@@ -26,5 +26,5 @@ public class MainMenu : MonoBehaviour
         if (_startButton != null) _startButton.clicked -= OnStartClicked;
     }
 
-    private void OnStartClicked() => _sceneLoader.LoadGameplay();
+    private void OnStartClicked() => _sceneLoader.LoadTransition();
 }
