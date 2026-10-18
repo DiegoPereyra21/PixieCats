@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2787577284199697409
 Transform:
   m_ObjectHideFlags: 0
@@ -210,7 +210,8 @@ PrefabInstance:
       value: NPC2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2782440861667735982, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4647324385062708199, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
       insertIndex: 0
