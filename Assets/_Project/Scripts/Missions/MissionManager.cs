@@ -163,10 +163,17 @@ public class MissionManager : MonoBehaviour
     private void SpawnItems(MissionDataSO mission, SpawnArea area)
     {
         List<Vector3> points = area.GetPoints(mission.SpawnCount);
+        List<PickupObject> prefabs = mission.PickPrefabs(points.Count);
 
-        foreach (Vector3 point in points)
+        if (prefabs.Count == 0)
         {
-            PickupObject item = Instantiate(mission.ItemPrefab, point, Quaternion.identity, _spawnParent);
+            Debug.LogError($"MissionManager: la misión '{mission.Title}' no tiene prefabs de ítem asignados.", this);
+            return;
+        }
+
+        for (int i = 0; i < points.Count; i++)
+        {
+            PickupObject item = Instantiate(prefabs[i], points[i], Quaternion.identity, _spawnParent);
 
             // se apoya en el piso según su collider (se asume el pivot en el centro)
             Collider col = item.GetComponentInChildren<Collider>();

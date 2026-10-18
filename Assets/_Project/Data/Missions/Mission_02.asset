@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: Mission_02
   m_EditorClassIdentifier: Assembly-CSharp::MissionDataSO
   _title: Mision 2 - Collectible_Heavy
-  _itemPrefab: {fileID: 4909253884071207693, guid: b0e29ab97b5b5f646a76d64e7b998bd3, type: 3}
-  _requiredCount: 1
-  _extraCount: 3
+  _itemPrefabs:
+  - {fileID: 2939425939803390762, guid: 9f9f39ca5fd4dbb4ea1c294befdbddac, type: 3}
+  - {fileID: 2670714467241875975, guid: 13df0585779c1d94c8b6179e452a6157, type: 3}
+  _itemPrefab: {fileID: 0}
+  _requiredCount: 5
+  _extraCount: 15
   _timeLimit: 90
   _acceptTimeLimit: 30
