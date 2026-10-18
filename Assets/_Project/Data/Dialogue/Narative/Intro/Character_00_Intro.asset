@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46529e89c9c688e4c91aa00f4b8d83cf, type: 3}
+  m_Name: Character_00_Intro
+  m_EditorClassIdentifier: Assembly-CSharp::NarrativeDialogueData
+  dialogueId: character_00_intro
+  lines:
+  - character: {fileID: 11400000, guid: 698561cd506adc343b0e18df892d6740, type: 2}
+    text: Hola criatura del bosque! Seguramente eres Frixie, cierto? Unos viajeros me contaron que si necesitaba ayuda mientras atravesaba el bosque podria pedirtela
+  - character: {fileID: 11400000, guid: 698561cd506adc343b0e18df892d6740, type: 2}
+    text: Mi nombre es John, viajo de region en region buscando lugares nuevos para pescar, un gusto!
