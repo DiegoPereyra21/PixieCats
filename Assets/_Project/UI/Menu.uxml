@@ -1,3 +1,20 @@
-<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Button text="COMENZAR" name="StartButton"/>
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/UI/Menu.uss?fileID=7433441132597879392&amp;guid=5d00c10be01a0bc45a29772df61ad2a0&amp;type=3#Menu"/>
+    <ui:VisualElement name="MenuRoot" class="menu-root" style="flex-direction: column-reverse; background-image: url(&quot;project://database/Assets/_Project/UI/Fondo%20para%20menu%20temp.png?fileID=2800000&amp;guid=67fa75c73975d9e41aa096842931ae5e&amp;type=3#Fondo para menu temp&quot;); -unity-background-scale-mode: scale-and-crop; background-color: rgb(255, 255, 255); position: relative;">
+        <ui:Image name="GameLogo" source="project://database/Assets/_Project/UI/logo.png?fileID=-4320295261928297051&amp;guid=18abe2b0e9e229346980d503584b3ee1&amp;type=3#logo_0" style="width: 31%; height: auto; position: absolute; top: 5%; left: 1%; bottom: 51%;"/>
+        <ui:VisualElement name="MainButtons" class="menu-buttons" style="position: absolute; left: 3%; width: 380px; bottom: 3%; height: auto; top: auto; right: 0%;">
+            <ui:Button name="StartButton" text="JUGAR" class="menu-button play-button" style="background-color: rgba(108, 93, 211, 0.588); -unity-font-definition: url(&quot;project://database/Assets/_Project/Fonts/DeFonte%20reduced%20DemiGras.ttf?fileID=12800000&amp;guid=c7eeebe6fe9f30742bb56d3297a84c5d&amp;type=3#DeFonte reduced DemiGras&quot;); width: 100%; position: relative; top: 0; left: 0; font-size: 40px; height: 75px;"/>
+            <ui:Button name="OptionsButton" text="OPCIONES" class="menu-button" style="background-color: rgba(53, 70, 118, 0.588); -unity-font-definition: url(&quot;project://database/Assets/_Project/Fonts/DeFonte%20reduced%20DemiGras.ttf?fileID=12800000&amp;guid=c7eeebe6fe9f30742bb56d3297a84c5d&amp;type=3#DeFonte reduced DemiGras&quot;); width: 100%; font-size: 40px; height: 75px;"/>
+            <ui:Button name="ExitButton" text="SALIR" class="menu-button" style="background-color: rgba(53, 70, 118, 0.588); -unity-font-definition: url(&quot;project://database/Assets/_Project/Fonts/DeFonte%20reduced%20DemiGras.ttf?fileID=12800000&amp;guid=c7eeebe6fe9f30742bb56d3297a84c5d&amp;type=3#DeFonte reduced DemiGras&quot;); width: 100%; font-size: 40px; height: 75px;"/>
+        </ui:VisualElement>
+        <ui:VisualElement class="menu-card" style="width: 226px; background-color: rgba(56, 67, 147, 0); border-left-color: rgba(255, 255, 255, 0); border-right-color: rgba(255, 255, 255, 0); border-top-color: rgba(255, 255, 255, 0); border-bottom-color: rgba(255, 255, 255, 0); height: 226px;">
+            <ui:VisualElement name="OptionsPanel" class="options-panel options-card" style="position: absolute; left: 50%; top: 50%; width: 500px; background-color: rgb(32, 41, 75); border-top-left-radius: 18px; border-top-right-radius: 18px; border-bottom-right-radius: 18px; border-bottom-left-radius: 18px; translate: -50% -50%;">
+                <ui:Label text="OPCIONES" class="options-title"/>
+                <ui:Slider name="MusicSlider" label="Música" low-value="0" high-value="1" value="1" class="options-control"/>
+                <ui:Slider name="SfxSlider" label="Efectos" low-value="0" high-value="1" value="1" class="options-control"/>
+                <ui:Toggle name="FullscreenToggle" label="Pantalla completa" class="options-control"/>
+                <ui:Button name="BackButton" text="VOLVER" class="menu-button"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
 </ui:UXML>
