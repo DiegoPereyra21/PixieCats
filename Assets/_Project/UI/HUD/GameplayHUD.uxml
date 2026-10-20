@@ -36,7 +36,7 @@
                 <ui:Label name="MissionCompletionTimer" text="el tiempo que tenemos para terminar la mision" class="mission-timer" style="font-size: 19px;"/>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="MissionAlert" class="mission-alert" style="top: 23px; left: 1044px;">
+        <ui:VisualElement name="MissionAlert" class="mission-alert" style="top: 158px; left: 682px; display: none;">
             <ui:Label name="MissionAlertIcon" text="!" class="mission-alert-icon" style="left: 1px;"/>
         </ui:VisualElement>
         <ui:VisualElement name="ActiveStatusContainer" class="active-status-container" style="display: none;">

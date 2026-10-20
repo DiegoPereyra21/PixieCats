@@ -3,18 +3,20 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "UI/Transition Texts")]
 public class TransitionTextsSO : ScriptableObject
 {
-    [SerializeField, TextArea(3, 8)] private string _default;           // transición normal
-    [SerializeField, TextArea(3, 8)] private string _reputationMaxed;
-    [SerializeField, TextArea(3, 8)] private string _reputationLost;
-    [SerializeField, TextArea(3, 8)] private string _wellbeingDepleted;
+    [SerializeField, TextArea(3, 8)] private string _default;
+    [SerializeField, TextArea(3, 8)] private string _fae;
+    [SerializeField, TextArea(3, 8)] private string _depression;
+    [SerializeField, TextArea(3, 8)] private string _happy;
+    [SerializeField, TextArea(3, 8)] private string _sacrifice;
 
     public string GetText(EndingType? ending)
     {
         string text = ending switch
         {
-            EndingType.ReputationMaxed => _reputationMaxed,
-            EndingType.ReputationLost => _reputationLost,
-            EndingType.WellbeingDepleted => _wellbeingDepleted,
+            EndingType.Fae => _fae,
+            EndingType.Depression => _depression,
+            EndingType.Happy => _happy,
+            EndingType.Sacrifice => _sacrifice,
             _ => _default
         };
 

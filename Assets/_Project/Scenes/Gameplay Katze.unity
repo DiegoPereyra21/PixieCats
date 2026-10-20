@@ -9063,7 +9063,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameDebugLogger
   _manager: {fileID: 394876082}
   _stats: {fileID: 1638180946}
-  _endings: {fileID: 394876085}
+  _gameProgress: {fileID: 1783749329}
   _timerLogInterval: 10
 --- !u!114 &394876085
 MonoBehaviour:
@@ -9081,6 +9081,7 @@ MonoBehaviour:
   _manager: {fileID: 394876082}
   _sceneLoader: {fileID: 1010442784}
   _transitionDelay: 2
+  <HasEnded>k__BackingField: 0
 --- !u!114 &394876086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20608,6 +20609,17 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!114 &1050814533 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6727206863584352670, guid: 2c537d8ff1e503748b6ecb025c48a83c, type: 3}
+  m_PrefabInstance: {fileID: 1799299596}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
 --- !u!43 &1051134732
 Mesh:
   m_ObjectHideFlags: 0
@@ -32139,6 +32151,79 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1 &1676484160
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1676484162}
+  - component: {fileID: 1676484161}
+  - component: {fileID: 1676484163}
+  m_Layer: 0
+  m_Name: EndingHUD
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1676484161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1676484160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: d7b8d101df1d2cf49ba3164427d2a0a9, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: de0dca687f9370c49b8ba9497662d26f, type: 3}
+  m_SortingOrder: 0
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
+--- !u!4 &1676484162
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1676484160}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -87.95158, y: 8.15395, z: 136.16112}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1676484163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1676484160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4531e15fbaec345428996d71e0d79b92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EndingHUD
+  endingsHUD: {fileID: 1676484161}
+  hudsToHide:
+  - {fileID: 1688722751}
+  - {fileID: 871149124}
+  - {fileID: 1050814533}
 --- !u!43 &1676959767
 Mesh:
   m_ObjectHideFlags: 0
@@ -34276,6 +34361,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5176035182857506262, guid: 35405a7c61c0e9a4b9a8f0baa2c2dc9e, type: 3}
   m_PrefabInstance: {fileID: 1746345476}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1783749329 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7563118097346034286, guid: cd81878880be5cc49b649fc0737e916f, type: 3}
+  m_PrefabInstance: {fileID: 1814136459}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1df8d26c315a8ae4dbd0482fbcd2fde2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameProgressManager
 --- !u!43 &1793575333
 Mesh:
   m_ObjectHideFlags: 0
@@ -34704,6 +34800,22 @@ PrefabInstance:
     - target: {fileID: 7015125966636362970, guid: cd81878880be5cc49b649fc0737e916f, type: 3}
       propertyPath: m_Name
       value: GameProgressManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7563118097346034286, guid: cd81878880be5cc49b649fc0737e916f, type: 3}
+      propertyPath: endingsHUD
+      value: 
+      objectReference: {fileID: 1676484161}
+    - target: {fileID: 7563118097346034286, guid: cd81878880be5cc49b649fc0737e916f, type: 3}
+      propertyPath: playerStats
+      value: 
+      objectReference: {fileID: 1638180946}
+    - target: {fileID: 7563118097346034286, guid: cd81878880be5cc49b649fc0737e916f, type: 3}
+      propertyPath: goodEndingView
+      value: 
+      objectReference: {fileID: 9197481963319205126, guid: de0dca687f9370c49b8ba9497662d26f, type: 3}
+    - target: {fileID: 7563118097346034286, guid: cd81878880be5cc49b649fc0737e916f, type: 3}
+      propertyPath: nightDurationMinutes
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -42162,6 +42274,7 @@ SceneRoots:
   - {fileID: 98848912}
   - {fileID: 131549294}
   - {fileID: 1625491383}
+  - {fileID: 1676484162}
   - {fileID: 1010442785}
   - {fileID: 18812505}
   - {fileID: 1269580388}
