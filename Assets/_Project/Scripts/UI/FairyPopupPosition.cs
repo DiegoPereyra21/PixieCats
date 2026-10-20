@@ -13,6 +13,7 @@ public class FairyPopupPosition : MonoBehaviour
     [SerializeField] private Vector3 worldOffset = new Vector3(0f, 1.5f, 0f); // altura de la cabeza
     [SerializeField] private Vector2 screenOffset = new Vector2(0f, -15f);    // px de panel; y negativo = más arriba
 
+
     private VisualElement popupPanel;
 
     private void OnEnable()
