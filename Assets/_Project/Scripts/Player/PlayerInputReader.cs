@@ -9,6 +9,7 @@ public class PlayerInputReader : MonoBehaviour
     public Vector2 Move { get; private set; }
     public bool Sprint { get; private set; }
     public bool JumpHeld { get; private set; }
+    public bool InteractHeld { get; private set; }
     public bool BrakeHeld => Move.y < BrakeThreshold;
     public float LastJumpPressTime { get; private set; } = float.NegativeInfinity;
 
@@ -36,6 +37,7 @@ public class PlayerInputReader : MonoBehaviour
         Move = blocked ? Vector2.zero : _move.ReadValue<Vector2>();
         Sprint = !blocked && _sprint.IsPressed();
         JumpHeld = !blocked && _jump.IsPressed();
+        InteractHeld = !blocked && _interact.IsPressed();
 
         if (_jump.WasPressedThisFrame() && !blocked)
         {

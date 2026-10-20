@@ -15612,6 +15612,62 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d0413cab4dbf9e4dbe9aecdc070fc32, type: 3}
+--- !u!1 &736785490
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 736785492}
+  - component: {fileID: 736785491}
+  m_Layer: 0
+  m_Name: MushroomSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &736785491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736785490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98427b5e07808d74b9a5bce78d3be593, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MushroomSpawner
+  _prefabs:
+  - {fileID: 3137234560243051482, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
+  _zones:
+  - Area: {fileID: 757288093}
+    Count: 2
+  - Area: {fileID: 802413650}
+    Count: 2
+  - Area: {fileID: 1812337978}
+    Count: 2
+  - Area: {fileID: 1509898234}
+    Count: 2
+  _spawnParent: {fileID: 0}
+--- !u!4 &736785492
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736785490}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 95.78583, y: 2.8, z: -81.71719}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &745044977
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -24675,6 +24731,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4541489378637581251, guid: 10144f24d9285ac4e95d6e57d64b01e9, type: 3}
   m_PrefabInstance: {fileID: 1288124655}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1291335752 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9118160705284661083, guid: ed3eb6b6e8c11534d8368cbf664ff034, type: 3}
+  m_PrefabInstance: {fileID: 1638180940}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912280075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27c0aafdc93d07243a1fdf000490c51c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
 --- !u!1001 &1302000035
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31398,6 +31465,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8431299735638179087, guid: ed3eb6b6e8c11534d8368cbf664ff034, type: 3}
+      propertyPath: _eater
+      value: 
+      objectReference: {fileID: 1912280077}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -31408,6 +31479,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7888510499887351365, guid: ed3eb6b6e8c11534d8368cbf664ff034, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1912280076}
+    - targetCorrespondingSourceObject: {fileID: 7888510499887351365, guid: ed3eb6b6e8c11534d8368cbf664ff034, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1912280077}
   m_SourcePrefab: {fileID: 100100000, guid: ed3eb6b6e8c11534d8368cbf664ff034, type: 3}
 --- !u!4 &1638180941 stripped
 Transform:
@@ -34740,8 +34814,50 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7015125966636362970, guid: cd81878880be5cc49b649fc0737e916f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1814136461}
+    - targetCorrespondingSourceObject: {fileID: 7015125966636362970, guid: cd81878880be5cc49b649fc0737e916f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1814136462}
   m_SourcePrefab: {fileID: 100100000, guid: cd81878880be5cc49b649fc0737e916f, type: 3}
+--- !u!1 &1814136460 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7015125966636362970, guid: cd81878880be5cc49b649fc0737e916f, type: 3}
+  m_PrefabInstance: {fileID: 1814136459}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1814136461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814136460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d3ebe643775c6f44b7154ca98824d71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameEndings
+  _stats: {fileID: 1638180946}
+  _manager: {fileID: 394876082}
+  _sceneLoader: {fileID: 1010442784}
+  _transitionDelay: 2
+--- !u!114 &1814136462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814136460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b33b5a9c264de1f4dbd030af5db606dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WellbeingDrain
+  _stats: {fileID: 1638180946}
+  _endings: {fileID: 1814136461}
+  _tickInterval: 1
 --- !u!1001 &1823573520
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36037,6 +36153,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterIdentity
   characterData: {fileID: 11400000, guid: a19afb1f1bb4df945b20f463d4858430, type: 2}
+--- !u!114 &1912280077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912280075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cb1fc0a61ce71e4095ad5bebde2285d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerEater
+  _input: {fileID: 1638180944}
+  _movement: {fileID: 1291335752}
+  _flight: {fileID: 1638180942}
+  _stats: {fileID: 1638180946}
+  _maxDistance: 3
 --- !u!1 &1912784462 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e5555d6a1b4efdd478065237ede9f5b8, type: 3}
@@ -42192,3 +42325,4 @@ SceneRoots:
   - {fileID: 18812505}
   - {fileID: 1269580388}
   - {fileID: 1432519593}
+  - {fileID: 736785492}
