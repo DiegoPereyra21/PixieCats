@@ -9077,11 +9077,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3ebe643775c6f44b7154ca98824d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameEndings
-  _stats: {fileID: 1638180946}
-  _manager: {fileID: 394876082}
-  _sceneLoader: {fileID: 1010442784}
-  _transitionDelay: 2
-  <HasEnded>k__BackingField: 0
 --- !u!114 &394876086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31436,7 +31431,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WellbeingDrain
   _stats: {fileID: 1638180946}
-  _endings: {fileID: 1814136461}
 --- !u!43 &1651802288
 Mesh:
   m_ObjectHideFlags: 0
@@ -32222,7 +32216,7 @@ MonoBehaviour:
   endingsHUD: {fileID: 1676484161}
   hudsToHide:
   - {fileID: 1688722751}
-  - {fileID: 871149124}
+  - {fileID: 2057848723}
   - {fileID: 1050814533}
 --- !u!43 &1676959767
 Mesh:
@@ -34366,7 +34360,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7563118097346034286, guid: cd81878880be5cc49b649fc0737e916f, type: 3}
   m_PrefabInstance: {fileID: 1814136459}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1814136460}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1df8d26c315a8ae4dbd0482fbcd2fde2, type: 3}
@@ -34842,10 +34836,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3ebe643775c6f44b7154ca98824d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameEndings
-  _stats: {fileID: 1638180946}
-  _manager: {fileID: 394876082}
-  _sceneLoader: {fileID: 1010442784}
-  _transitionDelay: 2
 --- !u!1001 &1823573520
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38619,6 +38609,17 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!114 &2057848723 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3485473389870655981, guid: ed3eb6b6e8c11534d8368cbf664ff034, type: 3}
+  m_PrefabInstance: {fileID: 1638180940}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
 --- !u!43 &2059266073
 Mesh:
   m_ObjectHideFlags: 0
@@ -42246,6 +42247,7 @@ SceneRoots:
   - {fileID: 1618657053}
   - {fileID: 1836617609}
   - {fileID: 320560121}
+  - {fileID: 1638180940}
   - {fileID: 837277230}
   - {fileID: 648655562}
   - {fileID: 1964154492}
@@ -42268,7 +42270,6 @@ SceneRoots:
   - {fileID: 1995038678}
   - {fileID: 179694001}
   - {fileID: 133486327}
-  - {fileID: 1638180940}
   - {fileID: 1484266513}
   - {fileID: 1258325120}
   - {fileID: 98848912}

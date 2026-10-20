@@ -1,1 +1,48 @@
-VisualElement {}
+
+/* Panel de cada final */
+#FaeEnding,
+#HappyEnding,
+#DepressionEnding,
+#SacrificeEnding {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgba(0, 0, 0, 0.45);
+}
+
+/* Imagen del final */
+#FaeEnding Image,
+#HappyEnding Image,
+#DepressionEnding Image,
+#SacrificeEnding Image {
+    width: 300px;
+    height: 300px;
+    flex-shrink: 0;
+
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/* Texto narrativo */
+#FaeEnding Label,
+#HappyEnding Label,
+#DepressionEnding Label,
+#SacrificeEnding Label {
+    width: 85%;
+    max-width: 1000px;
+    flex-shrink: 0;
+
+    margin-top: 28px;
+    padding: 12px;
+
+    color: rgb(245, 240, 230);
+    font-size: 28px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    white-space: normal;
+}
