@@ -1,8 +1,7 @@
-
-using UnityEngine;
-using UnityEngine.UIElements;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 public class NarrativeDialogueManager : MonoBehaviour
 {
@@ -12,6 +11,9 @@ public class NarrativeDialogueManager : MonoBehaviour
     [SerializeField] private UIDocument uiDocument;
     [SerializeField] private PlayerInputReader playerInput;
 
+    [Header("Paginado")]
+    [SerializeField, Min(20)] private int maxCharsPerPage = 110;
+
     private VisualElement dialogueRoot;
     private VisualElement portraitContainer;
     private Image characterPortrait;
@@ -19,16 +21,15 @@ public class NarrativeDialogueManager : MonoBehaviour
     private Label dialogueText;
     private Button nextButton;
     private Button declineButton;
-    private bool askForAcceptance;
+
     private NarrativeDialogueData currentDialogue;
     private int currentLineIndex;
-    [Header("Paginado")]
-    [SerializeField, Min(20)] private int maxCharsPerPage = 110;
-
-    private readonly List<string> pages = new List<string>();
     private int currentPageIndex;
+    private readonly List<string> pages = new List<string>();
 
     private bool isDialogueOpen;
+    private bool askForAcceptance; // el dialogo termina con la pregunta Si / No
+    private bool askingNow;        // ultima pagina con Si / No: E no avanza, hay que clicar
 
     public bool IsDialogueOpen => isDialogueOpen;
 
@@ -63,7 +64,6 @@ public class NarrativeDialogueManager : MonoBehaviour
         characterName = root.Q<Label>("CharacterName");
         dialogueText = root.Q<Label>("DialogueText");
         nextButton = root.Q<Button>("NextButton");
-
         declineButton = root.Q<Button>("DeclineButton");
 
         if (declineButton != null)
@@ -78,7 +78,6 @@ public class NarrativeDialogueManager : MonoBehaviour
         if (dialogueRoot == null || characterName == null || dialogueText == null || nextButton == null)
         {
             Debug.LogError("Faltan elementos en NarrativeDialogueHUD. Revisa los nombres del UXML.");
-
             enabled = false;
             return;
         }
@@ -90,13 +89,13 @@ public class NarrativeDialogueManager : MonoBehaviour
     private void OnEnable()
     {
         if (playerInput != null && isDialogueOpen)
-            playerInput.InteractPressed += AdvanceDialogue;
+            playerInput.InteractPressed += OnInteractPressed;
     }
 
     private void OnDisable()
     {
         if (playerInput != null)
-            playerInput.InteractPressed -= AdvanceDialogue;
+            playerInput.InteractPressed -= OnInteractPressed;
 
         if (nextButton != null)
             nextButton.clicked -= AdvanceDialogue;
@@ -111,9 +110,7 @@ public class NarrativeDialogueManager : MonoBehaviour
     public bool StartDialogue(NarrativeDialogueData dialogue, bool askAcceptance = false)
     {
         if (isDialogueOpen || dialogue == null || dialogue.Lines == null || dialogue.Lines.Length == 0)
-        {
             return false;
-        }
 
         if (playerInput == null)
         {
@@ -126,7 +123,7 @@ public class NarrativeDialogueManager : MonoBehaviour
         isDialogueOpen = true;
         askForAcceptance = askAcceptance;
 
-        playerInput.InteractPressed += AdvanceDialogue;
+        playerInput.InteractPressed += OnInteractPressed;
 
         dialogueRoot.style.display = DisplayStyle.Flex;
         ShowCurrentLine();
@@ -150,7 +147,7 @@ public class NarrativeDialogueManager : MonoBehaviour
             Sprite portrait = character.GetPortrait(line.Emotion);
 
             if (portrait == null)
-                Debug.Log($"Dialogo línea {currentLineIndex}: character={(line.Character != null ? line.Character.name : "NULL")}, emotion={line.Emotion}", currentDialogue);
+                Debug.Log($"Dialogo linea {currentLineIndex}: character={(line.Character != null ? line.Character.name : "NULL")}, emotion={line.Emotion}", currentDialogue);
 
             if (characterPortrait != null)
                 characterPortrait.sprite = portrait;
@@ -166,8 +163,30 @@ public class NarrativeDialogueManager : MonoBehaviour
                 portraitContainer.style.display = DisplayStyle.None;
         }
 
-
         ShowPage();
+    }
+
+    private void ShowPage()
+    {
+        dialogueText.text = pages[currentPageIndex];
+
+        bool lastPage = currentPageIndex == pages.Count - 1;
+        bool lastLine = currentLineIndex == currentDialogue.Lines.Length - 1;
+        bool askNow = lastPage && lastLine && askForAcceptance;
+
+        askingNow = askNow;
+
+        if (declineButton != null)
+            declineButton.style.display = askNow ? DisplayStyle.Flex : DisplayStyle.None;
+
+        nextButton.text = askNow ? " S\u00ED" : (lastPage && lastLine ? " [E] Terminar" : " [E] Continuar");
+    }
+
+    // E no avanza en la pregunta Si / No: ahi solo se puede clicar
+    private void OnInteractPressed()
+    {
+        if (askingNow) return;
+        AdvanceDialogue();
     }
 
     private void AdvanceDialogue()
@@ -195,37 +214,24 @@ public class NarrativeDialogueManager : MonoBehaviour
     private void EndDialogue()
     {
         if (playerInput != null)
-            playerInput.InteractPressed -= AdvanceDialogue;
+            playerInput.InteractPressed -= OnInteractPressed;
 
         NarrativeDialogueData finished = currentDialogue;
 
         isDialogueOpen = false;
         currentDialogue = null;
-
         askForAcceptance = false;
+        askingNow = false;
 
         if (declineButton != null)
             declineButton.style.display = DisplayStyle.None;
 
+        dialogueRoot.style.display = DisplayStyle.None;
 
         DialogueEnded?.Invoke(finished);
     }
 
-    private void ShowPage()
-    {
-        dialogueText.text = pages[currentPageIndex];
-
-        bool lastPage = currentPageIndex == pages.Count - 1;
-        bool lastLine = currentLineIndex == currentDialogue.Lines.Length - 1;
-        bool askNow = lastPage && lastLine && askForAcceptance;
-
-        if (declineButton != null)
-            declineButton.style.display = askNow ? DisplayStyle.Flex : DisplayStyle.None;
-
-        nextButton.text = askNow ? " [E] Sí" : (lastPage && lastLine ? " [E] Terminar" : " [E] Continuar");
-    }
-
-    // corta en fin de oración si puede, si no en espacio, sin pasar de maxCharsPerPage
+    // corta en fin de oracion si puede, si no en espacio, sin pasar de maxCharsPerPage
     private void SplitIntoPages(string text)
     {
         pages.Clear();
@@ -234,7 +240,7 @@ public class NarrativeDialogueManager : MonoBehaviour
         while (text.Length > maxCharsPerPage)
         {
             int cut = text.LastIndexOf(' ', maxCharsPerPage);
-            int sentence = text.LastIndexOfAny(new[] { '.', '!', '?', '…' }, maxCharsPerPage - 1);
+            int sentence = text.LastIndexOfAny(new[] { '.', '!', '?', '\u2026' }, maxCharsPerPage - 1);
 
             if (sentence > maxCharsPerPage * 0.5f) cut = sentence + 1;
             else if (cut <= 0) cut = maxCharsPerPage;
