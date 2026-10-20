@@ -21,6 +21,8 @@ public class PlayerFlight : MonoBehaviour
     [SerializeField] private LayerMask _groundMask = ~0;      // excluir la layer Player
     [SerializeField] private float _groundProbeDistance = 200f;
     [SerializeField] private float _ceilingSoftZone = 2f;     // distancia donde la subida se frena
+    [SerializeField] private float _brakeDescendSpeed = 25f;       // velocidad de caída al frenar con S
+    [SerializeField] private float _brakeVerticalAcceleration = 80f; // qué tan rápido llega a esa caída
 
     [Header("Despegue")]
     [SerializeField] private float _takeoffImpulse = 4f;      // velocidad vertical mínima al activar el vuelo
@@ -101,9 +103,15 @@ public class PlayerFlight : MonoBehaviour
             // el peso hace más lento el avance (la mitad de influencia que en vertical)
             _movement.MoveHorizontal(speed / (1f + _currentWeight * _weightInfluence * 0.5f), _flyAcceleration);
         }
+        bool braking = _input.BrakeHeld;
 
         float targetY;
-        if (_input.JumpHeld)
+        if (braking)
+        {
+            // S: frena en horizontal y se deja caer rápido (ignora Space)
+            targetY = -_brakeDescendSpeed;
+        }
+        else if (_input.JumpHeld)
         {
             // cerca del techo la subida se frena gradualmente
             float ceilingFactor = Mathf.Clamp01((ceiling - _rb.position.y) / _ceilingSoftZone);
@@ -116,12 +124,14 @@ public class PlayerFlight : MonoBehaviour
 
         // oscilación constante; con más peso aletea más lento (fase acumulada para evitar saltos al cambiar el peso)
         _bobPhase += (_bobFrequency / weightFactor) * Time.fixedDeltaTime;
-        targetY += Mathf.Sin(_bobPhase) * _bobAmplitude;
+        if (!braking) targetY += Mathf.Sin(_bobPhase) * _bobAmplitude;
 
         if (_rb.position.y >= ceiling) targetY = Mathf.Min(targetY, 0f);
 
+        float acceleration = braking ? _brakeVerticalAcceleration : _verticalAcceleration;
+
         Vector3 velocity = _rb.linearVelocity;
-        velocity.y = Mathf.MoveTowards(velocity.y, targetY, _verticalAcceleration * Time.fixedDeltaTime);
+        velocity.y = Mathf.MoveTowards(velocity.y, targetY, acceleration * Time.fixedDeltaTime);
         _rb.linearVelocity = velocity;
     }
 
