@@ -1664,10 +1664,26 @@ PrefabInstance:
       propertyPath: _spawnArea
       value: 
       objectReference: {fileID: 1812337978}
+    - target: {fileID: 7424660417022346299, guid: f6f38f243f5b6ad4ba157971e809ccc4, type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 7424660417022346299, guid: f6f38f243f5b6ad4ba157971e809ccc4, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7424660417022346299, guid: f6f38f243f5b6ad4ba157971e809ccc4, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 8393971939404382939, guid: f6f38f243f5b6ad4ba157971e809ccc4, type: 3}
       propertyPath: _player
       value: 
       objectReference: {fileID: 1638180945}
+    - target: {fileID: 8393971939404382939, guid: f6f38f243f5b6ad4ba157971e809ccc4, type: 3}
+      propertyPath: _maxSizeScale
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1860,10 +1876,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 275474695928777840, guid: 7857edf0d334c2d4aa51e54f6451f1f4, type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 275474695928777840, guid: 7857edf0d334c2d4aa51e54f6451f1f4, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 275474695928777840, guid: 7857edf0d334c2d4aa51e54f6451f1f4, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 1199785475389213328, guid: 7857edf0d334c2d4aa51e54f6451f1f4, type: 3}
       propertyPath: _player
       value: 
       objectReference: {fileID: 1638180945}
+    - target: {fileID: 1199785475389213328, guid: 7857edf0d334c2d4aa51e54f6451f1f4, type: 3}
+      propertyPath: _maxSizeScale
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 2830254178126090705, guid: 7857edf0d334c2d4aa51e54f6451f1f4, type: 3}
       propertyPath: _manager
       value: 
@@ -21530,6 +21562,22 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 1638180945}
+    - target: {fileID: 2447814369477602052, guid: 2cfc5d226f9894b4fb815cb61c19c5e4, type: 3}
+      propertyPath: _maxSizeScale
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3642482450866761188, guid: 2cfc5d226f9894b4fb815cb61c19c5e4, type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 3642482450866761188, guid: 2cfc5d226f9894b4fb815cb61c19c5e4, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3642482450866761188, guid: 2cfc5d226f9894b4fb815cb61c19c5e4, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 5433766888594301258, guid: 2cfc5d226f9894b4fb815cb61c19c5e4, type: 3}
       propertyPath: m_Name
       value: NPC2
@@ -24906,10 +24954,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 294586847168402681, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
+      propertyPath: ShapeModule.arc.mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 294586847168402681, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 294586847168402681, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 294586847168402681, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 1684985504320672281, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
       propertyPath: _player
       value: 
       objectReference: {fileID: 1638180945}
+    - target: {fileID: 1684985504320672281, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
+      propertyPath: _maxSizeScale
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 2342767659114645848, guid: b68f3e14ccae9c7449872216a407b185, type: 3}
       propertyPath: _manager
       value: 
