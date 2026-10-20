@@ -28,8 +28,13 @@ public class MushroomPortal : MonoBehaviour, IInteractable, IGuideTarget
         if (!CanInteract) return;
         _used = true; // evita cargar la transición dos veces
 
-        // el calendario avanza a la noche siguiente; GameProgressManager sobrevive a la recarga
-        if (GameProgressManager.Instance != null) GameProgressManager.Instance.ReturnThroughMushroomCircle();
+        if (GameProgressManager.Instance != null)
+        {
+            GameProgressManager.Instance.ReturnThroughMushroomCircle();
+
+            // si esta vuelta disparó un final, no se carga la transición
+            if (GameProgressManager.Instance.HasEndingTriggered) return;
+        }
 
         _sceneLoader.LoadTransition();
     }

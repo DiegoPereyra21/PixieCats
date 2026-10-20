@@ -7,7 +7,7 @@ using Unity.Cinemachine;
 public class NarrativeDialogueManager : MonoBehaviour
 {
     public static NarrativeDialogueManager Instance { get; private set; }
-
+    public event Action<NarrativeDialogueData> DialogueDeclined;
     [Header("Referencias")]
     [SerializeField] private UIDocument uiDocument;
     [SerializeField] private PlayerInputReader playerInput;
@@ -229,6 +229,13 @@ public class NarrativeDialogueManager : MonoBehaviour
     {
         if (!isDialogueOpen || !askingNow) return;
 
+        // en New Game+ se puede rechazar: cierra el diálogo y avisa
+        if (GameSession.IsNewGamePlus)
+        {
+            EndDialogue(true);
+            return;
+        }
+
         Camera cam = Camera.main;
 
         if (cam != null)
@@ -273,7 +280,7 @@ public class NarrativeDialogueManager : MonoBehaviour
         ShowCurrentLine();
     }
 
-    private void EndDialogue()
+    private void EndDialogue(bool declined = false)
     {
         if (playerInput != null)
             playerInput.InteractPressed -= OnInteractPressed;
@@ -290,7 +297,8 @@ public class NarrativeDialogueManager : MonoBehaviour
 
         dialogueRoot.style.display = DisplayStyle.None;
 
-        DialogueEnded?.Invoke(finished);
+        if (declined) DialogueDeclined?.Invoke(finished);
+        else DialogueEnded?.Invoke(finished);
 
         if (focusCamera != null)
         {

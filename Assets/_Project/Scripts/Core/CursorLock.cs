@@ -21,7 +21,8 @@ public class CursorLock : MonoBehaviour
 
     private void Update()
     {
-        bool inDialogue = NarrativeDialogueManager.Instance != null && NarrativeDialogueManager.Instance.IsDialogueOpen;
+        bool inDialogue = (NarrativeDialogueManager.Instance != null && NarrativeDialogueManager.Instance.IsDialogueOpen)
+                          || (GameProgressManager.Instance != null && GameProgressManager.Instance.HasEndingTriggered);
 
         if (inDialogue)
         {

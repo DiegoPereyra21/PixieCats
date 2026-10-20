@@ -10,9 +10,14 @@ public class QuestGiver : MonoBehaviour, IInteractable, IGuideTarget
     [SerializeField] private SpawnArea _spawnArea;
     [SerializeField] private CinemachineCamera _dialogueCamera; // la PersonalCamera de este NPC
 
-    public MissionState State => _manager.GetState(_mission);
+
+    public bool WasSkipped => _manager.WasSkipped(_mission);
+
     public bool CanInteract => State == MissionState.Available || State == MissionState.InProgress
-                               || (State == MissionState.Completed && _mission.AfterCompletedDialogue != null);
+                               || (State == MissionState.Completed && !WasSkipped && _mission.AfterCompletedDialogue != null);
+
+
+    public MissionState State => _manager.GetState(_mission);
     public bool IsBlocked => false;
     public bool WasDeliveredLate => _manager.WasLate(_mission); // para un diálogo distinto si se entregó tarde
 
@@ -125,6 +130,7 @@ public class QuestGiver : MonoBehaviour, IInteractable, IGuideTarget
         _pendingIntro = intro;
         _manager.PauseTimer(); // el tiempo para aceptar no corre mientras habla
         dialogues.DialogueEnded += OnDialogueEnded;
+        dialogues.DialogueDeclined += OnDialogueDeclined;
 
         if (!dialogues.StartDialogue(intro, true, _dialogueCamera))
         {
@@ -150,6 +156,16 @@ public class QuestGiver : MonoBehaviour, IInteractable, IGuideTarget
 
         if (NarrativeDialogueManager.Instance != null)
             NarrativeDialogueManager.Instance.DialogueEnded -= OnDialogueEnded;
+
+        NarrativeDialogueManager.Instance.DialogueDeclined -= OnDialogueDeclined;
+    }
+
+    private void OnDialogueDeclined(NarrativeDialogueData dialogue)
+    {
+        if (dialogue != _pendingIntro) return;
+
+        CancelPendingIntro();
+        _manager.Skip(_mission);
     }
 
     private void Accept() => _manager.TryAccept(_mission, _spawnArea);

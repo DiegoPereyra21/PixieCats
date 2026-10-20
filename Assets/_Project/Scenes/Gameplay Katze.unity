@@ -32267,6 +32267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EndingHUD
   endingsHUD: {fileID: 1676484161}
+  menuScene: Menu
   hudsToHide:
   - {fileID: 1688722751}
   - {fileID: 2057848723}
@@ -34525,6 +34526,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1df8d26c315a8ae4dbd0482fbcd2fde2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameProgressManager
+--- !u!1 &1790294781
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1790294783}
+  - component: {fileID: 1790294782}
+  m_Layer: 0
+  m_Name: NewGamePlusLighting
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1790294782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1790294781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f46a2bdee43ab04ab4a8c0c13c82582, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NewGamePlusLighting
+  _ambientIntensity: 1.1
+--- !u!4 &1790294783
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1790294781}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -135.51233, y: 8.41871, z: 163.87178}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1793575333
 Mesh:
   m_ObjectHideFlags: 0
@@ -42443,3 +42489,4 @@ SceneRoots:
   - {fileID: 1777359475}
   - {fileID: 363599474}
   - {fileID: 1764616092}
+  - {fileID: 1790294783}

@@ -30,4 +30,16 @@ public static class GameSession
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void ResetOnPlay() => Reset(); // por si el dominio no se recarga al dar Play
+
+    // New Game+
+    public static bool IsNewGamePlus { get; private set; }
+    public static bool NewGamePlusUnlocked => PlayerPrefs.GetInt("NewGamePlusUnlocked", 0) == 1;
+
+    public static void SetNewGamePlus(bool value) => IsNewGamePlus = value;
+
+    public static void UnlockNewGamePlus()
+    {
+        PlayerPrefs.SetInt("NewGamePlusUnlocked", 1);
+        PlayerPrefs.Save();
+    }
 }

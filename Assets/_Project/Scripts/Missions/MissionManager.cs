@@ -37,7 +37,27 @@ public class MissionManager : MonoBehaviour
     private bool _acceptTimerRunning;
     private float _acceptTimeRemaining;
     private int _pauseRequests;
+    public event Action<MissionDataSO> MissionSkipped;
+    private readonly HashSet<MissionDataSO> _skipped = new HashSet<MissionDataSO>();
 
+    public bool WasSkipped(MissionDataSO mission) => _skipped.Contains(mission);
+
+    // Rechaza la misión disponible (New Game+): pasa al siguiente NPC sin tocar bienestar ni reputación
+    public bool Skip(MissionDataSO mission)
+    {
+        if (GetState(mission) != MissionState.Available) return false;
+
+        _acceptTimerRunning = false;
+        _skipped.Add(mission);
+        _currentIndex++;
+
+        MissionSkipped?.Invoke(mission);
+        StateChanged?.Invoke();
+
+        StartAcceptTimer();
+        if (_currentIndex >= _chain.Count) ChainFinished?.Invoke();
+        return true;
+    }
     private void Update()
     {
         if (IsTimerPaused) return;

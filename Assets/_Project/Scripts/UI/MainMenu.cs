@@ -13,7 +13,7 @@ public class MainMenu : MonoBehaviour
     private VisualElement _mainButtons, _optionsPanel;
     private Slider _musicSlider, _sfxSlider;
     private Toggle _fullscreenToggle;
-
+    private Button _newGamePlusButton;
     private void OnEnable()
     {
         if (_uiDocument == null || _sceneLoader == null)
@@ -32,6 +32,8 @@ public class MainMenu : MonoBehaviour
         _musicSlider = root.Q<Slider>("MusicSlider");
         _sfxSlider = root.Q<Slider>("SfxSlider");
         _fullscreenToggle = root.Q<Toggle>("FullscreenToggle");
+        _newGamePlusButton = root.Q<Button>("NewGamePlusButton");
+
 
         if (_startButton == null || _optionsButton == null || _exitButton == null ||
             _backButton == null || _mainButtons == null || _optionsPanel == null ||
@@ -46,6 +48,14 @@ public class MainMenu : MonoBehaviour
         RegisterSounds(_exitButton);
         RegisterSounds(_backButton);
 
+        if (_newGamePlusButton != null)
+        {
+            // solo aparece cuando algún final lo desbloqueó
+            _newGamePlusButton.style.display = GameSession.NewGamePlusUnlocked ? DisplayStyle.Flex : DisplayStyle.None;
+            RegisterSounds(_newGamePlusButton);
+            _newGamePlusButton.clicked += OnNewGamePlusClicked;
+        }
+
         _startButton.clicked += OnStartClicked;
         _optionsButton.clicked += ShowOptions;
         _exitButton.clicked += _sceneLoader.Quit;
@@ -59,7 +69,7 @@ public class MainMenu : MonoBehaviour
 
     private void OnDisable()
     {
-        foreach (var button in new[] { _startButton, _optionsButton, _exitButton, _backButton })
+        foreach (var button in new[] { _startButton, _optionsButton, _exitButton, _backButton, _newGamePlusButton })
         {
             if (button == null) continue;
             button.UnregisterCallback<PointerEnterEvent>(OnButtonHover);
@@ -72,11 +82,20 @@ public class MainMenu : MonoBehaviour
         if (_musicSlider != null) _musicSlider.UnregisterValueChangedCallback(OnMusicChanged);
         if (_sfxSlider != null) _sfxSlider.UnregisterValueChangedCallback(OnSfxChanged);
         if (_fullscreenToggle != null) _fullscreenToggle.UnregisterValueChangedCallback(OnFullscreenChanged);
+        if (_newGamePlusButton != null) _newGamePlusButton.clicked -= OnNewGamePlusClicked;
     }
 
     private void OnStartClicked()
     {
         GameSession.Reset();
+        GameSession.SetNewGamePlus(false);
+        _sceneLoader.LoadTransition();
+    }
+
+    private void OnNewGamePlusClicked()
+    {
+        GameSession.Reset();
+        GameSession.SetNewGamePlus(true);
         _sceneLoader.LoadTransition();
     }
 

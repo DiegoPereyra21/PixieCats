@@ -1,8 +1,6 @@
-
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static GameSession;
 
 public enum FairySpawnLocation
 {
@@ -18,24 +16,28 @@ public enum GameProgressPhase
 
 public class GameProgressManager : MonoBehaviour
 {
-
     public static GameProgressManager Instance { get; private set; }
     public GameProgressPhase Phase { get; private set; }
     public FairySpawnLocation NextSpawnLocation { get; private set; }
     public FairySpawnLocation CurrentSpawnLocation { get; private set; }
     public bool HasEndingTriggered { get; private set; }
 
-    [Header("Estadisticas del jugador")]
-    [SerializeField] private PlayerStats playerStats;
-
     [Header("Ciclo nocturno")]
     [SerializeField, Min(0.1f)]
     private float nightDurationMinutes = 5f;
+
     [SerializeField] private string transitionScene = "Transition";
 
     [Header("Dia Inicial")]
     [SerializeField, Min(1)]
     private int initialDay = 1;
+
+    [Header("Finales por stats (vida en %)")]
+    [SerializeField, Range(0f, 100f)] private float sacrificeMaxWellbeing = 25f; // reputación al máximo con esta vida o menos
+    [SerializeField, Range(0f, 100f)] private float communityMaxWellbeing = 50f; // igual, en New Game+
+
+    [Header("New Game+")]
+    [SerializeField, Min(1)] private int nightsForHappyEnding = 3;
 
     private const int MinutesPerHour = 60;
     private const int MinutesPerDay = 24 * MinutesPerHour;
@@ -75,6 +77,9 @@ public class GameProgressManager : MonoBehaviour
 
     public int NightsWithoutReturning { get; private set; }
 
+    // noches terminadas, hayas vuelto a tiempo o no
+    public int NightsPlayed { get; private set; }
+
     // notifica el intervalo de tiempo transcurrido
     public event Action<long, long> OnTimeUpdated;
 
@@ -84,10 +89,6 @@ public class GameProgressManager : MonoBehaviour
     public event Action OnReturnedToKingdom;
 
     public event Action<EndingType> OnEndingTriggered;
-    // public event Action OnFaeEndingTriggered;
-    //public event Action OnHumanEndingTriggered;
-    //public event Action OnDepressionEndingTriggered;
-    //public event Action OnGoodEndingTriggered;
 
     public event Action<bool> OnCarryPenaltyChanged;
 
@@ -142,9 +143,6 @@ public class GameProgressManager : MonoBehaviour
 
         long previousMinute = CurrentGameMinute;
 
-        // la noche completa representa 12 horas de juego
-        //double gameMinutesPerSecond = NightDurationGameMinutes / (nightDurationMinutes * 60.0);
-
         // la noche completa representa 24 horas de juego - temp
         double gameMinutesPerSecond = NightDurationGameMinutes / (nightDurationMinutes * 120.0);
 
@@ -184,15 +182,24 @@ public class GameProgressManager : MonoBehaviour
         // el hada no llego al portal a tiempo
         hasReturnedToKingdomLastNight = false;
         NightsWithoutReturning++;
+        NightsPlayed++;
 
         NextSpawnLocation = FairySpawnLocation.HollowTree;
         SetHeavyCarryPenalty(true);
 
         OnFailedReturn?.Invoke(NightsWithoutReturning);
 
-        if (NightsWithoutReturning >= 2)
+        // acumuladas, aunque haya vuelto en medio; en New Game+ no existe
+        if (!GameSession.IsNewGamePlus && NightsWithoutReturning >= 2)
         {
             TriggerEnding(EndingType.Fae);
+            return;
+        }
+
+        // New Game+: la tercera noche termina en el final feliz, llegues o no
+        if (GameSession.IsNewGamePlus && NightsPlayed >= nightsForHappyEnding)
+        {
+            TriggerEnding(EndingType.Happy);
             return;
         }
 
@@ -217,13 +224,19 @@ public class GameProgressManager : MonoBehaviour
 
         // el regreso es inmediato, aunque todavia no sean las 06:00 (hora limite)
         hasReturnedToKingdomLastNight = true;
-        NightsWithoutReturning = 0;
         NextSpawnLocation = FairySpawnLocation.FairyKingdomPortal;
+        NightsPlayed++;
 
         SetHeavyCarryPenalty(false);
 
         Phase = GameProgressPhase.DayTransition;
         OnReturnedToKingdom?.Invoke();
+
+        if (GameSession.IsNewGamePlus && NightsPlayed >= nightsForHappyEnding)
+        {
+            TriggerEnding(EndingType.Happy);
+            return;
+        }
 
         // el calendario avanza hasta las 18:00 del dia siguiente
         AdvanceToNextNight();
@@ -298,6 +311,10 @@ public class GameProgressManager : MonoBehaviour
         HasEndingTriggered = true;
         SetClockPaused(true);
 
+        // cualquier final menos Fae desbloquea New Game+
+        if (ending != EndingType.Fae)
+            GameSession.UnlockNewGamePlus();
+
         OnEndingTriggered?.Invoke(ending);
     }
 
@@ -307,29 +324,51 @@ public class GameProgressManager : MonoBehaviour
         OnEndingTriggered += endingHUD.ShowEnding;
     }
 
+    // lo llama PlayerStats en cada escena: los Stat se recrean al recargar Gameplay
     public void RegisterStats(PlayerStats stats)
     {
-        if (wellbeingStat != null) wellbeingStat.Changed -= OnWellbeingChanged;
-        if (reputationStat != null) reputationStat.Changed -= OnReputationChanged;
+        if (wellbeingStat != null)
+            wellbeingStat.Changed -= OnWellbeingChanged;
+
+        if (reputationStat != null)
+            reputationStat.Changed -= OnReputationChanged;
 
         wellbeingStat = stats.Wellbeing;
         reputationStat = stats.Reputation;
+
         wellbeingStat.Changed += OnWellbeingChanged;
         reputationStat.Changed += OnReputationChanged;
-
-        OnWellbeingChanged(wellbeingStat.Value, 0f);
-        OnReputationChanged(reputationStat.Value, 0f);
     }
 
     private void OnWellbeingChanged(float value, float delta)
     {
-        if (value <= wellbeingStat.Min)
-            TriggerEnding(EndingType.Sacrifice);
+        // en New Game+ quedarse sin vida no termina la partida
+        if (value <= wellbeingStat.Min && !GameSession.IsNewGamePlus)
+            TriggerEnding(EndingType.OneWithTheDust);
     }
 
     private void OnReputationChanged(float value, float delta)
     {
         if (value <= reputationStat.Min)
-            TriggerEnding(EndingType.Depression);
+        {
+            TriggerEnding(GameSession.IsNewGamePlus ? EndingType.OneWithTheForest : EndingType.Depression);
+            return;
+        }
+
+        // solo cuando la reputación llega al máximo
+        if (value < reputationStat.Max)
+            return;
+
+        float wellbeing = wellbeingStat.Normalized * 100f;
+
+        if (GameSession.IsNewGamePlus)
+        {
+            if (wellbeing <= communityMaxWellbeing)
+                TriggerEnding(EndingType.Community);
+        }
+        else if (wellbeing <= sacrificeMaxWellbeing)
+        {
+            TriggerEnding(EndingType.Sacrifice);
+        }
     }
 }

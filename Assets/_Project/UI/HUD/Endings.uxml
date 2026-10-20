@@ -20,13 +20,14 @@
         <ui:Image style="background-image: url(&quot;project://database/Assets/_Project/Art/Background/Final_Bueno.png?fileID=2800000&amp;guid=e30e2068c3a288e47b8b1f2da67e089f&amp;type=3#Final_Bueno&quot;); -unity-background-scale-mode: scale-and-crop; flex-shrink: 1; height: 100%; width: 100%; align-self: center; justify-content: center; align-items: center; align-content: center; flex-direction: column;"/>
         <ui:Label text="No cuidaste de vos misma y te desmayaste el medio del bosque...&#10;los aldeanos te encontraron al borde de la muerte&#10;te llevaron al portal para que puedan curarte en tu casa" style="align-self: auto; -unity-text-align: upper-center; -unity-font-style: bold; position: absolute; top: 570px; left: 169px; color: rgb(255, 249, 249);"/>
     </ui:VisualElement>
-    <ui:VisualElement name="OneWithTheDust" style="flex-grow: 1; justify-content: center; align-self: center; font-size: 50px; display: none;">
+    <ui:VisualElement name="OneWithTheDustEnding" style="flex-grow: 1; justify-content: center; align-self: center; font-size: 50px; display: none;">
         <ui:Image style="background-image: url(&quot;project://database/Assets/_Project/Art/Background/Final_Malo.png?fileID=2800000&amp;guid=42179edec5854b64ea60aa857cf99bc0&amp;type=3#Final_Malo&quot;); -unity-background-scale-mode: scale-and-crop; flex-shrink: 1; height: 100%; width: 1925px; align-self: center; justify-content: center; align-items: center; align-content: center; flex-direction: column;"/>
         <ui:Label text="Te abandonaste completamente, tu vida termino y volviste al polvo" style="align-self: auto; -unity-text-align: upper-center; -unity-font-style: bold; position: absolute; top: 168px; left: 142px; color: rgb(255, 0, 0);"/>
     </ui:VisualElement>
-    <ui:VisualElement name="OneWithTheForest" style="flex-grow: 1; justify-content: center; align-self: center; font-size: 50px; display: none;">
+    <ui:VisualElement name="OneWithTheForestEnding" style="flex-grow: 1; justify-content: center; align-self: center; font-size: 50px; display: none;">
         <ui:Image style="background-image: url(&quot;project://database/Assets/_Project/Art/Background/Final_Bueno.png?fileID=2800000&amp;guid=e30e2068c3a288e47b8b1f2da67e089f&amp;type=3#Final_Bueno&quot;); -unity-background-scale-mode: scale-and-crop; flex-shrink: 1; height: 100%; width: 1925px; align-self: center; justify-content: center; align-items: center; align-content: center; flex-direction: column;">
             <ui:Label text=" fallaste en ayudar a otros , &#10;pero estas bien con vos misma, hiciste lo mejor que pudiste" style="align-self: auto; -unity-text-align: upper-center; -unity-font-style: bold; position: absolute; top: 680px; left: 172px; color: rgb(255, 255, 255);"/>
         </ui:Image>
     </ui:VisualElement>
+    <ui:Button name="BackToMenuButton" text="Volver al menú" style="position: absolute; bottom: 60px; right: 80px; font-size: 36px; padding: 12px 32px; display: none;"/>
 </ui:UXML>
