@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using System;
+using System.Collections.Generic;
 
 public class NarrativeDialogueManager : MonoBehaviour
 {
@@ -20,6 +21,12 @@ public class NarrativeDialogueManager : MonoBehaviour
 
     private NarrativeDialogueData currentDialogue;
     private int currentLineIndex;
+    [Header("Paginado")]
+    [SerializeField, Min(20)] private int maxCharsPerPage = 110;
+
+    private readonly List<string> pages = new List<string>();
+    private int currentPageIndex;
+
     private bool isDialogueOpen;
 
     public bool IsDialogueOpen => isDialogueOpen;
@@ -121,7 +128,8 @@ public class NarrativeDialogueManager : MonoBehaviour
     {
         NarrativeDialogueLine line = currentDialogue.Lines[currentLineIndex];
 
-        dialogueText.text = line.Text;
+        SplitIntoPages(line.Text);
+        currentPageIndex = 0;
 
         DialogueCharacterData character = line.Character;
 
@@ -148,13 +156,20 @@ public class NarrativeDialogueManager : MonoBehaviour
                 portraitContainer.style.display = DisplayStyle.None;
         }
 
-        nextButton.text = currentLineIndex == currentDialogue.Lines.Length - 1 ? " [E] Terminar" : " [E] Continuar";
+
+        ShowPage();
     }
 
     private void AdvanceDialogue()
     {
-        if (!isDialogueOpen)
+        if (!isDialogueOpen) return;
+
+        if (currentPageIndex < pages.Count - 1)
+        {
+            currentPageIndex++;
+            ShowPage();
             return;
+        }
 
         currentLineIndex++;
 
@@ -180,5 +195,36 @@ public class NarrativeDialogueManager : MonoBehaviour
         dialogueRoot.style.display = DisplayStyle.None;
 
         DialogueEnded?.Invoke(finished);
+    }
+
+    private void ShowPage()
+    {
+        dialogueText.text = pages[currentPageIndex];
+
+        bool lastPage = currentPageIndex == pages.Count - 1;
+        bool lastLine = currentLineIndex == currentDialogue.Lines.Length - 1;
+
+        nextButton.text = lastPage && lastLine ? " [E] Terminar" : " [E] Continuar";
+    }
+
+    // corta en fin de oración si puede, si no en espacio, sin pasar de maxCharsPerPage
+    private void SplitIntoPages(string text)
+    {
+        pages.Clear();
+        text = string.IsNullOrEmpty(text) ? string.Empty : text.Trim();
+
+        while (text.Length > maxCharsPerPage)
+        {
+            int cut = text.LastIndexOf(' ', maxCharsPerPage);
+            int sentence = text.LastIndexOfAny(new[] { '.', '!', '?', '…' }, maxCharsPerPage - 1);
+
+            if (sentence > maxCharsPerPage * 0.5f) cut = sentence + 1;
+            else if (cut <= 0) cut = maxCharsPerPage;
+
+            pages.Add(text.Substring(0, cut).Trim());
+            text = text.Substring(cut).Trim();
+        }
+
+        pages.Add(text);
     }
 }
