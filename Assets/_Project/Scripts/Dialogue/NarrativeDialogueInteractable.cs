@@ -1,4 +1,6 @@
 using UnityEngine;
+using Unity.Cinemachine;
+
 
 public class NarrativeDialogueInteractable : MonoBehaviour, IInteractable
 {
@@ -11,6 +13,7 @@ public class NarrativeDialogueInteractable : MonoBehaviour, IInteractable
     [Header("Resaltado")]
     [SerializeField] private GameObject highlightVisual;
 
+    [SerializeField] private CinemachineCamera dialogueCamera;
     private bool autoPlayed;
 
     public bool IsBlocked => !CanInteract;
@@ -23,7 +26,7 @@ public class NarrativeDialogueInteractable : MonoBehaviour, IInteractable
         if (!playOnStart || dialogue == null || NarrativeDialogueManager.Instance == null)
             return;
 
-        autoPlayed = NarrativeDialogueManager.Instance.StartDialogue(dialogue);
+        autoPlayed = NarrativeDialogueManager.Instance.StartDialogue(dialogue, false, dialogueCamera);
     }
 
     public void Interact(PlayerInteractor interactor)
@@ -31,7 +34,7 @@ public class NarrativeDialogueInteractable : MonoBehaviour, IInteractable
         if (!CanInteract)
             return;
 
-        NarrativeDialogueManager.Instance.StartDialogue(dialogue);
+        NarrativeDialogueManager.Instance.StartDialogue(dialogue, false, dialogueCamera);
     }
 
     public void SetHighlighted(bool highlighted)

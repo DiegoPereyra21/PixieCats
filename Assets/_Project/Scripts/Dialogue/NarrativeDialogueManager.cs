@@ -21,7 +21,8 @@ public class NarrativeDialogueManager : MonoBehaviour
     private CinemachineImpulseDefinition _declineImpulse;
     [SerializeField] private DeclineTextsSO _declineTexts;
     [SerializeField] private FairyPopupDialogueManager _fairyPopup; // si queda vacío se busca solo
-
+    [SerializeField] private int _focusPriority = 20;
+    private CinemachineCamera focusCamera;
     private VisualElement dialogueRoot;
     private VisualElement portraitContainer;
     private Image characterPortrait;
@@ -139,7 +140,7 @@ public class NarrativeDialogueManager : MonoBehaviour
             Instance = null;
     }
 
-    public bool StartDialogue(NarrativeDialogueData dialogue, bool askAcceptance = false)
+    public bool StartDialogue(NarrativeDialogueData dialogue, bool askAcceptance = false, CinemachineCamera focusCam = null)
     {
         if (isDialogueOpen || dialogue == null || dialogue.Lines == null || dialogue.Lines.Length == 0)
             return false;
@@ -154,6 +155,14 @@ public class NarrativeDialogueManager : MonoBehaviour
         currentLineIndex = 0;
         isDialogueOpen = true;
         askForAcceptance = askAcceptance;
+
+        focusCamera = focusCam;
+
+        if (focusCamera != null)
+        {
+            focusCamera.Priority = _focusPriority;
+            focusCamera.gameObject.SetActive(true);
+        }
 
         playerInput.InteractPressed += OnInteractPressed;
 
@@ -282,6 +291,12 @@ public class NarrativeDialogueManager : MonoBehaviour
         dialogueRoot.style.display = DisplayStyle.None;
 
         DialogueEnded?.Invoke(finished);
+
+        if (focusCamera != null)
+        {
+            focusCamera.gameObject.SetActive(false);
+            focusCamera = null;
+        }
     }
 
     // corta en fin de oracion si puede, si no en espacio, sin pasar de maxCharsPerPage

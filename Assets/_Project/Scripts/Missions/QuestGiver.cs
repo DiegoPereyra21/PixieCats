@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Unity.Cinemachine;
 
 [RequireComponent(typeof(InteractionHighlight))]
 public class QuestGiver : MonoBehaviour, IInteractable, IGuideTarget
@@ -7,12 +8,16 @@ public class QuestGiver : MonoBehaviour, IInteractable, IGuideTarget
     [SerializeField] private MissionManager _manager;
     [SerializeField] private MissionDataSO _mission;
     [SerializeField] private SpawnArea _spawnArea;
+    [SerializeField] private CinemachineCamera _dialogueCamera; // la PersonalCamera de este NPC
 
     public MissionState State => _manager.GetState(_mission);
-    public bool CanInteract => State == MissionState.Available || State == MissionState.InProgress;
+    public bool CanInteract => State == MissionState.Available || State == MissionState.InProgress
+                               || (State == MissionState.Completed && _mission.AfterCompletedDialogue != null);
     public bool IsBlocked => false;
     public bool WasDeliveredLate => _manager.WasLate(_mission); // para un diálogo distinto si se entregó tarde
-    public bool IsGuideActive => CanInteract;
+
+    public bool IsGuideActive => State == MissionState.Available || State == MissionState.InProgress;
+
     public Vector3 GuidePosition => transform.position;
 
     // para los diálogos: cambia el estado de este NPC / se interactúa con él (con el estado previo a la acción)
@@ -22,6 +27,7 @@ public class QuestGiver : MonoBehaviour, IInteractable, IGuideTarget
     private InteractionHighlight _highlight;
     private MissionState _lastState;
     private NarrativeDialogueData _pendingIntro; // diálogo abierto que termina en aceptar la misión
+    private NarrativeDialogueData _pendingInfo; // diálogo informativo abierto (no acepta la misión)
 
     private void Awake()
     {
@@ -39,6 +45,7 @@ public class QuestGiver : MonoBehaviour, IInteractable, IGuideTarget
     {
         _manager.StateChanged -= OnManagerStateChanged;
         CancelPendingIntro();
+        FinishInfoDialogue();
     }
 
     public void Interact(PlayerInteractor interactor)
@@ -47,7 +54,57 @@ public class QuestGiver : MonoBehaviour, IInteractable, IGuideTarget
         Interacted?.Invoke(state);
 
         if (state == MissionState.Available) BeginAccept();
-        else if (state == MissionState.InProgress) _manager.TryDeliver(_mission, interactor.Carrier);
+        else if (state == MissionState.InProgress) DeliverAndTalk(interactor);
+        else if (state == MissionState.Completed) PlayInfoDialogue(_mission.AfterCompletedDialogue);
+    }
+
+    // entrega lo que lleve; si completó dice el de misión completada, si no el de "todavía falta"
+    private void DeliverAndTalk(PlayerInteractor interactor)
+    {
+        _manager.TryDeliver(_mission, interactor.Carrier);
+
+        if (State == MissionState.Completed)
+        {
+            NarrativeDialogueData done = WasDeliveredLate && _mission.CompletedLateDialogue != null
+                ? _mission.CompletedLateDialogue
+                : _mission.CompletedDialogue;
+
+            PlayInfoDialogue(done);
+        }
+        else
+        {
+            PlayInfoDialogue(_mission.InProgressDialogue);
+        }
+    }
+
+    private void PlayInfoDialogue(NarrativeDialogueData dialogue)
+    {
+        NarrativeDialogueManager dialogues = NarrativeDialogueManager.Instance;
+        if (dialogue == null || dialogues == null) return;
+
+        _manager.PauseTimer();
+        _pendingInfo = dialogue;
+        dialogues.DialogueEnded += OnInfoDialogueEnded;
+
+        if (!dialogues.StartDialogue(dialogue, false, _dialogueCamera))
+            FinishInfoDialogue();
+    }
+
+    private void OnInfoDialogueEnded(NarrativeDialogueData dialogue)
+    {
+        if (dialogue != _pendingInfo) return;
+        FinishInfoDialogue();
+    }
+
+    private void FinishInfoDialogue()
+    {
+        if (_pendingInfo == null) return;
+
+        _pendingInfo = null;
+        _manager.ResumeTimer();
+
+        if (NarrativeDialogueManager.Instance != null)
+            NarrativeDialogueManager.Instance.DialogueEnded -= OnInfoDialogueEnded;
     }
 
     public void SetHighlighted(bool highlighted) => _highlight.Set(highlighted);
@@ -69,7 +126,7 @@ public class QuestGiver : MonoBehaviour, IInteractable, IGuideTarget
         _manager.PauseTimer(); // el tiempo para aceptar no corre mientras habla
         dialogues.DialogueEnded += OnDialogueEnded;
 
-        if (!dialogues.StartDialogue(intro, true))
+        if (!dialogues.StartDialogue(intro, true, _dialogueCamera))
         {
             CancelPendingIntro();
             Accept();

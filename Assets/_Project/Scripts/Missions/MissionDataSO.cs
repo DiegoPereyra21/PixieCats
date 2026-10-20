@@ -15,6 +15,16 @@ public class MissionDataSO : ScriptableObject
 
     [SerializeField] public NarrativeDialogueData dialogue;
 
+    [Header("Dialogos del NPC")]
+    [SerializeField] private NarrativeDialogueData _inProgressDialogue;     // le hablás con la misión activa y todavía no entregaste todo
+    [SerializeField] private NarrativeDialogueData _completedDialogue;      // al entregar lo último y completarla
+    [SerializeField] private NarrativeDialogueData _completedLateDialogue;  // igual, pero entregada tarde (vacío = usa el normal)
+    [SerializeField] private NarrativeDialogueData _afterCompletedDialogue; // le hablás después de completada (se puede repetir)
+    public NarrativeDialogueData InProgressDialogue => _inProgressDialogue;
+    public NarrativeDialogueData CompletedDialogue => _completedDialogue;
+    public NarrativeDialogueData CompletedLateDialogue => _completedLateDialogue;
+    public NarrativeDialogueData AfterCompletedDialogue => _afterCompletedDialogue;
+
     public DialogueCharacterData Requester => _requester;
     public string Title => _title;
     public PickupObject ItemPrefab => _itemPrefabs != null && _itemPrefabs.Length > 0 ? _itemPrefabs[0] : _itemPrefab;

@@ -19,7 +19,11 @@ MonoBehaviour:
   _itemPrefab: {fileID: 0}
   _requiredCount: 5
   _extraCount: 15
-  _timeLimit: 90
+  _timeLimit: 60
   _acceptTimeLimit: 30
   _requester: {fileID: 11400000, guid: 303cfd9900a0fe54d8a3bf8e2c44f165, type: 2}
   dialogue: {fileID: 11400000, guid: 7a444cda57b7af1449e01f4da6f745f8, type: 2}
+  _inProgressDialogue: {fileID: 11400000, guid: 78f6022ee556f7c4ebcd3dd757d40f78, type: 2}
+  _completedDialogue: {fileID: 11400000, guid: 834daa09b87ef2445bfc3e4c5031fc91, type: 2}
+  _completedLateDialogue: {fileID: 11400000, guid: d41f2e910f0089f49b5ddf46c25d1fec, type: 2}
+  _afterCompletedDialogue: {fileID: 11400000, guid: 1d3f4ec9d3bc303478fbd357f019413d, type: 2}
