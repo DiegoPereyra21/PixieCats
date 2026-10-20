@@ -8637,6 +8637,55 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1 &363599472
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 363599474}
+  - component: {fileID: 363599473}
+  m_Layer: 0
+  m_Name: MissionCompletedPopup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &363599473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363599472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c727027cae6b5e489db745aecfadf23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MissionCompletedPopup
+  _manager: {fileID: 394876082}
+  _popup: {fileID: 871149125}
+  _duration: 7
+  _nextMissionText: "Debo ir r\xE1pidamente a ayudar al pr\xF3ximo humano"
+  _lastMissionText: "Debo apurarme para volver a casa, sino quedar\xE9 afuera"
+--- !u!4 &363599474
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363599472}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -88.84203, y: 8.02887, z: 166.45656}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &374462006
 Mesh:
   m_ObjectHideFlags: 0
@@ -34355,6 +34404,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5176035182857506262, guid: 35405a7c61c0e9a4b9a8f0baa2c2dc9e, type: 3}
   m_PrefabInstance: {fileID: 1746345476}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1777359475
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6522858727346525843, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -86.7492
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522858727346525843, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 8.134485
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522858727346525843, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 166.42801
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522858727346525843, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522858727346525843, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522858727346525843, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522858727346525843, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522858727346525843, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522858727346525843, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522858727346525843, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8785664655529220412, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
+      propertyPath: m_Name
+      value: Collect_HongoAzul 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
 --- !u!114 &1783749329 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7563118097346034286, guid: cd81878880be5cc49b649fc0737e916f, type: 3}
@@ -42281,3 +42387,5 @@ SceneRoots:
   - {fileID: 1269580388}
   - {fileID: 1432519593}
   - {fileID: 736785492}
+  - {fileID: 1777359475}
+  - {fileID: 363599474}

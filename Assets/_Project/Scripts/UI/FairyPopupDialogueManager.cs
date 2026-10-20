@@ -94,7 +94,7 @@ public class FairyPopupDialogueManager : MonoBehaviour
         }
     }
 
-    public void ShowMessage(string text)
+    public void ShowMessage(string text, float duration = 0f)
     {
         if (popupPanel == null || string.IsNullOrEmpty(text))
             return;
@@ -103,7 +103,7 @@ public class FairyPopupDialogueManager : MonoBehaviour
         popupText.text = text;
 
         ShowPopup();
-        displayTimer = displayDuration;
+        displayTimer = duration > 0f ? duration : displayDuration;
         timer = 0f;
     }
 
