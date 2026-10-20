@@ -8,7 +8,10 @@ public enum EndingType
     Fae, // no volver a casa
     Depression, // perder reputacion
     Happy, // final dificil y feliz
-    Sacrifice // morir
+    Sacrifice, // morir
+    Community, // te salvan los aldeanos
+    OneWithTheForest, // fallaste en ayudar a otros , pero estas bien con vos misma
+    OneWithTheDust // la vida cae a 0
 }
 
 public class EndingHUD : MonoBehaviour
@@ -25,6 +28,9 @@ public class EndingHUD : MonoBehaviour
     private VisualElement depressionEnding;
     private VisualElement faeEnding;
     private VisualElement sacrificeEnding;
+    private VisualElement communityEnding;
+    private VisualElement oneWithTheForestEnding;
+    private VisualElement oneWithTheDustEnding;
 
     private void Awake()
     {
@@ -42,6 +48,9 @@ public class EndingHUD : MonoBehaviour
         depressionEnding = root.Q<VisualElement>("DepressionEnding");
         faeEnding = root.Q<VisualElement>("FaeEnding");
         sacrificeEnding = root.Q<VisualElement>("SacrificeEnding");
+        communityEnding = root.Q<VisualElement>("CommunityEnding");
+        oneWithTheForestEnding = root.Q<VisualElement>("OneWithTheForestEnding");
+        oneWithTheDustEnding = root.Q<VisualElement>("OneWithTheDustEnding");
 
         HideAllEndings();
     }
@@ -99,6 +108,18 @@ public class EndingHUD : MonoBehaviour
             case EndingType.Sacrifice:
                 sacrificeEnding.style.display = DisplayStyle.Flex;
                 break;
+
+            case EndingType.Community:
+                sacrificeEnding.style.display = DisplayStyle.Flex;
+                break;
+
+            case EndingType.OneWithTheForest:
+                sacrificeEnding.style.display = DisplayStyle.Flex;
+                break;
+
+            case EndingType.OneWithTheDust:
+                sacrificeEnding.style.display = DisplayStyle.Flex;
+                break;
         }
     }
 
@@ -108,6 +129,9 @@ public class EndingHUD : MonoBehaviour
         depressionEnding.style.display = DisplayStyle.None;
         faeEnding.style.display = DisplayStyle.None;
         sacrificeEnding.style.display = DisplayStyle.None;
+        communityEnding.style.display = DisplayStyle.None;
+        oneWithTheForestEnding.style.display = DisplayStyle.None;
+        oneWithTheDustEnding.style.display = DisplayStyle.None;
     }
     
 }
