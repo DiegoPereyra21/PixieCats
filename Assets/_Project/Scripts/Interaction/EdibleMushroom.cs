@@ -14,7 +14,8 @@ public class EdibleMushroom : MonoBehaviour, IInteractable
     public float HealPercent => _healPercent;
     public bool CanInteract => true;
     public bool IsBlocked => false;
-
+    [SerializeField, Min(0f)] private float _wobbleAmount = 0.06f;
+    [SerializeField, Min(0f)] private float _wobbleSpeed = 18f;
     private InteractionHighlight _highlight;
     private Vector3 _originalScale;
 
@@ -32,7 +33,13 @@ public class EdibleMushroom : MonoBehaviour, IInteractable
     public void SetHighlighted(bool highlighted) => _highlight.Set(highlighted);
 
     // 0 = entero, 1 = comido; se achica mientras se come
-    public void SetEatProgress(float progress) => transform.localScale = _originalScale * Mathf.Lerp(1f, _eatenScale, progress);
+    public void SetEatProgress(float progress)
+    {
+        float scale = Mathf.Lerp(1f, _eatenScale, progress);
+        float wobble = progress > 0f && progress < 1f ? Mathf.Sin(Time.time * _wobbleSpeed) * _wobbleAmount : 0f;
+        transform.localScale = Vector3.Scale(_originalScale, new Vector3(1f + wobble, 1f - wobble, 1f + wobble)) * scale;
+    }
+
 
     public void Consume()
     {
