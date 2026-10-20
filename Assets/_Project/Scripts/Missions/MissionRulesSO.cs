@@ -7,7 +7,8 @@ public class MissionRulesSO : ScriptableObject
     [SerializeField] private float _startWellbeing = 100f;
     [SerializeField] private float _wellbeingCostPerMission = 20f;
     [SerializeField, Min(0)] private int _freeMissions = 3; // las primeras N aceptadas no cuestan
-    [SerializeField, Min(0)] private float _wellbeingDrainPerSecond = 0.3f;
+    [SerializeField, Min(0)] private float _wellbeingDrainAmount = 2f;   // bienestar que pierde en cada tick
+    [SerializeField, Min(0.1f)] private float _wellbeingDrainInterval = 5f; // segundos entre ticks
 
     [Header("Reputación")]
     [SerializeField] private float _startReputation = 50f;
@@ -24,5 +25,6 @@ public class MissionRulesSO : ScriptableObject
     public float ReputationOnComplete => _reputationOnComplete;
     public float ReputationOnLateDelivery => _reputationOnLateDelivery;
     public float ReputationOnLateAccept => _reputationOnLateAccept;
-    public float WellbeingDrainPerSecond => _wellbeingDrainPerSecond;
+    public float WellbeingDrainAmount => _wellbeingDrainAmount;
+    public float WellbeingDrainInterval => _wellbeingDrainInterval;
 }

@@ -28188,6 +28188,11 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1 &1543694410 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7888510499887351365, guid: ed3eb6b6e8c11534d8368cbf664ff034, type: 3}
+  m_PrefabInstance: {fileID: 1638180940}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1550219353
 Mesh:
   m_ObjectHideFlags: 0
@@ -31106,7 +31111,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4230622009462015121, guid: ed3eb6b6e8c11534d8368cbf664ff034, type: 3}
   m_PrefabInstance: {fileID: 1638180940}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1543694410}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
@@ -31351,6 +31356,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7888510499887351365, guid: ed3eb6b6e8c11534d8368cbf664ff034, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1638180958}
     - targetCorrespondingSourceObject: {fileID: 5036542784782487260, guid: ed3eb6b6e8c11534d8368cbf664ff034, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
@@ -31365,7 +31373,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2627946811448665841, guid: ed3eb6b6e8c11534d8368cbf664ff034, type: 3}
   m_PrefabInstance: {fileID: 1638180940}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1543694410}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 89ee8b70d8ef39144ba3e1ea5061b2e3, type: 3}
@@ -31381,7 +31389,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 638354282783374585, guid: ed3eb6b6e8c11534d8368cbf664ff034, type: 3}
   m_PrefabInstance: {fileID: 1638180940}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1543694410}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e821c629849a0ad409621872634275d3, type: 3}
@@ -31397,12 +31405,26 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7078471958469365254, guid: ed3eb6b6e8c11534d8368cbf664ff034, type: 3}
   m_PrefabInstance: {fileID: 1638180940}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1543694410}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8bb0ffea0cdaad4e87e08bc52da290a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
+--- !u!114 &1638180958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543694410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b33b5a9c264de1f4dbd030af5db606dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WellbeingDrain
+  _stats: {fileID: 1638180946}
+  _endings: {fileID: 1814136461}
 --- !u!43 &1651802288
 Mesh:
   m_ObjectHideFlags: 0
@@ -34690,9 +34712,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7015125966636362970, guid: cd81878880be5cc49b649fc0737e916f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1814136461}
-    - targetCorrespondingSourceObject: {fileID: 7015125966636362970, guid: cd81878880be5cc49b649fc0737e916f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1814136462}
   m_SourcePrefab: {fileID: 100100000, guid: cd81878880be5cc49b649fc0737e916f, type: 3}
 --- !u!1 &1814136460 stripped
 GameObject:
@@ -34715,21 +34734,6 @@ MonoBehaviour:
   _manager: {fileID: 394876082}
   _sceneLoader: {fileID: 1010442784}
   _transitionDelay: 2
---- !u!114 &1814136462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1814136460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b33b5a9c264de1f4dbd030af5db606dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WellbeingDrain
-  _stats: {fileID: 1638180946}
-  _endings: {fileID: 1814136461}
-  _tickInterval: 1
 --- !u!1001 &1823573520
 PrefabInstance:
   m_ObjectHideFlags: 0
