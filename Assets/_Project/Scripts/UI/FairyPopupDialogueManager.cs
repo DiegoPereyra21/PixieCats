@@ -55,6 +55,20 @@ public class FairyPopupDialogueManager : MonoBehaviour
         if (popupPanel == null)
             return;
 
+        // durante cualquier diálogo narrativo no hay popups: se cierra el activo y se reinicia el intervalo
+        if (NarrativeDialogueManager.Instance != null && NarrativeDialogueManager.Instance.IsDialogueOpen)
+        {
+            timer = 0f;
+
+            if (displayTimer > 0f)
+            {
+                displayTimer = 0f;
+                HidePopup();
+            }
+
+            return;
+        }
+
         timer += Time.deltaTime;
 
         if (timer >= interval)
