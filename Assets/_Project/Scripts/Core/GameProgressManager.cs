@@ -34,8 +34,7 @@ public class GameProgressManager : MonoBehaviour
 
     [Header("Finales por stats (vida en %)")]
     [SerializeField, Range(0f, 100f)] private float sacrificeMaxWellbeing = 25f; // reputación al máximo con esta vida o menos
-    [SerializeField, Range(0f, 100f)] private float communityMaxWellbeing = 50f; // igual, en New Game+
-
+    [SerializeField, Range(0f, 100f)] private float communityWellbeing = 20f; // New Game+: vida (%) con la que te encuentran
     [Header("New Game+")]
     [SerializeField, Min(1)] private int nightsForHappyEnding = 3;
 
@@ -342,8 +341,16 @@ public class GameProgressManager : MonoBehaviour
 
     private void OnWellbeingChanged(float value, float delta)
     {
-        // en New Game+ quedarse sin vida no termina la partida
-        if (value <= wellbeingStat.Min && !GameSession.IsNewGamePlus)
+        // New Game+: te encuentran al bajar a esa vida; el juego base termina recién en 0
+        if (GameSession.IsNewGamePlus)
+        {
+            if (wellbeingStat.Normalized * 100f <= communityWellbeing)
+                TriggerEnding(EndingType.Community);
+
+            return;
+        }
+
+        if (value <= wellbeingStat.Min)
             TriggerEnding(EndingType.OneWithTheDust);
     }
 
@@ -355,20 +362,11 @@ public class GameProgressManager : MonoBehaviour
             return;
         }
 
-        // solo cuando la reputación llega al máximo
-        if (value < reputationStat.Max)
+        // en New Game+ la reputación al máximo no termina la partida
+        if (GameSession.IsNewGamePlus || value < reputationStat.Max)
             return;
 
-        float wellbeing = wellbeingStat.Normalized * 100f;
-
-        if (GameSession.IsNewGamePlus)
-        {
-            if (wellbeing <= communityMaxWellbeing)
-                TriggerEnding(EndingType.Community);
-        }
-        else if (wellbeing <= sacrificeMaxWellbeing)
-        {
+        if (wellbeingStat.Normalized * 100f <= sacrificeMaxWellbeing)
             TriggerEnding(EndingType.Sacrifice);
-        }
     }
 }
