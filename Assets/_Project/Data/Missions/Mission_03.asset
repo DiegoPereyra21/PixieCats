@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb64286a34402a47980842e8362cc28, type: 3}
   m_Name: Mission_03
   m_EditorClassIdentifier: Assembly-CSharp::MissionDataSO
-  _title: Mision 3 - Collectible_Light
+  _title: 4 Hongos azules en buen estado hada
   _itemPrefabs:
   - {fileID: 7234176634463872912, guid: 21b767803236e1c4d9806a44e631d3ce, type: 3}
   _itemPrefab: {fileID: 0}
-  _requiredCount: 4
-  _extraCount: 8
+  _requiredCount: 6
+  _extraCount: 11
   _timeLimit: 90
   _acceptTimeLimit: 30
-  _requester: {fileID: 0}
+  _requester: {fileID: 11400000, guid: d459102aab794044aa5f12cc144ad614, type: 2}
+  dialogue: {fileID: 11400000, guid: 28f6959206425e64b932c6317b4a60b7, type: 2}

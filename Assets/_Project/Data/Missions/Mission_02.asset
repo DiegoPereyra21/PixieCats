@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb64286a34402a47980842e8362cc28, type: 3}
   m_Name: Mission_02
   m_EditorClassIdentifier: Assembly-CSharp::MissionDataSO
-  _title: Mision 2 - Collectible_Heavy
+  _title: 5 Hongos blancos, apurate
   _itemPrefabs:
   - {fileID: 5672189782559054727, guid: a49541a008fa2724fb103ce30e40fc5a, type: 3}
   - {fileID: 3809278137817946332, guid: 79693e9353d838b45951872ac4e7e804, type: 3}

@@ -12,14 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb64286a34402a47980842e8362cc28, type: 3}
   m_Name: Mission_01
   m_EditorClassIdentifier: Assembly-CSharp::MissionDataSO
-  _title: Mision 1 - Collectible_Light
+  _title: 3 Hongos Rosas, rapido...
   _itemPrefabs:
   - {fileID: 4851420306947576950, guid: 5afeac4afc70001438719b6d8aac906d, type: 3}
   - {fileID: 3067342166764405439, guid: bbad2913ba0aeb64bb0d0a7526ea0ef5, type: 3}
   - {fileID: 886102910504232928, guid: 0ebaf992ec8b3d447ae316d618af8039, type: 3}
   _itemPrefab: {fileID: 0}
-  _requiredCount: 1
+  _requiredCount: 4
   _extraCount: 15
   _timeLimit: 90
   _acceptTimeLimit: 30
   _requester: {fileID: 11400000, guid: 698561cd506adc343b0e18df892d6740, type: 2}
+  dialogue: {fileID: 11400000, guid: c09c350de6f99b84d8b271a9eea54fc0, type: 2}
