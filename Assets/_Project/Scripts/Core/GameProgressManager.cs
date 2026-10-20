@@ -22,6 +22,9 @@ public class GameProgressManager : MonoBehaviour
     public FairySpawnLocation CurrentSpawnLocation { get; private set; }
     public bool HasEndingTriggered { get; private set; }
 
+    [Header("Estadisticas del jugador")]
+    [SerializeField] private PlayerStats playerStats;
+
     [Header("Ciclo nocturno")]
     [SerializeField, Min(0.1f)]
     private float nightDurationMinutes = 5f;
@@ -40,6 +43,8 @@ public class GameProgressManager : MonoBehaviour
     private bool clockPaused;
     private bool hasReturnedToKingdomLastNight = true;
     private bool hasHeavyCarryPenalty;
+    private Stat wellbeingStat;
+    private Stat reputationStat;
 
     public int CurrentDay => (int)(CurrentGameMinute / MinutesPerDay) + 1;
 
@@ -73,10 +78,13 @@ public class GameProgressManager : MonoBehaviour
     public event Action OnDawnReached;
     public event Action<int> OnFailedReturn;
     public event Action OnReturnedToKingdom;
-    public event Action OnFaeEndingTriggered;
-    public event Action OnHumanEndingTriggered;
-    public event Action OnDepressionEndingTriggered;
-    public event Action OnGoodEndingTriggered;
+
+    public event Action<EndingType> OnEndingTriggered;
+    // public event Action OnFaeEndingTriggered;
+    //public event Action OnHumanEndingTriggered;
+    //public event Action OnDepressionEndingTriggered;
+    //public event Action OnGoodEndingTriggered;
+
     public event Action<bool> OnCarryPenaltyChanged;
 
     private void Awake()
@@ -102,11 +110,22 @@ public class GameProgressManager : MonoBehaviour
         if (Instance != this)
             return;
 
+        SubscribeToStats();
+
+        if (HasEndingTriggered)
+            return;
+
         BeginNight();
     }
 
     private void OnDestroy()
     {
+        if (wellbeingStat != null)
+            wellbeingStat.Changed -= OnWellbeingChanged;
+
+        if (reputationStat != null)
+            reputationStat.Changed -= OnReputationChanged;
+
         if (Instance == this)
             Instance = null;
     }
@@ -129,23 +148,25 @@ public class GameProgressManager : MonoBehaviour
 
         totalGameMinutes += Time.deltaTime * gameMinutesPerSecond;
 
-        //if (totalGameMinutes >= nightEndMinute)
-         //   totalGameMinutes = nightEndMinute;
+        if (totalGameMinutes >= nightEndMinute)
+            totalGameMinutes = nightEndMinute;
 
         NotifyTimeUpdated(previousMinute);
 
-       // if (totalGameMinutes >= nightEndMinute)
-         //   HandleDawn();
+        if (totalGameMinutes >= nightEndMinute)
+            HandleDawn();
     }
 
     private void BeginNight()
     {
+        if (HasEndingTriggered)
+            return;
 
         Phase = GameProgressPhase.NightExploration;
 
         CurrentSpawnLocation = NextSpawnLocation;
 
-        //nightEndMinute = CurrentGameMinute + NightDurationGameMinutes;
+        nightEndMinute = CurrentGameMinute + NightDurationGameMinutes;
 
         OnNightStarted?.Invoke(CurrentDay, CurrentSpawnLocation);
     }
@@ -167,7 +188,11 @@ public class GameProgressManager : MonoBehaviour
 
         OnFailedReturn?.Invoke(NightsWithoutReturning);
 
-        CheckEndings();
+        if (NightsWithoutReturning >= 2)
+        {
+            TriggerEnding(EndingType.Fae);
+            return;
+        }
 
         if (HasEndingTriggered)
             return;
@@ -179,6 +204,9 @@ public class GameProgressManager : MonoBehaviour
 
     public void ReturnThroughMushroomCircle()
     {
+        if (HasEndingTriggered)
+            return;
+
         if (Phase != GameProgressPhase.NightExploration)
             return;
 
@@ -256,23 +284,50 @@ public class GameProgressManager : MonoBehaviour
         return $"{hour:00}:{minute:00}";
     }
 
-    private void CheckEndings()
+    private void TriggerEnding(EndingType ending)
     {
         if (HasEndingTriggered)
             return;
 
-        // final de las hadas
-        if (NightsWithoutReturning >= 3)
+        HasEndingTriggered = true;
+        SetClockPaused(true);
+
+        OnEndingTriggered?.Invoke(ending);
+    }
+
+    public void RegisterEndingHUD(EndingHUD endingHUD)
+    {
+        OnEndingTriggered -= endingHUD.ShowEnding;
+        OnEndingTriggered += endingHUD.ShowEnding;
+    }
+
+    private void SubscribeToStats()
+    {
+        if (playerStats == null)
         {
-            HasEndingTriggered = true;
-            OnFaeEndingTriggered?.Invoke();
+            Debug.LogError("GameProgressManager: falta asignar PlayerStats.");
             return;
         }
 
-        // final de los humanos
+        wellbeingStat = playerStats.Wellbeing;
+        reputationStat = playerStats.Reputation;
 
-        // final de depresion
+        wellbeingStat.Changed += OnWellbeingChanged;
+        reputationStat.Changed += OnReputationChanged;
 
-        // buen final
+        OnWellbeingChanged(wellbeingStat.Value, 0f);
+        OnReputationChanged(reputationStat.Value, 0f);
+    }
+
+    private void OnWellbeingChanged(float value, float delta)
+    {
+        if (value <= wellbeingStat.Min)
+            TriggerEnding(EndingType.Sacrifice);
+    }
+
+    private void OnReputationChanged(float value, float delta)
+    {
+        if (value <= reputationStat.Min)
+            TriggerEnding(EndingType.Depression);
     }
 }

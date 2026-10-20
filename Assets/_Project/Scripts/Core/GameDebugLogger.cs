@@ -5,7 +5,7 @@ public class GameDebugLogger : MonoBehaviour
 {
     [SerializeField] private MissionManager _manager;
     [SerializeField] private PlayerStats _stats;
-    [SerializeField] private GameEndings _endings;
+    [SerializeField] private GameProgressManager _gameProgress;
     [SerializeField] private float _timerLogInterval = 10f;
 
     private int _lastTimerStep = -1;
@@ -23,7 +23,7 @@ public class GameDebugLogger : MonoBehaviour
         _manager.AcceptDeadlineMissed += OnAcceptDeadlineMissed;
         _stats.Wellbeing.Changed += OnWellbeing;
         _stats.Reputation.Changed += OnReputation;
-        _endings.EndingReached += OnEnding;
+        _gameProgress.OnEndingTriggered += OnEnding;
     }
 
     private void OnDisable()
@@ -38,7 +38,7 @@ public class GameDebugLogger : MonoBehaviour
         _manager.AcceptDeadlineMissed -= OnAcceptDeadlineMissed;
         _stats.Wellbeing.Changed -= OnWellbeing;
         _stats.Reputation.Changed -= OnReputation;
-        _endings.EndingReached -= OnEnding;
+        _gameProgress.OnEndingTriggered -= OnEnding;
     }
 
     private void Start()

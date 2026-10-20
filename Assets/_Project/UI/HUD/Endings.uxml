@@ -1,0 +1,23 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/UI/HUD/Endings.uss?fileID=7433441132597879392&amp;guid=3b1a840481368ae44b84f6bf0e18d715&amp;type=3#Endings"/>
+    <ui:VisualElement name="FaeEnding" style="flex-grow: 1; justify-content: center; align-self: center; font-size: 50px; display: none;">
+        <ui:Image name="Image" style="background-image: url(&quot;project://database/Assets/_Project/Art/Background/Final_Meh.png?fileID=2800000&amp;guid=78532756af14ddf49a5cf938ccc4395f&amp;type=3#Final_Meh&quot;); -unity-background-scale-mode: scale-and-crop; flex-shrink: 1; height: 1080px; width: 1918px;">
+            <ui:Label text="No volviste a casa a tiempo demasiadas veces... &#10;el reino de las hadas ha cerrado tus puertas para ti " style="align-self: auto; -unity-text-align: upper-center; -unity-font-style: bold; position: absolute; top: 371px; left: 326px; color: rgb(255, 0, 0);"/>
+        </ui:Image>
+    </ui:VisualElement>
+    <ui:VisualElement name="HappyEnding" style="flex-grow: 1; justify-content: center; align-self: center; font-size: 50px; display: none;">
+        <ui:Image name="Image" style="background-image: url(&quot;project://database/Assets/_Project/Art/Background/Final_Bueno.png?fileID=2800000&amp;guid=e30e2068c3a288e47b8b1f2da67e089f&amp;type=3#Final_Bueno&quot;); -unity-background-scale-mode: scale-and-crop; flex-shrink: 1; height: 1080px; width: 1918px;">
+            <ui:Label text="Aprendiste a decir que no y a mantener un balance &#10;entre ayudar a otrs y protegerte a vos misma" style="align-self: auto; -unity-text-align: upper-center; -unity-font-style: bold; position: absolute; top: 606px; left: 381px; color: rgb(0, 0, 0);"/>
+        </ui:Image>
+    </ui:VisualElement>
+    <ui:VisualElement name="DepressionEnding" style="flex-grow: 1; justify-content: center; align-self: center; font-size: 50px; display: none;">
+        <ui:Image style="background-image: url(&quot;project://database/Assets/_Project/Art/Background/Final_Malo_SinCalavera.png?fileID=2800000&amp;guid=553a3db0a2950e64cb59d9ac71e8073d&amp;type=3#Final_Malo_SinCalavera&quot;); -unity-background-scale-mode: scale-and-crop; flex-shrink: 1; height: 1080px; width: 1918px;">
+            <ui:Label text="Ayudaste a la gente, pero no tanto como querias,&#10;ahora las personas no confian en tu palabra,&#10;te deprimiste y alejaste en lo oscuro del bosque" style="align-self: auto; -unity-text-align: upper-center; -unity-font-style: bold; position: absolute; top: 306px; left: 287px; color: rgb(255, 0, 0);"/>
+        </ui:Image>
+    </ui:VisualElement>
+    <ui:VisualElement name="SacrificeEnding" style="flex-grow: 1; justify-content: center; align-self: center; font-size: 50px; display: none;">
+        <ui:Image style="background-image: url(&quot;project://database/Assets/_Project/Art/Background/Final_Malo.png?fileID=2800000&amp;guid=42179edec5854b64ea60aa857cf99bc0&amp;type=3#Final_Malo&quot;); -unity-background-scale-mode: scale-and-crop; flex-shrink: 1; height: 1080px; width: 1918px;">
+            <ui:Label text="Hiciste todo lo que se esperaba de vos, pero pagaste un gran precio,&#10;no cuidaste de tu salud y terminaste muriendo de agotamiento" style="align-self: auto; -unity-text-align: upper-center; -unity-font-style: bold; position: absolute; top: 171px; left: 131px; color: rgb(255, 0, 0);"/>
+        </ui:Image>
+    </ui:VisualElement>
+</ui:UXML>
