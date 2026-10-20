@@ -9077,11 +9077,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3ebe643775c6f44b7154ca98824d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameEndings
-  _stats: {fileID: 1638180946}
-  _manager: {fileID: 394876082}
-  _sceneLoader: {fileID: 1010442784}
-  _transitionDelay: 2
-  <HasEnded>k__BackingField: 0
 --- !u!114 &394876086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12027,6 +12022,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4541489378637581251, guid: 10144f24d9285ac4e95d6e57d64b01e9, type: 3}
   m_PrefabInstance: {fileID: 568914570}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &570664303
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6522858727346525843, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -86.02681
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522858727346525843, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 8.17095
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522858727346525843, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 167.95546
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522858727346525843, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522858727346525843, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522858727346525843, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522858727346525843, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522858727346525843, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522858727346525843, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6522858727346525843, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8785664655529220412, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
+      propertyPath: m_Name
+      value: Collect_HongoAzul 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f88b2c24eb9d05f44ba3a1f978fa8efe, type: 3}
 --- !u!43 &577018345
 Mesh:
   m_ObjectHideFlags: 0
@@ -31436,7 +31488,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WellbeingDrain
   _stats: {fileID: 1638180946}
-  _endings: {fileID: 1814136461}
 --- !u!43 &1651802288
 Mesh:
   m_ObjectHideFlags: 0
@@ -32222,7 +32273,7 @@ MonoBehaviour:
   endingsHUD: {fileID: 1676484161}
   hudsToHide:
   - {fileID: 1688722751}
-  - {fileID: 871149124}
+  - {fileID: 0}
   - {fileID: 1050814533}
 --- !u!43 &1676959767
 Mesh:
@@ -34366,7 +34417,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7563118097346034286, guid: cd81878880be5cc49b649fc0737e916f, type: 3}
   m_PrefabInstance: {fileID: 1814136459}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1814136460}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1df8d26c315a8ae4dbd0482fbcd2fde2, type: 3}
@@ -34842,10 +34893,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3ebe643775c6f44b7154ca98824d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameEndings
-  _stats: {fileID: 1638180946}
-  _manager: {fileID: 394876082}
-  _sceneLoader: {fileID: 1010442784}
-  _transitionDelay: 2
 --- !u!1001 &1823573520
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42280,3 +42327,4 @@ SceneRoots:
   - {fileID: 1269580388}
   - {fileID: 1432519593}
   - {fileID: 736785492}
+  - {fileID: 570664303}
