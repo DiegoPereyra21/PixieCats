@@ -15,10 +15,10 @@ MonoBehaviour:
   _startWellbeing: 100
   _wellbeingCostPerMission: 20
   _freeMissions: 3
-  _wellbeingDrainAmount: 4
-  _wellbeingDrainInterval: 1
+  _wellbeingDrainAmount: 3
+  _wellbeingDrainInterval: 2
   _startReputation: 50
   _maxReputation: 100
   _reputationOnComplete: 10
-  _reputationOnLateDelivery: 5
+  _reputationOnLateDelivery: -5
   _reputationOnLateAccept: 20

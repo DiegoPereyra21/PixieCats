@@ -1,4 +1,5 @@
 using UnityEngine;
+using static GameSession;
 
 [CreateAssetMenu(menuName = "UI/Transition Texts")]
 public class TransitionTextsSO : ScriptableObject
@@ -8,6 +9,10 @@ public class TransitionTextsSO : ScriptableObject
     [SerializeField, TextArea(3, 8)] private string _depression;
     [SerializeField, TextArea(3, 8)] private string _happy;
     [SerializeField, TextArea(3, 8)] private string _sacrifice;
+    [SerializeField, TextArea(3, 8)] private string _missedDawn;
+
+    public string GetText(TransitionKind kind) =>
+        kind == TransitionKind.MissedDawn && !string.IsNullOrWhiteSpace(_missedDawn) ? _missedDawn : _default;
 
     public string GetText(EndingType? ending)
     {

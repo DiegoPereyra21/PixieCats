@@ -7,36 +7,25 @@ public class TransitionScene : MonoBehaviour
 {
     [SerializeField] private UIDocument _uiDocument;
     [SerializeField] private TransitionTextsSO _texts;
-
-    [Header("Transición normal")]
     [SerializeField] private string _nextScene = "Gameplay";
     [SerializeField] private float _duration = 3f; // segundos mínimos de pantalla negra
 
-    [Header("Después de un final")]
-    [SerializeField] private string _endingScene = "Menu";
-    [SerializeField] private float _endingDuration = 6f;
-
     private IEnumerator Start()
     {
-        EndingType? ending = GameSession.PendingEnding;
-        ShowText(ending);
-
-        string scene = ending.HasValue ? _endingScene : _nextScene;
-        float duration = ending.HasValue ? _endingDuration : _duration;
-
-        // el final ya se mostró: la próxima partida arranca limpia
-        if (ending.HasValue) GameSession.Reset();
+        TransitionKind kind = GameSession.NextTransition;
+        GameSession.SetTransition(TransitionKind.Normal);
+        ShowText(kind);
 
         // carga la escena en segundo plano y la activa recién al cumplirse el tiempo
-        AsyncOperation load = SceneManager.LoadSceneAsync(scene);
+        AsyncOperation load = SceneManager.LoadSceneAsync(_nextScene);
         load.allowSceneActivation = false;
 
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(_duration);
 
         load.allowSceneActivation = true;
     }
 
-    private void ShowText(EndingType? ending)
+    private void ShowText(TransitionKind kind)
     {
         if (_uiDocument == null) _uiDocument = GetComponent<UIDocument>();
 
@@ -48,6 +37,6 @@ public class TransitionScene : MonoBehaviour
             return;
         }
 
-        label.text = _texts.GetText(ending);
+        label.text = _texts.GetText(kind);
     }
 }

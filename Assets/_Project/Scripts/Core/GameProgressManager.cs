@@ -1,6 +1,8 @@
 
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using static GameSession;
 
 public enum FairySpawnLocation
 {
@@ -16,6 +18,7 @@ public enum GameProgressPhase
 
 public class GameProgressManager : MonoBehaviour
 {
+
     public static GameProgressManager Instance { get; private set; }
     public GameProgressPhase Phase { get; private set; }
     public FairySpawnLocation NextSpawnLocation { get; private set; }
@@ -28,6 +31,7 @@ public class GameProgressManager : MonoBehaviour
     [Header("Ciclo nocturno")]
     [SerializeField, Min(0.1f)]
     private float nightDurationMinutes = 5f;
+    [SerializeField] private string transitionScene = "Transition";
 
     [Header("Dia Inicial")]
     [SerializeField, Min(1)]
@@ -109,8 +113,6 @@ public class GameProgressManager : MonoBehaviour
     {
         if (Instance != this)
             return;
-
-        SubscribeToStats();
 
         if (HasEndingTriggered)
             return;
@@ -200,6 +202,9 @@ public class GameProgressManager : MonoBehaviour
         // el hada pasa el dia refugiada en el arbol (el calendario sigue avanzando aunque no explore)
         AdvanceToNextNight();
         BeginNight();
+
+        GameSession.SetTransition(TransitionKind.MissedDawn);
+        SceneManager.LoadScene(transitionScene);
     }
 
     public void ReturnThroughMushroomCircle()
@@ -212,6 +217,7 @@ public class GameProgressManager : MonoBehaviour
 
         // el regreso es inmediato, aunque todavia no sean las 06:00 (hora limite)
         hasReturnedToKingdomLastNight = true;
+        NightsWithoutReturning = 0;
         NextSpawnLocation = FairySpawnLocation.FairyKingdomPortal;
 
         SetHeavyCarryPenalty(false);
@@ -301,17 +307,13 @@ public class GameProgressManager : MonoBehaviour
         OnEndingTriggered += endingHUD.ShowEnding;
     }
 
-    private void SubscribeToStats()
+    public void RegisterStats(PlayerStats stats)
     {
-        if (playerStats == null)
-        {
-            Debug.LogError("GameProgressManager: falta asignar PlayerStats.");
-            return;
-        }
+        if (wellbeingStat != null) wellbeingStat.Changed -= OnWellbeingChanged;
+        if (reputationStat != null) reputationStat.Changed -= OnReputationChanged;
 
-        wellbeingStat = playerStats.Wellbeing;
-        reputationStat = playerStats.Reputation;
-
+        wellbeingStat = stats.Wellbeing;
+        reputationStat = stats.Reputation;
         wellbeingStat.Changed += OnWellbeingChanged;
         reputationStat.Changed += OnReputationChanged;
 

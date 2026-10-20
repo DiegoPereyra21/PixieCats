@@ -1,5 +1,7 @@
 using UnityEngine;
 
+public enum TransitionKind { Normal, MissedDawn }
+
 // Datos que sobreviven a la recarga de Gameplay (cada vuelta por el círculo de hongos)
 public static class GameSession
 {
@@ -7,8 +9,8 @@ public static class GameSession
     public static float Wellbeing { get; private set; }
     public static float Reputation { get; private set; }
 
-    // final alcanzado que la pantalla de transición debe mostrar (null = transición normal)
-    public static EndingType? PendingEnding { get; private set; }
+    // qué mensaje muestra la próxima pantalla de transición
+    public static TransitionKind NextTransition { get; private set; }
 
     public static void SaveStats(float wellbeing, float reputation)
     {
@@ -17,13 +19,13 @@ public static class GameSession
         HasStats = true;
     }
 
-    public static void SetEnding(EndingType ending) => PendingEnding = ending;
+    public static void SetTransition(TransitionKind kind) => NextTransition = kind;
 
-    // partida nueva: bienestar y reputación vuelven a los valores de las reglas y se borra el final
+    // partida nueva: bienestar y reputación vuelven a los valores de las reglas
     public static void Reset()
     {
         HasStats = false;
-        PendingEnding = null;
+        NextTransition = TransitionKind.Normal;
     }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]

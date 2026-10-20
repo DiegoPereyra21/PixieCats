@@ -13,6 +13,7 @@ public class PlayerStats : MonoBehaviour
 
     private Stat _wellbeing;
     private Stat _reputation;
+    private void Start() => GameProgressManager.Instance?.RegisterStats(this);
 
     // se guardan al descargar la escena
     private void OnDestroy()
