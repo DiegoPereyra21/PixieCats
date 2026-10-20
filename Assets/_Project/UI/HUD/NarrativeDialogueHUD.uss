@@ -151,6 +151,20 @@
     background-color: rgb(39, 27, 49);
 }
 
-.decline-button:disabled {
-    opacity: 0.45;
+.decline-button {
+    background-color: rgb(140, 30, 30);
+    transition-property: background-color;
+    transition-duration: 0.1s;
+}
+
+.decline-button:hover {
+    background-color: rgb(185, 40, 40);
+}
+
+.decline-button:active {
+    background-color: rgb(110, 20, 20);
+}
+
+.decline-button.decline-button--flash {
+    background-color: rgb(255, 40, 40);
 }

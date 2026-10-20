@@ -21,6 +21,7 @@ public class FairyPopupDialogueManager : MonoBehaviour
     private float displayTimer;
     private FairyPopupDialogueData lastDialogue;
     private IVisualElementScheduledItem hideItem;
+    private bool forcedMessage; // popup lanzado por código: se muestra aunque haya un diálogo abierto
 
     private void Awake()
     {
@@ -55,8 +56,8 @@ public class FairyPopupDialogueManager : MonoBehaviour
         if (popupPanel == null)
             return;
 
-        // durante cualquier diálogo narrativo no hay popups: se cierra el activo y se reinicia el intervalo
-        if (NarrativeDialogueManager.Instance != null && NarrativeDialogueManager.Instance.IsDialogueOpen)
+        // durante un diálogo no hay popups aleatorios: se cierra el activo y se reinicia el intervalo
+        if (!forcedMessage && NarrativeDialogueManager.Instance != null && NarrativeDialogueManager.Instance.IsDialogueOpen)
         {
             timer = 0f;
 
@@ -69,12 +70,15 @@ public class FairyPopupDialogueManager : MonoBehaviour
             return;
         }
 
-        timer += Time.deltaTime;
-
-        if (timer >= interval)
+        if (!forcedMessage)
         {
-            timer = 0f;
-            ShowRandomDialogue();
+            timer += Time.deltaTime;
+
+            if (timer >= interval)
+            {
+                timer = 0f;
+                ShowRandomDialogue();
+            }
         }
 
         if (displayTimer > 0f)
@@ -82,8 +86,25 @@ public class FairyPopupDialogueManager : MonoBehaviour
             displayTimer -= Time.deltaTime;
 
             if (displayTimer <= 0f)
+            {
                 HidePopup();
+                forcedMessage = false;
+                timer = 0f;
+            }
         }
+    }
+
+    public void ShowMessage(string text)
+    {
+        if (popupPanel == null || string.IsNullOrEmpty(text))
+            return;
+
+        forcedMessage = true;
+        popupText.text = text;
+
+        ShowPopup();
+        displayTimer = displayDuration;
+        timer = 0f;
     }
 
     private void ShowRandomDialogue()

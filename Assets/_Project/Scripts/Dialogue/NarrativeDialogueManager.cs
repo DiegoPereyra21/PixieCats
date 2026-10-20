@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Unity.Cinemachine;
 
 public class NarrativeDialogueManager : MonoBehaviour
 {
@@ -13,6 +14,13 @@ public class NarrativeDialogueManager : MonoBehaviour
 
     [Header("Paginado")]
     [SerializeField, Min(20)] private int maxCharsPerPage = 110;
+
+    [Header("Rechazar mision")]
+    [SerializeField] private float _declineShakeForce = 0.25f;     // amplitud del vaivén
+    [SerializeField] private float _declineShakeDuration = 0.5f;
+    private CinemachineImpulseDefinition _declineImpulse;
+    [SerializeField] private DeclineTextsSO _declineTexts;
+    [SerializeField] private FairyPopupDialogueManager _fairyPopup; // si queda vacío se busca solo
 
     private VisualElement dialogueRoot;
     private VisualElement portraitContainer;
@@ -46,6 +54,27 @@ public class NarrativeDialogueManager : MonoBehaviour
 
         Instance = this;
 
+        // vaivén lateral tipo "no": izquierda, derecha, izquierda... y se apaga
+        AnimationCurve shake = new AnimationCurve(
+            new Keyframe(0f, 0f),
+            new Keyframe(0.15f, 1f),
+            new Keyframe(0.35f, -1f),
+            new Keyframe(0.55f, 0.8f),
+            new Keyframe(0.75f, -0.5f),
+            new Keyframe(1f, 0f));
+
+        for (int i = 0; i < shake.length; i++)
+            shake.SmoothTangents(i, 0f);
+
+        _declineImpulse = new CinemachineImpulseDefinition
+        {
+            ImpulseChannel = 1,
+            ImpulseShape = CinemachineImpulseDefinition.ImpulseShapes.Custom,
+            CustomImpulseShape = shake,
+            ImpulseDuration = _declineShakeDuration,
+            ImpulseType = CinemachineImpulseDefinition.ImpulseTypes.Uniform
+        };
+
         if (uiDocument == null)
             uiDocument = GetComponent<UIDocument>();
 
@@ -68,7 +97,7 @@ public class NarrativeDialogueManager : MonoBehaviour
 
         if (declineButton != null)
         {
-            declineButton.SetEnabled(false); // se ve pero no se puede apretar
+            declineButton.clicked += OnDeclineClicked;
             declineButton.style.display = DisplayStyle.None;
         }
 
@@ -99,6 +128,9 @@ public class NarrativeDialogueManager : MonoBehaviour
 
         if (nextButton != null)
             nextButton.clicked -= AdvanceDialogue;
+
+        if (declineButton != null)
+            declineButton.clicked -= OnDeclineClicked;
     }
 
     private void OnDestroy()
@@ -180,6 +212,27 @@ public class NarrativeDialogueManager : MonoBehaviour
             declineButton.style.display = askNow ? DisplayStyle.Flex : DisplayStyle.None;
 
         nextButton.text = askNow ? " S\u00ED" : (lastPage && lastLine ? " [E] Terminar" : " [E] Continuar");
+    }
+
+
+    // "No" no cierra el diálogo: sacude la cámara, se pone rojo y el hada protesta
+    private void OnDeclineClicked()
+    {
+        if (!isDialogueOpen || !askingNow) return;
+
+        Camera cam = Camera.main;
+
+        if (cam != null)
+            _declineImpulse.CreateEvent(cam.transform.position, cam.transform.right * _declineShakeForce);
+
+        declineButton.AddToClassList("decline-button--flash");
+        declineButton.schedule.Execute(() => declineButton.RemoveFromClassList("decline-button--flash")).StartingIn(350);
+
+        if (_fairyPopup == null)
+            _fairyPopup = FindFirstObjectByType<FairyPopupDialogueManager>();
+
+        if (_fairyPopup != null && _declineTexts != null)
+            _fairyPopup.ShowMessage(_declineTexts.GetRandom());
     }
 
     // E no avanza en la pregunta Si / No: ahi solo se puede clicar
