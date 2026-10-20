@@ -18,7 +18,8 @@ public class NarrativeDialogueManager : MonoBehaviour
     private Label characterName;
     private Label dialogueText;
     private Button nextButton;
-
+    private Button declineButton;
+    private bool askForAcceptance;
     private NarrativeDialogueData currentDialogue;
     private int currentLineIndex;
     [Header("Paginado")]
@@ -63,6 +64,14 @@ public class NarrativeDialogueManager : MonoBehaviour
         dialogueText = root.Q<Label>("DialogueText");
         nextButton = root.Q<Button>("NextButton");
 
+        declineButton = root.Q<Button>("DeclineButton");
+
+        if (declineButton != null)
+        {
+            declineButton.SetEnabled(false); // se ve pero no se puede apretar
+            declineButton.style.display = DisplayStyle.None;
+        }
+
         if (characterPortrait == null)
             Debug.LogWarning("NarrativeDialogueManager: 'CharacterPortrait' no existe o no es un Image en el UXML.");
 
@@ -99,7 +108,7 @@ public class NarrativeDialogueManager : MonoBehaviour
             Instance = null;
     }
 
-    public bool StartDialogue(NarrativeDialogueData dialogue)
+    public bool StartDialogue(NarrativeDialogueData dialogue, bool askAcceptance = false)
     {
         if (isDialogueOpen || dialogue == null || dialogue.Lines == null || dialogue.Lines.Length == 0)
         {
@@ -115,6 +124,7 @@ public class NarrativeDialogueManager : MonoBehaviour
         currentDialogue = dialogue;
         currentLineIndex = 0;
         isDialogueOpen = true;
+        askForAcceptance = askAcceptance;
 
         playerInput.InteractPressed += AdvanceDialogue;
 
@@ -192,7 +202,11 @@ public class NarrativeDialogueManager : MonoBehaviour
         isDialogueOpen = false;
         currentDialogue = null;
 
-        dialogueRoot.style.display = DisplayStyle.None;
+        askForAcceptance = false;
+
+        if (declineButton != null)
+            declineButton.style.display = DisplayStyle.None;
+
 
         DialogueEnded?.Invoke(finished);
     }
@@ -203,8 +217,12 @@ public class NarrativeDialogueManager : MonoBehaviour
 
         bool lastPage = currentPageIndex == pages.Count - 1;
         bool lastLine = currentLineIndex == currentDialogue.Lines.Length - 1;
+        bool askNow = lastPage && lastLine && askForAcceptance;
 
-        nextButton.text = lastPage && lastLine ? " [E] Terminar" : " [E] Continuar";
+        if (declineButton != null)
+            declineButton.style.display = askNow ? DisplayStyle.Flex : DisplayStyle.None;
+
+        nextButton.text = askNow ? " [E] Sí" : (lastPage && lastLine ? " [E] Terminar" : " [E] Continuar");
     }
 
     // corta en fin de oración si puede, si no en espacio, sin pasar de maxCharsPerPage

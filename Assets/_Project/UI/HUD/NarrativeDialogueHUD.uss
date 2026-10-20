@@ -150,3 +150,7 @@
 .next-button:active {
     background-color: rgb(39, 27, 49);
 }
+
+.decline-button:disabled {
+    opacity: 0.45;
+}

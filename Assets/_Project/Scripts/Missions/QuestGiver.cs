@@ -69,7 +69,7 @@ public class QuestGiver : MonoBehaviour, IInteractable, IGuideTarget
         _manager.PauseTimer(); // el tiempo para aceptar no corre mientras habla
         dialogues.DialogueEnded += OnDialogueEnded;
 
-        if (!dialogues.StartDialogue(intro))
+        if (!dialogues.StartDialogue(intro, true))
         {
             CancelPendingIntro();
             Accept();

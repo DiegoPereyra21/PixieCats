@@ -11,7 +11,8 @@
                     <ui:Label text="Texto del dialogo" name="DialogueText" class="dialogue-text" style="font-size: 30px; -unity-font-definition: url(&quot;project://database/Assets/_Project/Fonts/Handlee-Regular.ttf?fileID=12800000&amp;guid=1a3e39fffd120a046915f726453b464d&amp;type=3#Handlee-Regular&quot;); letter-spacing: 1.5px; word-spacing: 1px; -unity-font-style: bold; margin-left: 10px;"/>
                 </ui:VisualElement>
                 <ui:Button text="[E] Continuar" name="NextButton" class="next-button" style="bottom: 68px; right: 137px; -unity-font-definition: url(&quot;project://database/Assets/_Project/Fonts/Handlee-Regular.ttf?fileID=12800000&amp;guid=1a3e39fffd120a046915f726453b464d&amp;type=3#Handlee-Regular&quot;); font-size: 18px; height: auto;"/>
-            </ui:VisualElement>
+                <ui:Button text="No" name="DeclineButton" class="next-button decline-button" style="bottom: 68px; right: 25px; -unity-font-definition: url(&quot;project://database/Assets/_Project/Fonts/Handlee-Regular.ttf?fileID=12800000&amp;guid=1a3e39fffd120a046915f726453b464d&amp;type=3#Handlee-Regular&quot;); font-size: 18px; height: auto; display: none;"/>
+                </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
