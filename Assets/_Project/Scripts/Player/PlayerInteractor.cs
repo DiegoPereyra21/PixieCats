@@ -4,11 +4,12 @@ public class PlayerInteractor : MonoBehaviour
 {
     [SerializeField] private PlayerInputReader _input;
     [SerializeField] private PlayerCarrier _carrier;
+    [SerializeField] private PlayerEater _eater;
     [SerializeField] private float _interactRadius = 2.5f;
     [SerializeField] private LayerMask _interactMask = ~0; // usar solo la layer Interactable
 
     public PlayerCarrier Carrier => _carrier;
-
+    public PlayerEater Eater => _eater;
     private readonly Collider[] _hits = new Collider[16];
     private IInteractable _highlighted;
 
