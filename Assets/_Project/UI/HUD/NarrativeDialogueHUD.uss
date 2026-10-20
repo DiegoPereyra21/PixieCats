@@ -74,8 +74,8 @@
     font-size: 35px;
     -unity-font-style: bold;
 
-    -unity-text-outline-width: 1px;
-    -unity-text-outline-color: rgb(48, 32, 25);
+    -unity-text-outline-width: 3px;
+    -unity-text-outline-color: rgb(20, 12, 8);
 }
 
 .dialogue-content {

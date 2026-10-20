@@ -5,7 +5,7 @@
 <ui:VisualElement name="PortraitContainer" class="portrait-container" style="left: 14%; width: 17%;">
     <ui:Image name="CharacterPortrait" class="character-portrait" scale-mode="ScaleToFit"/>
 </ui:VisualElement>
-            <ui:Label text="Label" name="CharacterName" class="character-name" style="left: 13%; bottom: 85%; -unity-font-definition: url(&quot;project://database/Assets/_Project/Fonts/OldeTome.ttf?fileID=12800000&amp;guid=cf680035c157c3b47b836e2ad49c61f2&amp;type=3#OldeTome&quot;); font-size: 40px; -unity-font-style: bold;"/>
+        <ui:Label text="Label" name="CharacterName" class="character-name" style="left: 13%; bottom: 85%; -unity-font-definition: url(&quot;project://database/Assets/_Project/Fonts/OldeTome.ttf?fileID=12800000&amp;guid=cf680035c157c3b47b836e2ad49c61f2&amp;type=3#OldeTome&quot;); font-size: 54px; -unity-font-style: bold;"/>
             <ui:VisualElement name="DialogueContent" class="dialogue-content" style="flex-grow: 1; flex-direction: row;">
                 <ui:VisualElement name="DialogueBackground" class="dialogue-background" style="flex-grow: 1; max-height: 180px; max-width: 700px; width: 630px; margin-top: 30px; border-bottom-left-radius: 15px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; background-color: rgba(232, 213, 169, 0.72); margin-left: 155px;">
                     <ui:Label text="Texto del dialogo" name="DialogueText" class="dialogue-text" style="font-size: 30px; -unity-font-definition: url(&quot;project://database/Assets/_Project/Fonts/Handlee-Regular.ttf?fileID=12800000&amp;guid=1a3e39fffd120a046915f726453b464d&amp;type=3#Handlee-Regular&quot;); letter-spacing: 1.5px; word-spacing: 1px; -unity-font-style: bold; margin-left: 10px;"/>
