@@ -18214,6 +18214,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7467907847758910912, guid: 8f1d263d450f0c3488ae5e5be2f484e3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1688722753}
+    - targetCorrespondingSourceObject: {fileID: 7467907847758910912, guid: 8f1d263d450f0c3488ae5e5be2f484e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1688722755}
   m_SourcePrefab: {fileID: 100100000, guid: 8f1d263d450f0c3488ae5e5be2f484e3, type: 3}
 --- !u!43 &900067104
 Mesh:
@@ -32966,6 +32969,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStatusHUD
   _uiDocument: {fileID: 1688722751}
   _stats: {fileID: 1638180946}
+  _font: {fileID: 0}
+  _minFeedback: 3
+  _lowWellbeing: 0.3
+--- !u!114 &1688722755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688722749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ec658d893124374b8aeaa9e2dffcef4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NextMissionTimerHUD
+  _uiDocument: {fileID: 1688722751}
+  _manager: {fileID: 394876082}
+  _font: {fileID: 12800000, guid: 1a3e39fffd120a046915f726453b464d, type: 3}
+  _warnFraction: 0.5
+  _dangerFraction: 0.25
+  _lateMessageTime: 3
 --- !u!43 &1692982011
 Mesh:
   m_ObjectHideFlags: 0
