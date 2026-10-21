@@ -16,7 +16,7 @@ MonoBehaviour:
   _wellbeingCostPerMission: 20
   _freeMissions: 3
   _wellbeingDrainAmount: 2
-  _wellbeingDrainInterval: 2
+  _wellbeingDrainInterval: 2.5
   _startReputation: 50
   _maxReputation: 100
   _reputationOnComplete: 10
