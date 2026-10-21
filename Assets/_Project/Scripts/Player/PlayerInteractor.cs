@@ -10,9 +10,8 @@ public class PlayerInteractor : MonoBehaviour
 
     public PlayerCarrier Carrier => _carrier;
     public PlayerEater Eater => _eater;
-    private readonly Collider[] _hits = new Collider[16];
     private IInteractable _highlighted;
-
+    private readonly Collider[] _hits = new Collider[64];
     private void OnEnable() => _input.InteractPressed += OnInteractPressed;
 
     private void OnDisable()
@@ -70,7 +69,7 @@ public class PlayerInteractor : MonoBehaviour
                 continue;
             }
 
-            float distance = (_hits[i].transform.position - center).sqrMagnitude;
+            float distance = (_hits[i].bounds.ClosestPoint(center) - center).sqrMagnitude;
             if (distance < closestDistance)
             {
                 closestDistance = distance;

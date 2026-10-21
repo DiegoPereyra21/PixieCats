@@ -10,12 +10,17 @@ public class PlayerStatusHUD : MonoBehaviour
     [SerializeField] private PlayerStats _stats;
     [SerializeField] private Font _font; // fuente de títulos y números (ej. Handlee-Regular)
 
+    [Header("Tamaño")]
+    [SerializeField, Range(0.8f, 2f)] private float _textScale = 1.3f; // agranda títulos y números
+    [SerializeField, Min(100f)] private float _barsWidth = 190f;       // ancho del bloque de barras
+    [SerializeField, Min(8f)] private float _barHeight = 16f;
+
     [Header("Feedback")]
     [SerializeField, Min(0f)] private float _minFeedback = 3f;          // cambios menores (desgaste de vida) no hacen efecto ni número
     [SerializeField, Range(0f, 1f)] private float _lowWellbeing = 0.3f; // bienestar en alerta
 
     private const float FloatingTime = 1f;
-    private const float FloatingRise = 28f;
+    private const float FloatingRise = 32f;
 
     private static readonly Color TextColor = new Color32(0x49, 0x35, 0x22, 255);
     private static readonly Color GainColor = new Color32(0x5E, 0x8C, 0x2A, 255);
@@ -63,6 +68,9 @@ public class PlayerStatusHUD : MonoBehaviour
             return;
         }
 
+        VisualElement attributes = root.Q<VisualElement>("AttributesContainer");
+        if (attributes != null) attributes.style.width = _barsWidth;
+
         _reputation = CreateView(_stats.Reputation, reputationFill, "Reputación", false);
         _wellbeing = CreateView(_stats.Wellbeing, wellbeingFill, "Bienestar", true);
 
@@ -93,13 +101,17 @@ public class PlayerStatusHUD : MonoBehaviour
             GhostValue = stat.Normalized
         };
 
-        // lugar para el título arriba de la barra
-        container.style.marginTop = 20;
+        float titleSize = 15f * _textScale;
+
+        // barra más gruesa y lugar para el título arriba
+        bar.style.height = _barHeight;
+        SetRadius(bar, _barHeight / 2f);
+        container.style.marginTop = titleSize + 8f;
 
         view.Title = new Label(title);
-        SetupLabel(view.Title, 15f);
+        SetupLabel(view.Title, titleSize);
         view.Title.style.left = 30;
-        view.Title.style.top = -17;
+        view.Title.style.top = -(titleSize + 3f);
         view.Title.style.color = TextColor;
         container.Add(view.Title);
 
@@ -110,15 +122,22 @@ public class PlayerStatusHUD : MonoBehaviour
         ghost.style.left = 0;
         ghost.style.top = 0;
         ghost.style.bottom = 0;
-        ghost.style.borderTopLeftRadius = 5;
-        ghost.style.borderBottomLeftRadius = 5;
-        ghost.style.borderTopRightRadius = 5;
-        ghost.style.borderBottomRightRadius = 5;
+        SetRadius(ghost, _barHeight / 2f - 1f);
         bar.Insert(0, ghost);
         view.Ghost = ghost;
 
+        SetRadius(fill, _barHeight / 2f - 1f);
+
         ApplyWidths(view);
         return view;
+    }
+
+    private static void SetRadius(VisualElement element, float radius)
+    {
+        element.style.borderTopLeftRadius = radius;
+        element.style.borderTopRightRadius = radius;
+        element.style.borderBottomLeftRadius = radius;
+        element.style.borderBottomRightRadius = radius;
     }
 
     private void SetupLabel(Label label, float size)
@@ -177,10 +196,12 @@ public class PlayerStatusHUD : MonoBehaviour
 
     private void SpawnFloating(BarView view, float delta)
     {
+        float size = 22f * _textScale;
+
         Label label = new Label((delta > 0f ? "+" : "") + Mathf.RoundToInt(delta));
-        SetupLabel(label, 22f);
+        SetupLabel(label, size);
         label.style.right = 4;
-        label.style.top = -18;
+        label.style.top = -(size * 0.8f);
         label.style.color = delta > 0f ? GainColor : LossColor;
         view.Container.Add(label);
 
