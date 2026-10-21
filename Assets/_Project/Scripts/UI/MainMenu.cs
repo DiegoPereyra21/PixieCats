@@ -89,14 +89,14 @@ public class MainMenu : MonoBehaviour
     {
         GameSession.Reset();
         GameSession.SetNewGamePlus(false);
-        _sceneLoader.LoadTransition();
+        _sceneLoader.LoadGameStart();
     }
 
     private void OnNewGamePlusClicked()
     {
         GameSession.Reset();
         GameSession.SetNewGamePlus(true);
-        _sceneLoader.LoadTransition();
+        _sceneLoader.LoadGameStart();
     }
 
     private void RegisterSounds(Button button)

@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 611662367}
   - component: {fileID: 611662366}
+  - component: {fileID: 611662368}
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -174,6 +175,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &611662368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 611662365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f62a8a782d2d0247a5b8044cb67cc97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameStartScene
+  _uiDocument: {fileID: 611662366}
+  _texts: {fileID: 11400000, guid: 3d3b486f245c72840adcf5477deabdff, type: 2}
+  _nextScene: Gameplay Katze
+  _labelName: GameStartText
+  _hintName: GameStartHint
+  _hintText: Click para continuar
+  _charsPerSecond: 45
+  _minLineTime: 0.5
+  _autoAdvanceSeconds: 0
+  _fadeTime: 0.35
 --- !u!1 &914852531
 GameObject:
   m_ObjectHideFlags: 0

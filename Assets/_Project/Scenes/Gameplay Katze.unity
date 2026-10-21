@@ -35163,7 +35163,7 @@ PrefabInstance:
       objectReference: {fileID: 9197481963319205126, guid: de0dca687f9370c49b8ba9497662d26f, type: 3}
     - target: {fileID: 7563118097346034286, guid: cd81878880be5cc49b649fc0737e916f, type: 3}
       propertyPath: nightDurationMinutes
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
