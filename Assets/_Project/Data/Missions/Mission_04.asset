@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb64286a34402a47980842e8362cc28, type: 3}
   m_Name: Mission_04
   m_EditorClassIdentifier: Assembly-CSharp::MissionDataSO
-  _title: 3 Hongos con huecos ya mismo
+  _title: Hongos con huecos ya mismo
   _itemPrefabs:
   - {fileID: 2670714467241875975, guid: 13df0585779c1d94c8b6179e452a6157, type: 3}
   - {fileID: 2939425939803390762, guid: 9f9f39ca5fd4dbb4ea1c294befdbddac, type: 3}

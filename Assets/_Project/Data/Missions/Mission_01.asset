@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb64286a34402a47980842e8362cc28, type: 3}
   m_Name: Mission_01
   m_EditorClassIdentifier: Assembly-CSharp::MissionDataSO
-  _title: 3 Hongos Rosas, rapido...
+  _title: Hongos Rosas, rapido...
   _itemPrefabs:
   - {fileID: 4851420306947576950, guid: 5afeac4afc70001438719b6d8aac906d, type: 3}
   - {fileID: 3067342166764405439, guid: bbad2913ba0aeb64bb0d0a7526ea0ef5, type: 3}

@@ -1,12 +1,17 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-// Cuenta regresiva para llegar a tiempo a la próxima misión (si se pasa, se pierde reputación)
+// Cuenta regresiva para llegar a tiempo a la próxima misión (si se pasa, se pierde reputación).
+// Va en la esquina superior derecha, donde después aparece la misión activa
 public class NextMissionTimerHUD : MonoBehaviour
 {
     [SerializeField] private UIDocument _uiDocument;
     [SerializeField] private MissionManager _manager;
     [SerializeField] private Font _font; // fuente del HUD (ej. Handlee-Regular)
+
+    [Header("Tamaño")]
+    [SerializeField, Range(0.8f, 2f)] private float _textScale = 1.3f; // agranda todos los textos
+    [SerializeField, Min(200f)] private float _width = 360f;
 
     [Header("Aviso")]
     [SerializeField, Range(0f, 1f)] private float _warnFraction = 0.5f;    // el color pasa a ámbar
@@ -37,7 +42,9 @@ public class NextMissionTimerHUD : MonoBehaviour
             return;
         }
 
-        BuildUI(_uiDocument.rootVisualElement);
+        VisualElement root = _uiDocument.rootVisualElement;
+        BuildUI(root.Q<VisualElement>("GameplayHUDRoot") ?? root);
+
         _manager.AcceptDeadlineMissed += OnDeadlineMissed;
     }
 
@@ -48,19 +55,19 @@ public class NextMissionTimerHUD : MonoBehaviour
 
     private void OnDeadlineMissed(MissionDataSO next) => _lateTimer = _lateMessageTime;
 
-    private void BuildUI(VisualElement root)
+    private void BuildUI(VisualElement parent)
     {
         _panel = new VisualElement();
         _panel.pickingMode = PickingMode.Ignore;
         _panel.style.position = Position.Absolute;
-        _panel.style.top = 14;
-        _panel.style.left = Length.Percent(50f);
+        _panel.style.top = 0;
+        _panel.style.right = 0;
+        _panel.style.width = _width;
         _panel.style.alignItems = Align.Center;
-        _panel.style.minWidth = 260;
-        _panel.style.paddingTop = 8;
-        _panel.style.paddingBottom = 10;
-        _panel.style.paddingLeft = 22;
-        _panel.style.paddingRight = 22;
+        _panel.style.paddingTop = 12;
+        _panel.style.paddingBottom = 14;
+        _panel.style.paddingLeft = 18;
+        _panel.style.paddingRight = 18;
         _panel.style.backgroundColor = PanelColor;
         _panel.style.display = DisplayStyle.None;
         _panel.style.opacity = 0f;
@@ -68,27 +75,30 @@ public class NextMissionTimerHUD : MonoBehaviour
         SetRadius(_panel, 14f);
 
         _title = CreateLabel(17f);
+        _title.style.whiteSpace = WhiteSpace.Normal;
+        _title.style.maxWidth = _width - 40f;
+
         _time = CreateLabel(38f);
 
         VisualElement bar = new VisualElement();
         bar.pickingMode = PickingMode.Ignore;
-        bar.style.width = 220;
-        bar.style.height = 10;
-        bar.style.marginTop = 4;
+        bar.style.width = Length.Percent(100f);
+        bar.style.height = 14;
+        bar.style.marginTop = 6;
         bar.style.overflow = Overflow.Hidden;
         bar.style.backgroundColor = TextColor;
-        SetRadius(bar, 5f);
+        SetRadius(bar, 7f);
 
         _barFill = new VisualElement();
         _barFill.pickingMode = PickingMode.Ignore;
         _barFill.style.height = Length.Percent(100f);
-        SetRadius(_barFill, 5f);
+        SetRadius(_barFill, 6f);
         bar.Add(_barFill);
 
         _panel.Add(_title);
         _panel.Add(_time);
         _panel.Add(bar);
-        root.Add(_panel);
+        parent.Add(_panel);
     }
 
     private Label CreateLabel(float size)
@@ -103,7 +113,7 @@ public class NextMissionTimerHUD : MonoBehaviour
         label.style.paddingRight = 0;
         label.style.paddingTop = 0;
         label.style.paddingBottom = 0;
-        label.style.fontSize = size;
+        label.style.fontSize = size * _textScale;
         label.style.unityFontStyleAndWeight = FontStyle.Bold;
         label.style.unityTextAlign = TextAnchor.MiddleCenter;
         label.style.whiteSpace = WhiteSpace.NoWrap;
@@ -121,12 +131,13 @@ public class NextMissionTimerHUD : MonoBehaviour
         float dt = Time.unscaledDeltaTime;
 
         MissionDataSO next = _manager.NextMission;
+        bool hasMission = _manager.ActiveMission != null;
         bool running = _manager.IsAcceptTimerRunning && next != null;
 
-        if (running) _lateTimer = 0f;
+        if (running || hasMission) _lateTimer = 0f;
         else if (_lateTimer > 0f) _lateTimer -= dt;
 
-        bool late = !running && _lateTimer > 0f;
+        bool late = !running && !hasMission && _lateTimer > 0f;
         bool visible = running || late;
 
         _alpha = Mathf.MoveTowards(_alpha, visible ? 1f : 0f, dt / 0.25f);
@@ -167,7 +178,8 @@ public class NextMissionTimerHUD : MonoBehaviour
             _time.style.opacity = 1f;
         }
 
-        _panel.style.translate = new Translate(Length.Percent(-50f), (1f - _alpha) * -20f);
+        // entra deslizándose desde la derecha
+        _panel.style.translate = new Translate((1f - _alpha) * 40f, 0f);
         _panel.style.scale = new Scale(new Vector3(scale, scale, 1f));
     }
 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb64286a34402a47980842e8362cc28, type: 3}
   m_Name: Mission_03
   m_EditorClassIdentifier: Assembly-CSharp::MissionDataSO
-  _title: 4 Hongos azules en buen estado hada
+  _title: Hongos azules en buen estado hada
   _itemPrefabs:
   - {fileID: 7234176634463872912, guid: 21b767803236e1c4d9806a44e631d3ce, type: 3}
   _itemPrefab: {fileID: 0}

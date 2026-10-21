@@ -15697,7 +15697,9 @@ MonoBehaviour:
     Count: 2
   - Area: {fileID: 1509898234}
     Count: 2
-  _spawnParent: {fileID: 788869891}
+  - Area: {fileID: 788869890}
+    Count: 2
+  _spawnParent: {fileID: 0}
 --- !u!4 &736785492
 Transform:
   m_ObjectHideFlags: 0
@@ -18217,6 +18219,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7467907847758910912, guid: 8f1d263d450f0c3488ae5e5be2f484e3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1688722755}
+    - targetCorrespondingSourceObject: {fileID: 7467907847758910912, guid: 8f1d263d450f0c3488ae5e5be2f484e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1688722756}
   m_SourcePrefab: {fileID: 100100000, guid: 8f1d263d450f0c3488ae5e5be2f484e3, type: 3}
 --- !u!43 &900067104
 Mesh:
@@ -32990,6 +32995,23 @@ MonoBehaviour:
   _warnFraction: 0.5
   _dangerFraction: 0.25
   _lateMessageTime: 3
+--- !u!114 &1688722756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688722749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978ea554979094842b9f310fbc2e450f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ActiveMissionHUD
+  _uiDocument: {fileID: 1688722751}
+  _manager: {fileID: 394876082}
+  _font: {fileID: 12800000, guid: 1a3e39fffd120a046915f726453b464d, type: 3}
+  _warnFraction: 0.5
+  _dangerFraction: 0.25
 --- !u!43 &1692982011
 Mesh:
   m_ObjectHideFlags: 0
