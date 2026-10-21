@@ -10,6 +10,7 @@ public class GameStartScene : MonoBehaviour
 {
     [SerializeField] private UIDocument _uiDocument;
     [SerializeField] private NarrativeDialogueData _texts;
+    [SerializeField] private NarrativeDialogueData _newGamePlusTexts; // si queda vacío, New Game+ usa los mismos textos
     [SerializeField] private string _nextScene = "Gameplay Katze";
 
     [Header("UXML")]
@@ -51,14 +52,16 @@ public class GameStartScene : MonoBehaviour
             if (_label != null) BuildTextBox(root);
         }
 
-        if (_label == null || _texts == null || _texts.Lines == null || _texts.Lines.Length == 0)
+        NarrativeDialogueData texts = GameSession.IsNewGamePlus && _newGamePlusTexts != null ? _newGamePlusTexts : _texts;
+
+        if (_label == null || texts == null || texts.Lines == null || texts.Lines.Length == 0)
         {
             Debug.LogWarning("GameStartScene: falta el label, el asset de textos o no tiene líneas; paso directo al juego.", this);
             load.allowSceneActivation = true;
             yield break;
         }
 
-        foreach (NarrativeDialogueLine line in _texts.Lines)
+        foreach (NarrativeDialogueLine line in texts.Lines)
         {
             yield return ShowLine(line.Text);
 

@@ -218,7 +218,12 @@ public class NarrativeDialogueManager : MonoBehaviour
         askingNow = askNow;
 
         if (declineButton != null)
+        {
             declineButton.style.display = askNow ? DisplayStyle.Flex : DisplayStyle.None;
+
+            // en New Game+ "No" rechaza de verdad: se ve igual que "Sí"; en el juego base queda rojo
+            declineButton.EnableInClassList("decline-button", !GameSession.IsNewGamePlus);
+        }
 
         nextButton.text = askNow ? " S\u00ED" : (lastPage && lastLine ? " [E] Terminar" : " [E] Continuar");
     }
