@@ -251,7 +251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EdibleMushroom
   _eatTime: 2
-  _healPercent: 0.1
+  _healPercent: 0.22
   _eatenScale: 0.3
   _onEaten: {fileID: 0}
   _wobbleAmount: 0.06

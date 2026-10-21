@@ -1,48 +1,56 @@
-
-/* Panel de cada final */
-#FaeEnding,
-#HappyEnding,
-#DepressionEnding,
-#SacrificeEnding {
+.ending-panel {
     position: absolute;
     left: 0;
-    right: 0;
     top: 0;
+    right: 0;
     bottom: 0;
-
-    align-items: center;
-    justify-content: center;
-
-    background-color: rgba(0, 0, 0, 0.45);
+    display: none;
 }
 
-/* Imagen del final */
-#FaeEnding Image,
-#HappyEnding Image,
-#DepressionEnding Image,
-#SacrificeEnding Image {
-    width: 300px;
-    height: 300px;
-    flex-shrink: 0;
-
-    -unity-background-scale-mode: scale-to-fit;
+.ending-image {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    -unity-background-scale-mode: scale-and-crop;
 }
 
-/* Texto narrativo */
-#FaeEnding Label,
-#HappyEnding Label,
-#DepressionEnding Label,
-#SacrificeEnding Label {
-    width: 85%;
-    max-width: 1000px;
-    flex-shrink: 0;
-
-    margin-top: 28px;
-    padding: 12px;
-
-    color: rgb(245, 240, 230);
-    font-size: 28px;
+.ending-text {
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    font-size: 50px;
     -unity-font-style: bold;
-    -unity-text-align: middle-center;
+    -unity-text-align: upper-center;
     white-space: normal;
+}
+
+.ending-button {
+    width: 380px;
+    height: 75px;
+    background-color: rgba(108, 93, 211, 0.588);
+    color: rgb(255, 255, 255);
+    border-radius: 10px;
+    border-width: 0;
+    font-size: 40px;
+    -unity-font-style: bold;
+    -unity-font-definition: url("project://database/Assets/_Project/Fonts/DeFonte%20reduced%20DemiGras.ttf?fileID=12800000&guid=c7eeebe6fe9f30742bb56d3297a84c5d&type=3#DeFonte reduced DemiGras");
+    transition-property: background-color, scale;
+    transition-duration: 0.13s;
+}
+
+.ending-button:hover {
+    background-color: rgba(120, 105, 232, 0.8);
+    scale: 1.035 1.035;
+}
+
+.ending-button:active {
+    background-color: rgba(81, 70, 179, 0.8);
+    scale: 0.98 0.98;
+}
+
+.ending-button:focus {
+    border-width: 2px;
+    border-color: rgb(183, 167, 255);
 }

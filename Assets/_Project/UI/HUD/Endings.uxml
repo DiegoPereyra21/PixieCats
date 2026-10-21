@@ -1,33 +1,32 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/_Project/UI/HUD/Endings.uss?fileID=7433441132597879392&amp;guid=3b1a840481368ae44b84f6bf0e18d715&amp;type=3#Endings"/>
-    <ui:VisualElement name="FaeEnding" style="flex-grow: 1; justify-content: center; align-self: center; font-size: 50px; display: none; width: auto; height: auto;">
-        <ui:Image name="Image" style="background-image: url(&quot;project://database/Assets/_Project/Art/Background/Final_Meh.png?fileID=2800000&amp;guid=78532756af14ddf49a5cf938ccc4395f&amp;type=3#Final_Meh&quot;); -unity-background-scale-mode: scale-and-crop; flex-shrink: 1; height: 1080px; width: 1918px;"/>
-        <ui:Label text="No volviste a casa a tiempo demasiadas veces... &#10;el reino de las hadas ha cerrado tus puertas para ti " style="align-self: auto; -unity-text-align: upper-center; -unity-font-style: bold; position: absolute; top: 311px; left: 399px; color: rgb(255, 0, 0);"/>
+    <ui:VisualElement name="FaeEnding" class="ending-panel">
+        <ui:VisualElement class="ending-image" style="background-image: url(&quot;project://database/Assets/_Project/Art/Background/Final_Meh.png?fileID=2800000&amp;guid=78532756af14ddf49a5cf938ccc4395f&amp;type=3#Final_Meh&quot;);"/>
+        <ui:Label class="ending-text" text="No volviste a casa a tiempo demasiadas veces... &#10;el reino de las hadas ha cerrado tus puertas para ti " style="top: 34%; color: rgb(255, 0, 0);"/>
     </ui:VisualElement>
-    <ui:VisualElement name="HappyEnding" style="flex-grow: 1; justify-content: center; align-self: center; font-size: 50px; display: none;">
-        <ui:Image name="Image" style="background-image: url(&quot;project://database/Assets/_Project/Art/Background/Final_Bueno.png?fileID=2800000&amp;guid=e30e2068c3a288e47b8b1f2da67e089f&amp;type=3#Final_Bueno&quot;); -unity-background-scale-mode: scale-and-crop; flex-shrink: 1; height: 1080px; width: 1918px;"/>
-        <ui:Label text="Aprendiste a decir que no y a mantener un balance &#10;entre ayudar a otrs y protegerte a vos misma" style="align-self: auto; -unity-text-align: upper-center; -unity-font-style: bold; position: absolute; top: 649px; left: 439px; color: rgb(0, 0, 0);"/>
+    <ui:VisualElement name="HappyEnding" class="ending-panel">
+        <ui:VisualElement class="ending-image" style="background-image: url(&quot;project://database/Assets/_Project/Art/Background/Final_Bueno.png?fileID=2800000&amp;guid=e30e2068c3a288e47b8b1f2da67e089f&amp;type=3#Final_Bueno&quot;);"/>
+        <ui:Label class="ending-text" text="Aprendiste a decir que no y a mantener un balance &#10;entre ayudar a otrs y protegerte a vos misma" style="top: 56%; color: rgb(0, 0, 0);"/>
     </ui:VisualElement>
-    <ui:VisualElement name="DepressionEnding" style="flex-grow: 1; justify-content: center; align-self: center; font-size: 50px; display: none;">
-        <ui:Image style="background-image: url(&quot;project://database/Assets/_Project/Art/Background/Final_Malo_SinCalavera.png?fileID=2800000&amp;guid=553a3db0a2950e64cb59d9ac71e8073d&amp;type=3#Final_Malo_SinCalavera&quot;); -unity-background-scale-mode: scale-and-crop; flex-shrink: 1; height: 1080px; width: 1918px;"/>
-        <ui:Label text="Ayudaste a la gente, pero no tanto como querias,&#10;ahora las personas no confian en tu palabra,&#10;te deprimiste y alejaste en lo oscuro del bosque" style="align-self: auto; -unity-text-align: upper-center; -unity-font-style: bold; position: absolute; top: 244px; left: 425px; color: rgb(255, 0, 0);"/>
+    <ui:VisualElement name="DepressionEnding" class="ending-panel">
+        <ui:VisualElement class="ending-image" style="background-image: url(&quot;project://database/Assets/_Project/Art/Background/Final_Malo_SinCalavera.png?fileID=2800000&amp;guid=553a3db0a2950e64cb59d9ac71e8073d&amp;type=3#Final_Malo_SinCalavera&quot;);"/>
+        <ui:Label class="ending-text" text="Ayudaste a la gente, pero no tanto como querias,&#10;ahora las personas no confian en tu palabra,&#10;te deprimiste y alejaste en lo oscuro del bosque" style="top: 28%; color: rgb(255, 0, 0);"/>
     </ui:VisualElement>
-    <ui:VisualElement name="SacrificeEnding" style="flex-grow: 1; justify-content: center; align-self: center; font-size: 50px; display: none;">
-        <ui:Image style="background-image: url(&quot;project://database/Assets/_Project/Art/Background/Final_Malo.png?fileID=2800000&amp;guid=42179edec5854b64ea60aa857cf99bc0&amp;type=3#Final_Malo&quot;); -unity-background-scale-mode: scale-and-crop; flex-shrink: 1; height: 100%; width: 100%; align-self: center; justify-content: center; align-items: center; align-content: center; flex-direction: column;"/>
-        <ui:Label text="Hiciste todo lo que se esperaba de vos, pero pagaste un gran precio,&#10;no cuidaste de tu salud y terminaste muriendo de agotamiento" style="align-self: auto; -unity-text-align: upper-center; -unity-font-style: bold; position: absolute; top: 182px; left: 479px; color: rgb(255, 0, 0);"/>
+    <ui:VisualElement name="SacrificeEnding" class="ending-panel">
+        <ui:VisualElement class="ending-image" style="background-image: url(&quot;project://database/Assets/_Project/Art/Background/Final_Malo.png?fileID=2800000&amp;guid=42179edec5854b64ea60aa857cf99bc0&amp;type=3#Final_Malo&quot;);"/>
+        <ui:Label class="ending-text" text="Hiciste todo lo que se esperaba de vos, pero pagaste un gran precio,&#10;no cuidaste de tu salud y terminaste muriendo de agotamiento" style="top: 17%; color: rgb(255, 0, 0);"/>
     </ui:VisualElement>
-    <ui:VisualElement name="CommunityEnding" style="flex-grow: 1; justify-content: center; align-self: center; font-size: 50px; display: none; width: 1910px;">
-        <ui:Image style="background-image: url(&quot;project://database/Assets/_Project/Art/Background/Final_Bueno.png?fileID=2800000&amp;guid=e30e2068c3a288e47b8b1f2da67e089f&amp;type=3#Final_Bueno&quot;); -unity-background-scale-mode: scale-and-crop; flex-shrink: 1; height: 100%; width: 100%; align-self: center; justify-content: center; align-items: center; align-content: center; flex-direction: column;"/>
-        <ui:Label text="No cuidaste de vos misma y te desmayaste el medio del bosque...&#10;los aldeanos te encontraron al borde de la muerte&#10;te llevaron al portal para que puedan curarte en tu casa" style="align-self: auto; -unity-text-align: upper-center; -unity-font-style: bold; position: absolute; top: 570px; left: 169px; color: rgb(255, 249, 249);"/>
+    <ui:VisualElement name="CommunityEnding" class="ending-panel">
+        <ui:VisualElement class="ending-image" style="background-image: url(&quot;project://database/Assets/_Project/Art/Background/Final_Bueno.png?fileID=2800000&amp;guid=e30e2068c3a288e47b8b1f2da67e089f&amp;type=3#Final_Bueno&quot;);"/>
+        <ui:Label class="ending-text" text="No cuidaste de vos misma y te desmayaste el medio del bosque...&#10;los aldeanos te encontraron al borde de la muerte&#10;te llevaron al portal para que puedan curarte en tu casa" style="top: 53%; color: rgb(255, 249, 249);"/>
     </ui:VisualElement>
-    <ui:VisualElement name="OneWithTheDustEnding" style="flex-grow: 1; justify-content: center; align-self: center; font-size: 50px; display: none;">
-        <ui:Image style="background-image: url(&quot;project://database/Assets/_Project/Art/Background/Final_Malo.png?fileID=2800000&amp;guid=42179edec5854b64ea60aa857cf99bc0&amp;type=3#Final_Malo&quot;); -unity-background-scale-mode: scale-and-crop; flex-shrink: 1; height: 100%; width: 1925px; align-self: center; justify-content: center; align-items: center; align-content: center; flex-direction: column;"/>
-        <ui:Label text="Te abandonaste completamente, tu vida termino y volviste al polvo" style="align-self: auto; -unity-text-align: upper-center; -unity-font-style: bold; position: absolute; top: 168px; left: 142px; color: rgb(255, 0, 0);"/>
+    <ui:VisualElement name="OneWithTheDustEnding" class="ending-panel">
+        <ui:VisualElement class="ending-image" style="background-image: url(&quot;project://database/Assets/_Project/Art/Background/Final_Malo.png?fileID=2800000&amp;guid=42179edec5854b64ea60aa857cf99bc0&amp;type=3#Final_Malo&quot;);"/>
+        <ui:Label class="ending-text" text="Te abandonaste completamente, tu vida termino y volviste al polvo" style="top: 16%; color: rgb(255, 0, 0);"/>
     </ui:VisualElement>
-    <ui:VisualElement name="OneWithTheForestEnding" style="flex-grow: 1; justify-content: center; align-self: center; font-size: 50px; display: none;">
-        <ui:Image style="background-image: url(&quot;project://database/Assets/_Project/Art/Background/Final_Bueno.png?fileID=2800000&amp;guid=e30e2068c3a288e47b8b1f2da67e089f&amp;type=3#Final_Bueno&quot;); -unity-background-scale-mode: scale-and-crop; flex-shrink: 1; height: 100%; width: 1925px; align-self: center; justify-content: center; align-items: center; align-content: center; flex-direction: column;">
-            <ui:Label text=" fallaste en ayudar a otros , &#10;pero estas bien con vos misma, hiciste lo mejor que pudiste" style="align-self: auto; -unity-text-align: upper-center; -unity-font-style: bold; position: absolute; top: 680px; left: 172px; color: rgb(255, 255, 255);"/>
-        </ui:Image>
+    <ui:VisualElement name="OneWithTheForestEnding" class="ending-panel">
+        <ui:VisualElement class="ending-image" style="background-image: url(&quot;project://database/Assets/_Project/Art/Background/Final_Bueno.png?fileID=2800000&amp;guid=e30e2068c3a288e47b8b1f2da67e089f&amp;type=3#Final_Bueno&quot;);"/>
+        <ui:Label class="ending-text" text=" fallaste en ayudar a otros , &#10;pero estas bien con vos misma, hiciste lo mejor que pudiste" style="top: 63%; color: rgb(255, 255, 255);"/>
     </ui:VisualElement>
-    <ui:Button name="BackToMenuButton" text="Volver al menú" style="position: absolute; bottom: 60px; right: 80px; font-size: 36px; padding: 12px 32px; display: none;"/>
+    <ui:Button name="BackToMenuButton" text="VOLVER AL MENÚ" class="ending-button" style="position: absolute; right: 4%; bottom: 6%; display: none;"/>
 </ui:UXML>
