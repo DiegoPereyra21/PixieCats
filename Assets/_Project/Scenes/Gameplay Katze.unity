@@ -20277,6 +20277,7 @@ MonoBehaviour:
   _menuScene: Menu
   _gameplayScene: Gameplay Katze
   _transitionScene: Transition
+  _gameStartScene: GameStart
 --- !u!4 &1010442785
 Transform:
   m_ObjectHideFlags: 0
@@ -29061,15 +29062,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3094585691628853365, guid: 33d1fdbb8941d254a8d6c5dcbb1b8863, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -66.9353
+      value: -14
       objectReference: {fileID: 0}
     - target: {fileID: 3094585691628853365, guid: 33d1fdbb8941d254a8d6c5dcbb1b8863, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.5
+      value: 102
       objectReference: {fileID: 0}
     - target: {fileID: 3094585691628853365, guid: 33d1fdbb8941d254a8d6c5dcbb1b8863, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 74.11251
+      value: -44
       objectReference: {fileID: 0}
     - target: {fileID: 3094585691628853365, guid: 33d1fdbb8941d254a8d6c5dcbb1b8863, type: 3}
       propertyPath: m_LocalRotation.w
@@ -29114,6 +29115,10 @@ PrefabInstance:
     - target: {fileID: 7822643748276295122, guid: 33d1fdbb8941d254a8d6c5dcbb1b8863, type: 3}
       propertyPath: dayExposure
       value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7822643748276295122, guid: 33d1fdbb8941d254a8d6c5dcbb1b8863, type: 3}
+      propertyPath: skyDistance
+      value: 550
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
