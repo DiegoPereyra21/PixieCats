@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fa31c649df1f104cb5a95b342b052b1, type: 3}
   m_Name: TransitionTexts
   m_EditorClassIdentifier: Assembly-CSharp::TransitionTextsSO
-  _default: "Ayuda a los humanos, aunque estes cansada y con hambre\n\n NUNCA DIGAS QUE NO"
-  _reputationMaxed: 'Los humanos conformes con tus encargos constantes y velocidad, no dejaron de utilizarte por toda la vida
+  _default: 'Ayuda a los humanos lo mas que puedas, relamente te necesitan...
 
 
-    NUNCA DIJISTE QUE NO'
-  _reputationLost: Los humanos en venganza por tu falta de ayuda constante optaron por cortarte las alas para siempre
-  _wellbeingDepleted: "Tus alas no aguantaron el esfuerzo constante de ayudar a los humanos, terminaron quebr\xE1ndose y con ello tambi\xE9n tu vida"
+    NUNCA DIGAS QUE NO'
+  _fae: 
+  _depression: 
+  _happy: 
+  _sacrifice: 
+  _missedDawn: 

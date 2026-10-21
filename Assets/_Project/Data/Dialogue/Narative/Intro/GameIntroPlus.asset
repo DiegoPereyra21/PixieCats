@@ -16,4 +16,4 @@ MonoBehaviour:
   lines:
   - character: {fileID: 11400000, guid: a19afb1f1bb4df945b20f463d4858430, type: 2}
     emotion: 0
-    text: 'Wow... siento como si volviera '
+    text: 'Wow... '
